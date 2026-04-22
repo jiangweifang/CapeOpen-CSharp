@@ -22,7 +22,9 @@ namespace CapeOpen
         ICapeUtilities,
         ICapeUtilitiesCOM,
         CapeOpen.ECapeUser,
-        CapeOpen.ECapeRoot
+        CapeOpen.ECapeRoot,
+        IPersistStream,
+        IPersistStreamInit
     {
         /// <summary>
         /// The message returned during the last validation of the unit operation.
@@ -34,6 +36,10 @@ namespace CapeOpen
 
         // Track whether Dispose has been called.
         private bool _disposed;
+        [NonSerialized]
+        private bool m_dirty;
+        [NonSerialized]
+        private bool m_Loaded;
         /// <summary>
         ///	The simulation context that can be used by the PMC.
         /// </summary>
@@ -44,7 +50,7 @@ namespace CapeOpen
         [NonSerialized]
         private ICapeSimulationContext m_SimulationContext;
 
-        static System.Reflection.Assembly MyResolveEventHandler(Object sender, System.ResolveEventArgs args)
+        protected static System.Reflection.Assembly MyResolveEventHandler(Object sender, System.ResolveEventArgs args)
         {
             return typeof(CapeObjectBase).Assembly;
         }
@@ -194,11 +200,11 @@ namespace CapeOpen
             : base()
         {
             m_Parameters = new ParameterCollection();
-            m_Parameters.AddingNew += new AddingNewEventHandler(m_Parameters_AddingNew);
-            m_Parameters.ListChanged += new ListChangedEventHandler(m_Parameters_ListChanged);
             this.m_SimulationContext = null;
             this.m_ValidationMessage = "This object has not been validated.";
             _disposed = false;
+            m_dirty = false;
+            m_Loaded = false;
         }
 
         /// <summary>
@@ -209,7 +215,7 @@ namespace CapeOpen
         /// </remarks>
         ~CapeObjectBase()
         {
-            this.Dispose();
+            this.Dispose(false);
         }
 
         /// <summary>
@@ -235,6 +241,8 @@ namespace CapeOpen
             this.m_SimulationContext = null;
             this.m_ValidationMessage = "This object has not been validated.";
             _disposed = false;
+            m_dirty = false;
+            m_Loaded = false;
         }
 
         /// <summary>
@@ -261,6 +269,8 @@ namespace CapeOpen
             this.m_SimulationContext = null;
             this.m_ValidationMessage = "This object has not been validated.";
             _disposed = false;
+            m_dirty = false;
+            m_Loaded = false;
         }
 
         /// <summary>Creates a new object that is a copy of the current instance.</summary>
@@ -293,6 +303,8 @@ namespace CapeOpen
             m_Parameters.ListChanged += new ListChangedEventHandler(m_Parameters_ListChanged);
             this.m_ValidationMessage = "This object has not been validated.";
             _disposed = false;
+            m_dirty = false;
+            m_Loaded = false;
         }
 
 
@@ -810,6 +822,308 @@ namespace CapeOpen
                 {
                     ((ICapeDiagnostic)this.m_SimulationContext).LogMessage(message);
                 }
+            }
+        }
+
+        // IPersistStream
+
+        void IPersistStream.GetClassID(out Guid pClassID)
+        {
+            pClassID = this.GetType().GUID;
+        }
+
+        /// <summary>This method checks the object for changes since it was last saved.</summary>
+        /// <returns>S_OK (0) if dirty; S_FALSE (1) otherwise.</returns>
+        int IPersistStream.IsDirty()
+        {
+            if (m_dirty) return 0;
+            return 1;
+        }
+
+        /// <summary>This method saves an object to the specified stream.</summary>
+        /// <param name="pStm">IStream to write to.</param>
+        /// <param name="fClearDirty">True to clear the dirty flag after save.</param>
+        void IPersistStream.Save(System.Runtime.InteropServices.ComTypes.IStream pStm, bool fClearDirty)
+        {
+            SaveToStream(pStm);
+            if (fClearDirty) m_dirty = false;
+        }
+
+        /// <summary>This method initializes an object from the stream where it was previously saved.</summary>
+        /// <param name="pStm">IStream to read from.</param>
+        void IPersistStream.Load(System.Runtime.InteropServices.ComTypes.IStream pStm)
+        {
+            LoadFromStream(pStm);
+        }
+
+        /// <summary>This method returns the size, in bytes, of the stream needed to save the object.</summary>
+        /// <param name="pcbSize">Pointer to size in bytes.</param>
+        void IPersistStream.GetSizeMax(out long pcbSize)
+        {
+            pcbSize = 0;
+        }
+
+        // IPersistStreamInit
+
+        void IPersistStreamInit.GetClassID(out Guid pClassID)
+        {
+            pClassID = this.GetType().GUID;
+        }
+
+        /// <summary>This method checks the object for changes since it was last saved.</summary>
+        /// <returns>S_OK (0) if dirty; S_FALSE (1) otherwise.</returns>
+        int IPersistStreamInit.IsDirty()
+        {
+            if (m_dirty) return 0;
+            return 1;
+        }
+
+        /// <summary>This method saves an object to the specified stream.</summary>
+        /// <param name="pStm">IStream to write to.</param>
+        /// <param name="fClearDirty">True to clear the dirty flag after save.</param>
+        void IPersistStreamInit.Save(System.Runtime.InteropServices.ComTypes.IStream pStm, bool fClearDirty)
+        {
+            SaveToStream(pStm);
+            if (fClearDirty) m_dirty = false;
+        }
+
+        /// <summary>This method initializes an object from the stream where it was previously saved.</summary>
+        /// <param name="pStm">IStream to read from.</param>
+        void IPersistStreamInit.Load(System.Runtime.InteropServices.ComTypes.IStream pStm)
+        {
+            LoadFromStream(pStm);
+        }
+
+        /// <summary>This method returns the size, in bytes, of the stream needed to save the object.</summary>
+        /// <param name="pcbSize">Pointer to size in bytes.</param>
+        void IPersistStreamInit.GetSizeMax(out long pcbSize)
+        {
+            pcbSize = 0;
+        }
+
+        /// <summary>Initializes an object to a default state. This method is to be called instead of IPersistStreamInit.Load.</summary>
+        void IPersistStreamInit.InitNew()
+        {
+            if (m_Loaded)
+            {
+                throw new CapeUnexpectedException("The object has already been initialized with IPersistStreamInit.Load.");
+            }
+        }
+
+        /// <summary>
+        /// Saves the PMC state to a COM IStream using typed binary serialization with GZip compression.
+        /// </summary>
+        /// <remarks>
+        /// Serializes ComponentName, ComponentDescription, and all parameter values using
+        /// BinaryWriter with explicit types, following the FlowExchange storage pattern.
+        /// Derived classes may override to persist additional state.
+        /// </remarks>
+        /// <param name="pStm">The COM IStream to write to.</param>
+        protected virtual void SaveToStream(System.Runtime.InteropServices.ComTypes.IStream pStm)
+        {
+            System.IO.MemoryStream memoryStream = new System.IO.MemoryStream();
+            using (var gz = new System.IO.Compression.GZipStream(memoryStream, System.IO.Compression.CompressionMode.Compress))
+            using (var writer = new System.IO.BinaryWriter(gz))
+            {
+                writer.Write(this.ComponentName ?? "");
+                writer.Write(this.ComponentDescription ?? "");
+                writer.Write(this.Parameters.Count);
+                for (int i = 0; i < this.Parameters.Count; i++)
+                {
+                    ICapeParameter param = (ICapeParameter)this.Parameters[i];
+                    ICapeParameterSpec spec = (ICapeParameterSpec)param.Specification;
+                    CapeIdentification paramId = (CapeIdentification)param;
+                    writer.Write(paramId.ComponentName ?? "");
+                    writer.Write((int)spec.Type);
+                    switch (spec.Type)
+                    {
+                        case CapeParamType.CAPE_REAL:
+                            writer.Write(param.value is double ? (double)param.value : 0.0);
+                            break;
+                        case CapeParamType.CAPE_INT:
+                            writer.Write(param.value is int ? (int)param.value : 0);
+                            break;
+                        case CapeParamType.CAPE_BOOLEAN:
+                            writer.Write(param.value is bool ? (bool)param.value : false);
+                            break;
+                        case CapeParamType.CAPE_OPTION:
+                            writer.Write(param.value is string ? (string)param.value : "");
+                            break;
+                        case CapeParamType.CAPE_ARRAY:
+                            WriteObject(writer, param.value);
+                            break;
+                        default:
+                            WriteObject(writer, param.value);
+                            break;
+                    }
+                }
+            }
+            byte[] data = memoryStream.ToArray();
+            byte[] lenBytes = BitConverter.GetBytes(data.Length);
+            pStm.Write(lenBytes, 4, IntPtr.Zero);
+            pStm.Write(data, data.Length, IntPtr.Zero);
+        }
+
+        /// <summary>
+        /// Loads the PMC state from a COM IStream using typed binary deserialization with GZip decompression.
+        /// </summary>
+        /// <remarks>
+        /// Restores ComponentName, ComponentDescription, and parameter values that were
+        /// previously saved by <see cref="SaveToStream"/>. Parameter collection structure is
+        /// preserved (created by constructor); only values are restored by matching name.
+        /// </remarks>
+        /// <param name="pStm">The COM IStream to read from.</param>
+        protected virtual void LoadFromStream(System.Runtime.InteropServices.ComTypes.IStream pStm)
+        {
+            m_Loaded = true;
+            byte[] lenBytes = new byte[4];
+            pStm.Read(lenBytes, 4, IntPtr.Zero);
+            int len = BitConverter.ToInt32(lenBytes, 0);
+            byte[] data = new byte[len];
+            pStm.Read(data, len, IntPtr.Zero);
+            System.IO.MemoryStream memoryStream = new System.IO.MemoryStream(data);
+            using (var gz = new System.IO.Compression.GZipStream(memoryStream, System.IO.Compression.CompressionMode.Decompress))
+            using (var reader = new System.IO.BinaryReader(gz))
+            {
+                this.ComponentName = reader.ReadString();
+                this.ComponentDescription = reader.ReadString();
+                int paramCount = reader.ReadInt32();
+                for (int i = 0; i < paramCount; i++)
+                {
+                    string paramName = reader.ReadString();
+                    CapeParamType paramType = (CapeParamType)reader.ReadInt32();
+                    object paramValue = null;
+                    switch (paramType)
+                    {
+                        case CapeParamType.CAPE_REAL:
+                            paramValue = reader.ReadDouble();
+                            break;
+                        case CapeParamType.CAPE_INT:
+                            paramValue = reader.ReadInt32();
+                            break;
+                        case CapeParamType.CAPE_BOOLEAN:
+                            paramValue = reader.ReadBoolean();
+                            break;
+                        case CapeParamType.CAPE_OPTION:
+                            paramValue = reader.ReadString();
+                            break;
+                        case CapeParamType.CAPE_ARRAY:
+                            paramValue = ReadObject(reader);
+                            break;
+                        default:
+                            paramValue = ReadObject(reader);
+                            break;
+                    }
+                    for (int j = 0; j < this.Parameters.Count; j++)
+                    {
+                        CapeIdentification existingParam = (CapeIdentification)this.Parameters[j];
+                        if (existingParam.ComponentName == paramName)
+                        {
+                            ((ICapeParameter)this.Parameters[j]).value = paramValue;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        // Type tags for recursive typed object serialization (used for CAPE_ARRAY values).
+        private const byte TAG_NULL = 0;
+        private const byte TAG_DOUBLE = 1;
+        private const byte TAG_INT = 2;
+        private const byte TAG_BOOL = 3;
+        private const byte TAG_STRING = 4;
+        private const byte TAG_ARRAY = 5;
+
+        /// <summary>
+        /// Recursively writes an arbitrary parameter value (scalar, string, nested array,
+        /// or <see cref="ICapeParameter"/> wrapper) with a leading type tag byte so that it
+        /// can be faithfully reconstructed by <see cref="ReadObject"/>.
+        /// </summary>
+        private static void WriteObject(System.IO.BinaryWriter writer, object value)
+        {
+            if (value == null)
+            {
+                writer.Write(TAG_NULL);
+                return;
+            }
+            if (value is ICapeParameter)
+            {
+                // Unwrap nested parameter to its underlying value.
+                WriteObject(writer, ((ICapeParameter)value).value);
+                return;
+            }
+            if (value is double)
+            {
+                writer.Write(TAG_DOUBLE);
+                writer.Write((double)value);
+                return;
+            }
+            if (value is int)
+            {
+                writer.Write(TAG_INT);
+                writer.Write((int)value);
+                return;
+            }
+            if (value is bool)
+            {
+                writer.Write(TAG_BOOL);
+                writer.Write((bool)value);
+                return;
+            }
+            if (value is string)
+            {
+                writer.Write(TAG_STRING);
+                writer.Write((string)value);
+                return;
+            }
+            if (value is System.Array)
+            {
+                System.Array arr = (System.Array)value;
+                writer.Write(TAG_ARRAY);
+                writer.Write(arr.Length);
+                for (int k = 0; k < arr.Length; k++)
+                {
+                    WriteObject(writer, arr.GetValue(k));
+                }
+                return;
+            }
+            // Fallback: persist as string representation.
+            writer.Write(TAG_STRING);
+            writer.Write(value.ToString());
+        }
+
+        /// <summary>
+        /// Recursively reads a value previously written by <see cref="WriteObject"/>.
+        /// Arrays are materialized as <c>object[]</c>.
+        /// </summary>
+        private static object ReadObject(System.IO.BinaryReader reader)
+        {
+            byte tag = reader.ReadByte();
+            switch (tag)
+            {
+                case TAG_NULL:
+                    return null;
+                case TAG_DOUBLE:
+                    return reader.ReadDouble();
+                case TAG_INT:
+                    return reader.ReadInt32();
+                case TAG_BOOL:
+                    return reader.ReadBoolean();
+                case TAG_STRING:
+                    return reader.ReadString();
+                case TAG_ARRAY:
+                    {
+                        int n = reader.ReadInt32();
+                        object[] result = new object[n];
+                        for (int k = 0; k < n; k++)
+                        {
+                            result[k] = ReadObject(reader);
+                        }
+                        return result;
+                    }
+                default:
+                    throw new System.IO.InvalidDataException("Unknown persistence type tag: " + tag);
             }
         }
     };

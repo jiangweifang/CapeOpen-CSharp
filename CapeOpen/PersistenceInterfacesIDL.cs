@@ -1,65 +1,60 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 
 namespace CapeOpen
 {
-    /// <summary>
-    /// 持久化
-    /// </summary>
-    [ComImport]
-    [ComVisible(false)]
-    [Guid("0000010c-0000-0000-C000-000000000046")]
-    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    public interface IPersist
+    // NOTE: IPersist (GUID 0000010c-...) is NOT declared separately because
+    // the CLR's CCW already provides a built-in IPersist implementation for all
+    // ComVisible managed objects. Declaring a custom [ComImport] IPersist with
+    // the same GUID causes a vtable conflict in the CCW, leading to
+    // FatalExecutionEngineError (0xc0000005).
+    //
+    // Instead, GetClassID is "flattened" into each derived interface so that
+    // the COM vtable layout matches the native definition while avoiding the
+    // duplicate-IPersist conflict.
+
+    [System.Runtime.InteropServices.ComImport()]
+    [System.Runtime.InteropServices.InterfaceType(System.Runtime.InteropServices.ComInterfaceType.InterfaceIsIUnknown)]
+    [System.Runtime.InteropServices.Guid("00000109-0000-0000-C000-000000000046")]
+    [System.Runtime.InteropServices.ComVisibleAttribute(false)]
+    public interface IPersistStream
     {
-        /// <summary>
-        /// 获取一个类的唯一标识符。
-        /// </summary>
-        /// <param name="pClassID"></param>
+        // vtable slot 3 – inherited from IPersist
         void GetClassID(out Guid pClassID);
+        // vtable slot 4
+        [System.Runtime.InteropServices.PreserveSig]
+        int IsDirty();
+        // vtable slot 5
+        void Load(System.Runtime.InteropServices.ComTypes.IStream pStm);
+        // vtable slot 6
+        void Save(System.Runtime.InteropServices.ComTypes.IStream pStm,
+            [System.Runtime.InteropServices.InAttribute, System.Runtime.InteropServices.MarshalAs(System.Runtime.InteropServices.UnmanagedType.Bool)] bool fClearDirty);
+        // vtable slot 7
+        void GetSizeMax(out long pcbSize);
     };
 
-    /// <summary>
-    /// This interface cannot be import through PIA for some reason
-    /// </summary>
-    [Guid("00000109-0000-0000-C000-000000000046")]
-    [ComVisible(true)]
-    [InterfaceType(1)]
-    [ComImport]
-    public interface IPersistStream : IPersist
+    [System.Runtime.InteropServices.ComImport()]
+    [System.Runtime.InteropServices.InterfaceType(System.Runtime.InteropServices.ComInterfaceType.InterfaceIsIUnknown)]
+    [System.Runtime.InteropServices.Guid("7FD52380-4E07-101B-AE2D-08002B2EC713")]
+    [System.Runtime.InteropServices.ComVisibleAttribute(false)]
+    public interface IPersistStreamInit
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <paramCollection name="pClassID"></paramCollection>
-        new void GetClassID(out Guid pClassID);
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        [MethodImpl(MethodImplOptions.PreserveSig)]
+        // vtable slot 3 – inherited from IPersist
+        void GetClassID(out Guid pClassID);
+        // vtable slot 4
+        [System.Runtime.InteropServices.PreserveSig]
         int IsDirty();
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <paramCollection name="pStm"></paramCollection>
-        void Load(IStream pStm);
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <paramCollection name="pStm"></paramCollection>
-        /// <paramCollection name="fClearDirty"></paramCollection>
-        void Save(IStream pStm, [MarshalAs(UnmanagedType.Bool), In] bool fClearDirty);
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <paramCollection name="pcbSize"></paramCollection>
+        // vtable slot 5
+        void Load(System.Runtime.InteropServices.ComTypes.IStream pStm);
+        // vtable slot 6
+        void Save(System.Runtime.InteropServices.ComTypes.IStream pStm,
+            [System.Runtime.InteropServices.In, System.Runtime.InteropServices.MarshalAs(System.Runtime.InteropServices.UnmanagedType.Bool)] bool fClearDirty);
+        // vtable slot 7
         void GetSizeMax(out long pcbSize);
-    }
+        // vtable slot 8
+        void InitNew();
+    };
 }
 

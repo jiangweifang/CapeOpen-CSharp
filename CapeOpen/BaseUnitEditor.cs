@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -34,13 +34,22 @@ namespace CapeOpen
 
             if (unit.Ports is PortCollection ports)
             {
-                ports.AddingNew += Ports_AddingNew;
+                ports.ListChanged += Collection_ListChanged;
+            }
+            if (unit.Parameters is ParameterCollection parameters)
+            {
+                parameters.ListChanged += Collection_ListChanged;
             }
         }
-        private void Ports_AddingNew(object sender, AddingNewEventArgs e)
+
+        private void Collection_ListChanged(object sender, ListChangedEventArgs e)
         {
-            // 这里编写你希望在“添加”按钮点击时执行的逻辑
-            
+            if (e.ListChangedType == ListChangedType.ItemAdded
+                || e.ListChangedType == ListChangedType.ItemDeleted
+                || e.ListChangedType == ListChangedType.Reset)
+            {
+                propertyGrid1.Refresh();
+            }
         }
 
         private void CloseButton_Click(object sender, EventArgs e)

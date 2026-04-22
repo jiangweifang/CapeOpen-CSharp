@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Linq;
@@ -10,13 +10,13 @@ namespace CapeOpen
 {
     internal class ParameterCollectionEditor : CollectionEditor
     {
-        private ComboBox _comboBox; // 保存ComboBox引用
+        private ComboBox _comboBox;
         public ParameterCollectionEditor(Type type) : base(type)
         {
         }
         protected override object CreateInstance(Type itemType)
         {
-            var types = new[] { typeof(RealParameter), typeof(IntegerParameter), typeof(BooleanParameter), typeof(OptionParameter) };
+            var types = new[] { typeof(RealParameter), typeof(IntegerParameter), typeof(BooleanParameter), typeof(OptionParameter), typeof(ArrayParameter) };
             var selectedType = _comboBox != null && _comboBox.SelectedIndex >= 0
                 ? types[_comboBox.SelectedIndex]
                 : typeof(RealParameter);
@@ -29,6 +29,8 @@ namespace CapeOpen
                 return new BooleanParameter("新建布尔参数", "描述", false, false, CapeParamMode.CAPE_INPUT_OUTPUT);
             if (selectedType == typeof(OptionParameter))
                 return new OptionParameter("新建选项参数", "描述", "选项1", "选项1", new[] { "选项1", "选项2" }, true, CapeParamMode.CAPE_INPUT_OUTPUT);
+            if (selectedType == typeof(ArrayParameter))
+                return new ArrayParameter("新建数组参数", "描述", new object[] { 0.0, 0.0, 0.0 }, new object[] { 0.0, 0.0, 0.0 }, CapeParamMode.CAPE_INPUT_OUTPUT);
 
             return null;
         }
@@ -39,7 +41,7 @@ namespace CapeOpen
             foreach (Control c in form.Controls)
             {
                 c.Top += 30;
-                c.Height -= 30; // 只缩小内容区，不影响底部按钮
+                c.Height -= 30;
             }
 
             _comboBox = new ComboBox
@@ -55,7 +57,8 @@ namespace CapeOpen
                 typeof(RealParameter),
                 typeof(IntegerParameter),
                 typeof(BooleanParameter),
-                typeof(OptionParameter)
+                typeof(OptionParameter),
+                typeof(ArrayParameter)
             };
             _comboBox.Items.AddRange(types.Select(t => t.Name).ToArray());
             _comboBox.SelectedIndex = 0;

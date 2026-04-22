@@ -1,12 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing.Design;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Runtime.InteropServices.ComTypes;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 
 namespace CapeOpen
@@ -47,15 +41,10 @@ namespace CapeOpen
         ICapeUnit,
         ICapeUnitCOM,
         ICapeUnitReport,
-        ICapeUnitReportCOM,
-        IPersistStream
-    //  IPersist,
-    //  IPersistStreamInit
+        ICapeUnitReportCOM
     {
-        
         private PortCollection m_Ports;
         private CapeValidationStatus m_ValStatus;
-        // private bool m_dirty;
         private String m_selecetdReport;
         private System.Collections.Generic.List<String> m_Reports;
         // Track whether Dispose has been called.
@@ -131,13 +120,11 @@ namespace CapeOpen
             : base()
         {
             m_Ports = new PortCollection();
-            m_Ports.AddingNew += new AddingNewEventHandler(m_Ports_AddingNew);
-            m_Ports.ListChanged += new ListChangedEventHandler(m_Ports_ListChanged);
+            m_Ports.AddingNew += new System.ComponentModel.AddingNewEventHandler(m_Ports_AddingNew);
+            m_Ports.ListChanged += new System.ComponentModel.ListChangedEventHandler(m_Ports_ListChanged);
             m_ValStatus = CapeValidationStatus.CAPE_NOT_VALIDATED;
-            m_Reports = new List<string>
-            {
-                "Default Report"
-            };
+            m_Reports = new System.Collections.Generic.List<String>();
+            m_Reports.Add("Default Report");
             m_selecetdReport = "Default Report";
         }
 
@@ -149,7 +136,7 @@ namespace CapeOpen
         /// </remarks>
         ~CapeUnitBase()
         {
-            this.Dispose(true);
+            this.Dispose(false);
         }
          
         /// <summary>Creates a new object that is a copy of the current instance.</summary>
@@ -270,7 +257,7 @@ namespace CapeOpen
         /// <param name = "args">A <see cref = "System.ComponentModel.ListChangedEventArgs">System.ComponentModel.ListChangedEventArgs</see> that provides information about the name change.</param>
         void m_Ports_ListChanged(object sender, System.ComponentModel.ListChangedEventArgs args)
         {
-            PortCollectionListChanged?.Invoke(sender, args);
+            OnPortCollectionListChanged(args);
         }
 
         /// <summary>
@@ -285,7 +272,7 @@ namespace CapeOpen
         /// <param name = "args">A <see cref = "System.ComponentModel.AddingNewEventArgs">System.ComponentModel.AddingNewEventArgs</see> that provides information about the name change.</param>
         void m_Ports_AddingNew(object sender, System.ComponentModel.AddingNewEventArgs args)
         {
-            PortCollectionAddingNew?.Invoke(sender, args);
+            OnPortCollectionAddingNew(args);
         }
 
         /// <summary>
@@ -296,10 +283,44 @@ namespace CapeOpen
         public event System.ComponentModel.ListChangedEventHandler PortCollectionListChanged;
 
         /// <summary>
+        /// Occurs when the list or an item in the list changes.
+        /// </summary>
+        /// <remarks>ListChanged notifications for item value changes are only raised if the 
+        /// list item type implements the INotifyPropertyChanged interface.</remarks> 
+        /// <param name = "args">A <see cref = "System.ComponentModel.ListChangedEventArgs">System.ComponentModel.ListChangedEventArgs</see> that contains information about the event.</param>
+        protected void OnPortCollectionListChanged(System.ComponentModel.ListChangedEventArgs args)
+        {
+            if (PortCollectionListChanged != null)
+            {
+                PortCollectionListChanged(this, args);
+            }
+        }
+
+        /// <summary>
         /// Occurs when the user Adds a new element to the port collection.
         /// </summary>
         /// <remarks>The event to be handles when the name of the PMC is changed.</remarks> 
         public event System.ComponentModel.AddingNewEventHandler PortCollectionAddingNew;
+
+        /// <summary>
+        /// Occurs before an item is added to the list.
+        /// </summary>
+        /// <remarks>
+        /// The AddingNew event occurs before a new object is added to the collection 
+        /// represented by the Items property. This event is raised after the AddNew method is 
+        /// called, but before the new item is created and added to the internal list. By 
+        /// handling this event, the programmer can provide custom item creation and insertion 
+        /// behavior without being forced to derive from the BindingList&gt;T&lt; class. 
+        /// </remarks>
+        /// <param name = "args">A <see cref = "System.ComponentModel.AddingNewEventArgs">System.ComponentModel.AddingNewEventArgs</see> that contains information about the event.</param>
+        protected void OnPortCollectionAddingNew(System.ComponentModel.AddingNewEventArgs args)
+        {
+            if (PortCollectionAddingNew != null)
+            {
+                PortCollectionAddingNew(this, args);
+            }
+        }
+
 
         /// <summary>
         /// Occurs when the user validates the unit operation.
@@ -509,18 +530,14 @@ namespace CapeOpen
         [System.Runtime.InteropServices.ComUnregisterFunction()]
         public new static void UnregisterFunction(Type t)
         {
+            UnregisterHelper(Microsoft.Win32.RegistryKey.OpenBaseKey(Microsoft.Win32.RegistryHive.ClassesRoot, Microsoft.Win32.RegistryView.Registry32), t);
+            UnregisterHelper(Microsoft.Win32.RegistryKey.OpenBaseKey(Microsoft.Win32.RegistryHive.ClassesRoot, Microsoft.Win32.RegistryView.Registry64), t);
+        }
+
+        private static void UnregisterHelper(Microsoft.Win32.RegistryKey baseKey, Type t)
+        {
             String keyname = String.Concat("CLSID\\{", t.GUID.ToString(), "}");
-            Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.ClassesRoot.OpenSubKey(keyname, true);
-            String[] keyNames = key.GetSubKeyNames();
-            for (int i = 0; i < keyNames.Length; i++)
-            {
-                key.DeleteSubKeyTree(keyNames[i]);
-            }
-            String[] valueNames = key.GetValueNames();
-            for (int i = 0; i < valueNames.Length; i++)
-            {
-                key.DeleteValue(valueNames[i]);
-            }
+            baseKey.DeleteSubKeyTree(keyname, false);
         }
 
         /// <summary>
@@ -560,7 +577,6 @@ namespace CapeOpen
         /// <exception cref = "ECapeFailedInitialisation">ECapeFailedInitialisation</exception>
         /// <exception cref = "ECapeBadInvOrder">ECapeBadInvOrder</exception>
         //        [System.ComponentModel.EditorAttribute(typeof(capePortCollectionEditor), typeof(System.Drawing.Design.UITypeEditor))]
-        [Editor(typeof(PortCollectionEditor), typeof(UITypeEditor))]
         [System.ComponentModel.CategoryAttribute("ICapeUnit")]
         [System.ComponentModel.DescriptionAttribute("Unit Operation Port Collection. Click on the (...) button to edit collection.")]
         [System.ComponentModel.TypeConverter(typeof(PortCollectionTypeConverter))]
@@ -786,278 +802,9 @@ namespace CapeOpen
             OnUnitOperationValidated(args);
             return true;
         }
-        /*        // IPersist
-                /// <summary>This method retrieves the class identifier (CLSID) of an object. The 
-                /// CLSID is a unique value that identifies the code that can manipulate the 
-                /// persistent data.</summary>
-                /// <remarks>
-                /// The GetClassID method retrieves the class identifier (CLSID) for an object, 
-                /// used in later operations to load object-specific code into the caller's context.
-                /// </remarks>
-                /// <param name ="pClassID"><para>Pointer to the location of the CLSID on return.</para>
-                /// <para>The CLSID is a globally unique identifier (GUID) that uniquely represents 
-                /// an object class that defines the code that can manipulate the object's data. </para>
-                /// </param>
-                void IPersist.GetClassID(out Guid pClassID)
-                {
-                    pClassID = this.GetType().GUID;
-                }
-
-                // IPersistStream
-
-                /// <summary>
-                /// This method checks the object for changes since it was last saved.
-                /// </summary>
-                /// <remarks>
-                /// This method checks whether an object has changed since it was last saved so you can 
-                /// avoid losing information in objects that have not yet been saved.
-                /// </remarks>
-                /// <returns>
-                /// <para>If the object has changed since it was last saved, the return value 
-                /// is the HRESULT S_OK, which has a numerical value of 0. </para>
-                /// <para>If the object has not changed since the last save, the return value 
-                /// is the HRESULT S_FALSE, which has a numerical value of 1. </para>
-                /// </returns>
-                int IPersistStream.IsDirty()
-                {
-                    if (m_dirty) return 0;
-                    return 1;
-                }
-
-                /// <summary>This method saves an object to the specified stream.</summary>
-                /// <remarks>
-                /// IPersistStream.Save saves an object into the specified stream and indicates 
-                /// whether the object should reset its dirty flag.
-                /// </remarks>
-                /// <param name ="fClearDirty">Value that indicates whether to clear the dirty flag after the save 
-                /// is complete. If TRUE, the flag should be cleared. If FALSE, the flag should be left unchanged. </param>
-                /// <param name ="pStm">IStream pointer to the stream into which the object should be saved. </param>
-                void IPersistStream.Save(System.Runtime.InteropServices.ComTypes.IStream pStm, bool fClearDirty)
-                {
-                    Byte[] arrLen = new Byte[2];
-                    // Convert the string into a byte array    
-                    System.IO.MemoryStream memoryStream = new System.IO.MemoryStream();
-                    Object[] saveObjects = new Object[4];
-                    saveObjects[0] = this.ComponentName;
-                    saveObjects[1] = this.ComponentDescription;
-                    saveObjects[2] = this.Parameters;
-                    saveObjects[3] = m_Ports;
-                    System.Runtime.Serialization.Formatters.Binary.BinaryFormatter binaryFormatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-                    binaryFormatter.Serialize(memoryStream, saveObjects);
-                    Byte[] bytes = memoryStream.ToArray();
-                    memoryStream.Close();
-                    // construct length (separate into two separate bytes)    
-                    arrLen[0] = (Byte)(bytes.Length % 256);
-                    arrLen[1] = (Byte)(bytes.Length / 256);
-                    try
-                    {
-                        // Save the array in the stream    
-                        pStm.Write(arrLen, 2, IntPtr.Zero);
-                        pStm.Write(bytes, bytes.Length, IntPtr.Zero);
-                        System.Runtime.InteropServices.Marshal.ReleaseComObject(pStm);
-                        if (fClearDirty) m_dirty = false;
-                    }
-                    catch (System.Exception p_Ex)
-                    {
-                        System.Windows.Forms.MessageBox.Show(p_Ex.ToString());
-                        System.Runtime.InteropServices.Marshal.ReleaseComObject(pStm);
-                    }
-                }
-
-                /// <summary>This method initializes an object from the stream where it was previously saved.</summary>
-                /// <remarks>
-                /// This method loads an object from its associated stream.
-                /// </remarks>
-                /// <param name ="pStm">IStream pointer to the stream from which the object should be loaded. </param>
-                void IPersistStream.Load(System.Runtime.InteropServices.ComTypes.IStream pStm)
-                {
-                    m_Loaded = true;
-                    m_Ports.Clear();
-                    this.Parameters.Clear();
-                    int cb;
-                    Byte[] arrLen = new Byte[2];
-                    // Read the length of the string  
-                    IntPtr pcb = IntPtr.Zero;
-                    pStm.Read(arrLen, 2, IntPtr.Zero);
-                    // Calculate the length    
-                    cb = 256 * arrLen[1] + arrLen[0];
-                    // Read the stream to get the string    
-                    Byte[] bytes = new Byte[cb];
-                    pStm.Read(bytes, cb, pcb);
-                    System.Runtime.InteropServices.Marshal.ReleaseComObject(pStm);
-                    // Deserialize byte array    
-                    System.IO.MemoryStream memoryStream = new System.IO.MemoryStream(bytes);
-                    System.Runtime.Serialization.Formatters.Binary.BinaryFormatter binaryFormatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-                    try
-                    {
-                        AppDomain domain = AppDomain.CurrentDomain;
-                        domain.AssemblyResolve += new ResolveEventHandler(CapeOpen.CapeUnitBase.MyResolveEventHandler);
-                        Object[] loadObject = (Object[])(binaryFormatter.Deserialize(memoryStream));
-                        this.ComponentName = loadObject[0].ToString();
-                        this.ComponentDescription = loadObject[1].ToString();
-                        ParameterCollection parameters = (ParameterCollection)loadObject[2];
-                        foreach (ICapeParameter param in parameters)
-                        {
-                            this.Parameters.Add(param);
-                        }
-                        m_Ports = (PortCollection)loadObject[3];
-                        domain.AssemblyResolve -= new ResolveEventHandler(CapeOpen.CapeUnitBase.MyResolveEventHandler);
-                    }
-                    catch (System.Exception p_Ex)
-                    {
-                        System.Windows.Forms.MessageBox.Show(p_Ex.ToString());
-                    }
-                    memoryStream.Close();
-                }
-
-                /// <summary>This method returns the size, in bytes, of the stream needed to save the object.</summary>
-                /// <remarks>
-                /// <para>This method returns the size needed to save an object. </para>
-                /// <para>You can call this method to determine the size and set the necessary 
-                /// buffers before calling the Save method.</para>
-                /// </remarks>
-                /// <param name ="pcbSize">Pointer to a 64-bit unsigned integer value indicating the size, in bytes, of the stream needed to save this object. </param>
-                void IPersistStream.GetSizeMax(out long pcbSize)
-                {
-                    pcbSize = 0;
-                }
-                // IPersistStreamInit
-
-                /// <summary>
-                /// This method checks the object for changes since it was last saved.
-                /// </summary>
-                /// <remarks>
-                /// This method checks whether an object has changed since it was last saved so you can 
-                /// avoid losing information in objects that have not yet been saved.
-                /// </remarks>
-                /// <returns>
-                /// <para>If the object has changed since it was last saved, the return value 
-                /// is the HRESULT S_OK, which has a numerical value of 0. </para>
-                /// <para>If the object has not changed since the last save, the return value 
-                /// is the HRESULT S_FALSE, which has a numerical value of 1. </para>
-                /// </returns>
-                int IPersistStreamInit.IsDirty()
-                {
-                    if (m_dirty) return 0;
-                    return 1;
-                }
-
-                /// <summary>This method saves an object to the specified stream.</summary>
-                /// <remarks>
-                /// IPersistStream.Save saves an object into the specified stream and indicates 
-                /// whether the object should reset its dirty flag.
-                /// </remarks>
-                /// <param name ="fClearDirty">Value that indicates whether to clear the dirty flag after the save 
-                /// is complete. If TRUE, the flag should be cleared. If FALSE, the flag should be left unchanged. </param>
-                /// <param name ="pStm">IStream pointer to the stream into which the object should be saved. </param>
-                void IPersistStreamInit.Save(System.Runtime.InteropServices.ComTypes.IStream pStm, bool fClearDirty)
-                {
-                    Byte[] arrLen = new Byte[2];
-                    // Convert the string into a byte array    
-                    System.IO.MemoryStream memoryStream = new System.IO.MemoryStream();
-                    Object[] saveObjects = new Object[4];
-                    saveObjects[0] = this.ComponentName;
-                    saveObjects[1] = this.ComponentDescription;
-                    saveObjects[2] = this.Parameters;
-                    saveObjects[3] = m_Ports;
-                    System.Runtime.Serialization.Formatters.Binary.BinaryFormatter binaryFormatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-                    binaryFormatter.Serialize(memoryStream, saveObjects);
-                    Byte[] bytes = memoryStream.ToArray();
-                    memoryStream.Close();
-                    // construct length (separate into two separate bytes)    
-                    arrLen[0] = (Byte)(bytes.Length % 256);
-                    arrLen[1] = (Byte)(bytes.Length / 256);
-                    try
-                    {
-                        // Save the array in the stream    
-                        pStm.Write(arrLen, 2, IntPtr.Zero);
-                        pStm.Write(bytes, bytes.Length, IntPtr.Zero);
-                        System.Runtime.InteropServices.Marshal.ReleaseComObject(pStm);
-                        if (fClearDirty) m_dirty = false;
-                    }
-                    catch (System.Exception p_Ex)
-                    {
-                        System.Windows.Forms.MessageBox.Show(p_Ex.ToString());
-                        System.Runtime.InteropServices.Marshal.ReleaseComObject(pStm);
-                    }
-                }
-
-                /// <summary>This method initializes an object from the stream where it was previously saved.</summary>
-                /// <remarks>
-                /// This method loads an object from its associated stream.
-                /// </remarks>
-                /// <param name ="pStm">IStream pointer to the stream from which the object should be loaded. </param>
-                void IPersistStreamInit.Load(System.Runtime.InteropServices.ComTypes.IStream pStm)
-                {
-                    m_Loaded = true;
-                    m_Ports.Clear();
-                    this.Parameters.Clear();
-                    int cb;
-                    Byte[] arrLen = new Byte[2];
-                    // Read the length of the string  
-                    IntPtr pcb = IntPtr.Zero;
-                    pStm.Read(arrLen, 2, IntPtr.Zero);
-                    // Calculate the length    
-                    cb = 256 * arrLen[1] + arrLen[0];
-                    // Read the stream to get the string    
-                    Byte[] bytes = new Byte[cb];
-                    pStm.Read(bytes, cb, pcb);
-                    System.Runtime.InteropServices.Marshal.ReleaseComObject(pStm);
-                    // Deserialize byte array    
-                    System.IO.MemoryStream memoryStream = new System.IO.MemoryStream(bytes);
-                    System.Runtime.Serialization.Formatters.Binary.BinaryFormatter binaryFormatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-                    try
-                    {
-                        AppDomain domain = AppDomain.CurrentDomain;
-                        domain.AssemblyResolve += new ResolveEventHandler(CapeOpen.CapeUnitBase.MyResolveEventHandler);
-                        Object[] loadObject = (Object[])(binaryFormatter.Deserialize(memoryStream));
-                        this.ComponentName = loadObject[0].ToString();
-                        this.ComponentDescription = loadObject[1].ToString();
-                        ParameterCollection parameters = (ParameterCollection)loadObject[2];
-                        foreach (ICapeParameter param in parameters)
-                        {
-                            this.Parameters.Add(param);
-                        }
-                        m_Ports = (PortCollection)loadObject[3];
-                        domain.AssemblyResolve -= new ResolveEventHandler(CapeOpen.CapeUnitBase.MyResolveEventHandler);
-                    }
-                    catch (System.Exception p_Ex)
-                    {
-                        System.Windows.Forms.MessageBox.Show(p_Ex.ToString());
-                    }
-                    memoryStream.Close();
-                }
-
-                /// <summary>This method returns the size, in bytes, of the stream needed to save the object.</summary>
-                /// <remarks>
-                /// <para>This method returns the size needed to save an object. </para>
-                /// <para>You can call this method to determine the size and set the necessary 
-                /// buffers before calling the Save method.</para>
-                /// </remarks>
-                /// <param name ="pcbSize">Pointer to a 64-bit unsigned integer value indicating the size, in bytes, of the stream needed to save this object. </param>
-                void IPersistStreamInit.GetSizeMax(out long pcbSize)
-                {
-                    pcbSize = 0;
-                }
-
-                /// <summary>Initializes an object to a default state. This method is to be called 
-                /// instead of IPersistStreamInit.Load.</summary>
-                /// <remarks>
-                /// If the object has already been initialized with IPersistStreamInit.Load, then 
-                /// this method must return E_UNEXPECTED.
-                /// </remarks>
-                void IPersistStreamInit.InitNew()
-                {
-                    if (m_Loaded)
-                    {
-                        CapeOpen.CapeUnexpectedException p_Ex = new CapeUnexpectedException("The object has already been initialized with IPersistStreamInit.Load.");
-                        throw p_Ex;
-                    }
-                }
-        */
 
         /// <summary>
-        ///	Gets the list of possible reports for the unit operation.
+        /// Gets the list of possible reports for the unit operation.
         /// </summary>
         /// <remarks>
         ///	Gets the list of possible reports for the unit operation.
@@ -1235,29 +982,6 @@ namespace CapeOpen
                 retVal = String.Concat(retVal, Environment.NewLine);
             }
             return retVal;
-        }
-
-        public void GetClassID(out Guid pClassID)
-        {
-            pClassID = GetType().GUID;
-        }
-
-        public int IsDirty()
-        {
-            return 1;
-        }
-
-        public void Load(IStream pStm)
-        {
-        }
-
-        public void Save(IStream pStm, [In, MarshalAs(UnmanagedType.Bool)] bool fClearDirty)
-        {
-        }
-
-        public void GetSizeMax(out long pcbSize)
-        {
-            pcbSize = 0;
         }
     };
 }

@@ -5,8 +5,165 @@ using System.Text;
 
 namespace CapeOpen
 {
-    class ArrayParameter
+    /// <summary>
+    /// Array-Valued parameter for use in the CAPE-OPEN parameter collection.
+    /// </summary>
+    /// <remarks>
+    /// Array-Valued parameter for use in the CAPE-OPEN parameter collection.
+    /// The array contains elements that conform to a specified element parameter type.
+    /// </remarks>
+    [Serializable]
+    [System.Runtime.InteropServices.ComVisible(true)]
+    [System.Runtime.InteropServices.Guid("3A5F7B2E-9C14-4D8A-B6E1-7F2A3D4C5E6B")]
+    [System.Runtime.InteropServices.ClassInterface(System.Runtime.InteropServices.ClassInterfaceType.None)]
+    public class ArrayParameter : CapeParameter,
+        ICapeParameter,
+        ICapeParameterSpec,
+        ICapeArrayParameterSpec,
+        System.ComponentModel.INotifyPropertyChanged
     {
+        private object[] m_value;
+        private object[] m_DefaultValue;
+        private int[] m_size;
+        private object[] m_itemsSpecifications;
+
+        /// <summary>
+        /// Constructor for the array-valued parameter.
+        /// </summary>
+        /// <param name="name">Sets the ComponentName of the parameter.</param>
+        /// <param name="description">Sets the ComponentDescription of the parameter.</param>
+        /// <param name="value">Sets the initial value of the parameter (an array of values).</param>
+        /// <param name="defaultValue">Sets the default value of the parameter.</param>
+        /// <param name="size">An integer array containing the size of each dimension.</param>
+        /// <param name="itemsSpecifications">An array of parameter specifications for each element.</param>
+        /// <param name="mode">Sets the CapeParamMode mode of the parameter.</param>
+        public ArrayParameter(String name, String description, object[] value, object[] defaultValue, int[] size, object[] itemsSpecifications, CapeParamMode mode)
+            : base(name, description, mode)
+        {
+            m_value = value;
+            m_DefaultValue = defaultValue;
+            m_size = size;
+            m_itemsSpecifications = itemsSpecifications;
+            this.Mode = mode;
+            m_ValStatus = CapeValidationStatus.CAPE_VALID;
+        }
+
+        /// <summary>
+        /// Constructor for a simple one-dimensional array parameter.
+        /// </summary>
+        /// <param name="name">Sets the ComponentName of the parameter.</param>
+        /// <param name="description">Sets the ComponentDescription of the parameter.</param>
+        /// <param name="value">Sets the initial value of the parameter.</param>
+        /// <param name="defaultValue">Sets the default value of the parameter.</param>
+        /// <param name="mode">Sets the CapeParamMode mode of the parameter.</param>
+        public ArrayParameter(String name, String description, object[] value, object[] defaultValue, CapeParamMode mode)
+            : this(name, description, value, defaultValue, new int[] { value.Length }, null, mode)
+        {
+        }
+
+        /// <summary>
+        /// Gets and sets the value for this Parameter.
+        /// </summary>
+        [System.ComponentModel.BrowsableAttribute(false)]
+        override public Object value
+        {
+            get { return m_value; }
+            set
+            {
+                ParameterValueChangedEventArgs args = new ParameterValueChangedEventArgs(this.ComponentName, m_value, value);
+                m_value = (object[])value;
+                OnParameterValueChanged(args);
+            }
+        }
+
+        /// <summary>
+        /// Gets and sets the array value for this Parameter.
+        /// </summary>
+        [System.ComponentModel.CategoryAttribute("ICapeParameter")]
+        public object[] Value
+        {
+            get { return m_value; }
+            set
+            {
+                ParameterValueChangedEventArgs args = new ParameterValueChangedEventArgs(this.ComponentName, m_value, value);
+                m_value = value;
+                OnParameterValueChanged(args);
+            }
+        }
+
+        /// <inheritdoc/>
+        override public Object Clone()
+        {
+            return new ArrayParameter(this.ComponentName, this.ComponentDescription, (object[])m_value.Clone(), (object[])m_DefaultValue.Clone(), (int[])m_size.Clone(), m_itemsSpecifications, this.Mode);
+        }
+
+        /// <inheritdoc/>
+        public override bool Validate(ref String message)
+        {
+            message = "Value is valid.";
+            m_ValStatus = CapeValidationStatus.CAPE_VALID;
+            ParameterValidatedEventArgs args = new ParameterValidatedEventArgs(this.ComponentName, message, CapeValidationStatus.CAPE_VALID, CapeValidationStatus.CAPE_VALID);
+            OnParameterValidated(args);
+            return true;
+        }
+
+        /// <inheritdoc/>
+        public override void Reset()
+        {
+            ParameterResetEventArgs args = new ParameterResetEventArgs(this.ComponentName);
+            m_value = (object[])m_DefaultValue.Clone();
+            OnParameterReset(args);
+        }
+
+        /// <inheritdoc/>
+        [System.ComponentModel.CategoryAttribute("ICapeParameterSpec")]
+        public override CapeParamType Type
+        {
+            get { return CapeParamType.CAPE_ARRAY; }
+        }
+
+        /// <inheritdoc/>
+        [System.ComponentModel.Category("Parameter Specification")]
+        int ICapeArrayParameterSpec.NumDimensions
+        {
+            get { return m_size.Length; }
+        }
+
+        /// <inheritdoc/>
+        [System.ComponentModel.Category("Parameter Specification")]
+        int[] ICapeArrayParameterSpec.Size
+        {
+            get { return m_size; }
+        }
+
+        /// <inheritdoc/>
+        [System.ComponentModel.BrowsableAttribute(false)]
+        object[] ICapeArrayParameterSpec.ItemsSpecifications
+        {
+            get { return m_itemsSpecifications; }
+        }
+
+        /// <inheritdoc/>
+        object ICapeArrayParameterSpec.Validate(object inputArray, ref string[] messages)
+        {
+            messages = new string[] { "Value is valid." };
+            return true;
+        }
+
+        /// <summary>
+        /// Gets and sets the default value of the parameter.
+        /// </summary>
+        [System.ComponentModel.CategoryAttribute("ICapeArrayParameterSpec")]
+        public object[] DefaultValue
+        {
+            get { return m_DefaultValue; }
+            set
+            {
+                ParameterDefaultValueChangedEventArgs args = new ParameterDefaultValueChangedEventArgs(this.ComponentName, m_DefaultValue, value);
+                m_DefaultValue = value;
+                OnParameterDefaultValueChanged(args);
+            }
+        }
     }
 
 

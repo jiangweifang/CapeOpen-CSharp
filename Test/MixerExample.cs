@@ -91,6 +91,10 @@ namespace Test
             // Add a string valued parameter using the OptionParameter constructor.
             Parameters.Add(new OptionParameter("OptionParameter", "This is an example of an option parameter.", "Test Value", "Test Value", options, true, CapeParamMode.CAPE_INPUT_OUTPUT));
 
+            // Add an array valued parameter using the ArrayParameter constructor.
+            object[] arrayValues = { 1.0, 2.0, 3.0 };
+            Parameters.Add(new ArrayParameter("ArrayParameter", "This is an example of an array parameter.", arrayValues, arrayValues, CapeParamMode.CAPE_INPUT_OUTPUT));
+
             // Add an available report.
             Reports.Add("Report 2");
         }
