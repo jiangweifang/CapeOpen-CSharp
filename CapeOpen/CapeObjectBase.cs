@@ -916,6 +916,7 @@ namespace CapeOpen
         /// <remarks>
         /// Serializes ComponentName, ComponentDescription, and all parameter values using
         /// BinaryWriter with explicit types, following the FlowExchange storage pattern.
+        /// V2 format saves full parameter metadata to support reconstruction of dynamically added parameters.
         /// Derived classes may override to persist additional state.
         /// </remarks>
         /// <param name="pStm">The COM IStream to write to.</param>
@@ -925,6 +926,8 @@ namespace CapeOpen
             using (var gz = new System.IO.Compression.GZipStream(memoryStream, System.IO.Compression.CompressionMode.Compress))
             using (var writer = new System.IO.BinaryWriter(gz))
             {
+                // V2 format marker
+                writer.Write(STREAM_MAGIC_V2);
                 writer.Write(this.ComponentName ?? "");
                 writer.Write(this.ComponentDescription ?? "");
                 writer.Write(this.Parameters.Count);
@@ -934,23 +937,52 @@ namespace CapeOpen
                     ICapeParameterSpec spec = (ICapeParameterSpec)param.Specification;
                     CapeIdentification paramId = (CapeIdentification)param;
                     writer.Write(paramId.ComponentName ?? "");
+                    writer.Write(paramId.ComponentDescription ?? "");
+                    writer.Write((int)param.Mode);
                     writer.Write((int)spec.Type);
                     switch (spec.Type)
                     {
                         case CapeParamType.CAPE_REAL:
-                            writer.Write(param.value is double ? (double)param.value : 0.0);
+                            {
+                                RealParameter rp = (RealParameter)param;
+                                writer.Write(rp.SIValue);
+                                writer.Write(((ICapeRealParameterSpec)rp).SIDefaultValue);
+                                writer.Write(((ICapeRealParameterSpec)rp).SILowerBound);
+                                writer.Write(((ICapeRealParameterSpec)rp).SIUpperBound);
+                                writer.Write(rp.Unit ?? "");
+                            }
                             break;
                         case CapeParamType.CAPE_INT:
-                            writer.Write(param.value is int ? (int)param.value : 0);
+                            {
+                                IntegerParameter ip = (IntegerParameter)param;
+                                writer.Write(ip.Value);
+                                writer.Write(((ICapeIntegerParameterSpec)ip).DefaultValue);
+                                writer.Write(((ICapeIntegerParameterSpec)ip).LowerBound);
+                                writer.Write(((ICapeIntegerParameterSpec)ip).UpperBound);
+                            }
                             break;
                         case CapeParamType.CAPE_BOOLEAN:
-                            writer.Write(param.value is bool ? (bool)param.value : false);
+                            {
+                                BooleanParameter bp = (BooleanParameter)param;
+                                writer.Write(bp.Value);
+                                writer.Write(bp.DefaultValue);
+                            }
                             break;
                         case CapeParamType.CAPE_OPTION:
-                            writer.Write(param.value is string ? (string)param.value : "");
+                            {
+                                OptionParameter op = (OptionParameter)param;
+                                writer.Write(param.value is string ? (string)param.value : "");
+                                writer.Write(((ICapeOptionParameterSpec)op).DefaultValue ?? "");
+                                string[] optList = ((ICapeOptionParameterSpec)op).OptionList ?? new string[0];
+                                writer.Write(optList.Length);
+                                for (int k = 0; k < optList.Length; k++)
+                                    writer.Write(optList[k] ?? "");
+                                writer.Write(((ICapeOptionParameterSpec)op).RestrictedToList);
+                            }
                             break;
                         case CapeParamType.CAPE_ARRAY:
                             WriteObject(writer, param.value);
+                            WriteObject(writer, ((ArrayParameter)param).DefaultValue);
                             break;
                         default:
                             WriteObject(writer, param.value);
@@ -969,8 +1001,9 @@ namespace CapeOpen
         /// </summary>
         /// <remarks>
         /// Restores ComponentName, ComponentDescription, and parameter values that were
-        /// previously saved by <see cref="SaveToStream"/>. Parameter collection structure is
-        /// preserved (created by constructor); only values are restored by matching name.
+        /// previously saved by <see cref="SaveToStream"/>. Supports both V1 (value-only)
+        /// and V2 (full metadata) formats. For V2 streams, parameters not found in the
+        /// constructor-created collection are recreated from saved metadata and appended.
         /// </remarks>
         /// <param name="pStm">The COM IStream to read from.</param>
         protected virtual void LoadFromStream(System.Runtime.InteropServices.ComTypes.IStream pStm)
@@ -985,44 +1018,177 @@ namespace CapeOpen
             using (var gz = new System.IO.Compression.GZipStream(memoryStream, System.IO.Compression.CompressionMode.Decompress))
             using (var reader = new System.IO.BinaryReader(gz))
             {
-                this.ComponentName = reader.ReadString();
-                this.ComponentDescription = reader.ReadString();
-                int paramCount = reader.ReadInt32();
-                for (int i = 0; i < paramCount; i++)
+                // Detect format version: V2 starts with 4-byte magic, V1 starts with a string.
+                byte[] magic = reader.ReadBytes(4);
+                bool isV2 = magic.Length == 4
+                    && magic[0] == STREAM_MAGIC_V2[0]
+                    && magic[1] == STREAM_MAGIC_V2[1]
+                    && magic[2] == STREAM_MAGIC_V2[2]
+                    && magic[3] == STREAM_MAGIC_V2[3];
+                if (isV2)
                 {
-                    string paramName = reader.ReadString();
-                    CapeParamType paramType = (CapeParamType)reader.ReadInt32();
-                    object paramValue = null;
-                    switch (paramType)
+                    LoadFromStreamV2(reader);
+                }
+                else
+                {
+                    // V1: re-decompress from the beginning since GZipStream is forward-only.
+                    var memoryStream2 = new System.IO.MemoryStream(data);
+                    using (var gz2 = new System.IO.Compression.GZipStream(memoryStream2, System.IO.Compression.CompressionMode.Decompress))
+                    using (var reader2 = new System.IO.BinaryReader(gz2))
                     {
-                        case CapeParamType.CAPE_REAL:
-                            paramValue = reader.ReadDouble();
-                            break;
-                        case CapeParamType.CAPE_INT:
-                            paramValue = reader.ReadInt32();
-                            break;
-                        case CapeParamType.CAPE_BOOLEAN:
-                            paramValue = reader.ReadBoolean();
-                            break;
-                        case CapeParamType.CAPE_OPTION:
-                            paramValue = reader.ReadString();
-                            break;
-                        case CapeParamType.CAPE_ARRAY:
-                            paramValue = ReadObject(reader);
-                            break;
-                        default:
-                            paramValue = ReadObject(reader);
-                            break;
+                        LoadFromStreamV1(reader2);
                     }
-                    for (int j = 0; j < this.Parameters.Count; j++)
+                }
+            }
+        }
+
+        // Stream format version: V1 = original (no version byte), V2 = with full metadata.
+        // We write a 4-byte magic marker to distinguish V2 from V1.
+        // V1 starts with a BinaryWriter string (7-bit length prefix), so this 4-byte
+        // sequence (0xCA, 0xFE, 0x00, 0x02) will never appear as a valid V1 start.
+        private static readonly byte[] STREAM_MAGIC_V2 = { 0xCA, 0xFE, 0x00, 0x02 };
+
+        /// <summary>
+        /// V1 load: restores only parameter values by name match (original format).
+        /// </summary>
+        private void LoadFromStreamV1(System.IO.BinaryReader reader)
+        {
+            this.ComponentName = reader.ReadString();
+            this.ComponentDescription = reader.ReadString();
+            int paramCount = reader.ReadInt32();
+            for (int i = 0; i < paramCount; i++)
+            {
+                string paramName = reader.ReadString();
+                CapeParamType paramType = (CapeParamType)reader.ReadInt32();
+                object paramValue = null;
+                switch (paramType)
+                {
+                    case CapeParamType.CAPE_REAL:
+                        paramValue = reader.ReadDouble();
+                        break;
+                    case CapeParamType.CAPE_INT:
+                        paramValue = reader.ReadInt32();
+                        break;
+                    case CapeParamType.CAPE_BOOLEAN:
+                        paramValue = reader.ReadBoolean();
+                        break;
+                    case CapeParamType.CAPE_OPTION:
+                        paramValue = reader.ReadString();
+                        break;
+                    case CapeParamType.CAPE_ARRAY:
+                        paramValue = ReadObject(reader);
+                        break;
+                    default:
+                        paramValue = ReadObject(reader);
+                        break;
+                }
+                for (int j = 0; j < this.Parameters.Count; j++)
+                {
+                    CapeIdentification existingParam = (CapeIdentification)this.Parameters[j];
+                    if (existingParam.ComponentName == paramName)
                     {
-                        CapeIdentification existingParam = (CapeIdentification)this.Parameters[j];
-                        if (existingParam.ComponentName == paramName)
+                        ((ICapeParameter)this.Parameters[j]).value = paramValue;
+                        break;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// V2 load: restores parameter values by name match and recreates missing parameters from saved metadata.
+        /// </summary>
+        private void LoadFromStreamV2(System.IO.BinaryReader reader)
+        {
+            this.ComponentName = reader.ReadString();
+            this.ComponentDescription = reader.ReadString();
+            int paramCount = reader.ReadInt32();
+            for (int i = 0; i < paramCount; i++)
+            {
+                string paramName = reader.ReadString();
+                string paramDesc = reader.ReadString();
+                CapeParamMode paramMode = (CapeParamMode)reader.ReadInt32();
+                CapeParamType paramType = (CapeParamType)reader.ReadInt32();
+
+                ICapeParameter existingParam = null;
+                for (int j = 0; j < this.Parameters.Count; j++)
+                {
+                    CapeIdentification ep = (CapeIdentification)this.Parameters[j];
+                    if (ep.ComponentName == paramName)
+                    {
+                        existingParam = (ICapeParameter)this.Parameters[j];
+                        break;
+                    }
+                }
+
+                switch (paramType)
+                {
+                    case CapeParamType.CAPE_REAL:
                         {
-                            ((ICapeParameter)this.Parameters[j]).value = paramValue;
-                            break;
+                            double val = reader.ReadDouble();
+                            double defVal = reader.ReadDouble();
+                            double lower = reader.ReadDouble();
+                            double upper = reader.ReadDouble();
+                            string unit = reader.ReadString();
+                            if (existingParam != null)
+                                existingParam.value = val;
+                            else
+                                this.Parameters.Add(new RealParameter(paramName, paramDesc, val, defVal, lower, upper, paramMode, unit));
                         }
-                    }
+                        break;
+                    case CapeParamType.CAPE_INT:
+                        {
+                            int val = reader.ReadInt32();
+                            int defVal = reader.ReadInt32();
+                            int lower = reader.ReadInt32();
+                            int upper = reader.ReadInt32();
+                            if (existingParam != null)
+                                existingParam.value = val;
+                            else
+                                this.Parameters.Add(new IntegerParameter(paramName, paramDesc, val, defVal, lower, upper, paramMode));
+                        }
+                        break;
+                    case CapeParamType.CAPE_BOOLEAN:
+                        {
+                            bool val = reader.ReadBoolean();
+                            bool defVal = reader.ReadBoolean();
+                            if (existingParam != null)
+                                existingParam.value = val;
+                            else
+                                this.Parameters.Add(new BooleanParameter(paramName, paramDesc, val, defVal, paramMode));
+                        }
+                        break;
+                    case CapeParamType.CAPE_OPTION:
+                        {
+                            string val = reader.ReadString();
+                            string defVal = reader.ReadString();
+                            int optCount = reader.ReadInt32();
+                            string[] optList = new string[optCount];
+                            for (int k = 0; k < optCount; k++)
+                                optList[k] = reader.ReadString();
+                            bool restricted = reader.ReadBoolean();
+                            if (existingParam != null)
+                                existingParam.value = val;
+                            else
+                                this.Parameters.Add(new OptionParameter(paramName, paramDesc, val, defVal, optList, restricted, paramMode));
+                        }
+                        break;
+                    case CapeParamType.CAPE_ARRAY:
+                        {
+                            object val = ReadObject(reader);
+                            object defVal = ReadObject(reader);
+                            if (existingParam != null)
+                                existingParam.value = val;
+                            else
+                                this.Parameters.Add(new ArrayParameter(paramName, paramDesc, (object[])val, (object[])defVal, paramMode));
+                        }
+                        break;
+                    default:
+                        {
+                            object val = ReadObject(reader);
+                            if (existingParam != null)
+                                existingParam.value = val;
+                        }
+                        break;
                 }
             }
         }
