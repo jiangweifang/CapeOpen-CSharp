@@ -25,4 +25,7 @@
   <ItemGroup>
     <Content Include="epa_seal_medium.ico" />
   </ItemGroup>
+	<ItemGroup>
+		<Content Include="../README.md" />
+	</ItemGroup>
 </Project>
