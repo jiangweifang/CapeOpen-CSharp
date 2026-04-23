@@ -69,6 +69,12 @@
   <ItemGroup>
     <Compile Include="ArrayParameter.cs" />
     <Compile Include="ArrayValueEditor.cs" />
+    <Compile Include="ArrayValueEditorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ArrayValueEditorForm.Designer.cs">
+      <DependentUpon>ArrayValueEditorForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="BaseUnitEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -135,6 +141,9 @@
     <None Include="unitCategories.xml" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="ArrayValueEditorForm.resx">
+      <DependentUpon>ArrayValueEditorForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="BaseUnitEditor.resx">
       <DependentUpon>BaseUnitEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
