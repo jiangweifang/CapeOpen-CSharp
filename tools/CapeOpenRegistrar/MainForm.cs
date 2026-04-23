@@ -122,19 +122,18 @@ internal sealed class MainForm : Form
         _list.DragEnter += OnListDragEnter;
         _list.DragDrop += OnListDragDrop;
 
-        // Target dropdown: Auto detects the comhost.dll bitness; x86 writes
-        // to Wow6432Node (what 32-bit hosts like PRO/II read); x64 writes to
-        // the native view; Both writes to both.
-        _cboTarget.Items.AddRange(new object[] { "Auto", "x86", "x64", "Both" });
+        // Target dropdown: x86 writes to Wow6432Node (what 32-bit hosts
+        // like PRO/II read); x64 writes to the native view; Both writes to both.
+        _cboTarget.Items.AddRange(new object[] { "x86", "x64", "Both" });
         _cboTarget.SelectedIndex = 0;
     }
 
     Registrar.BitnessTarget SelectedTarget() => _cboTarget.SelectedIndex switch
     {
-        1 => Registrar.BitnessTarget.X86,
-        2 => Registrar.BitnessTarget.X64,
-        3 => Registrar.BitnessTarget.Both,
-        _ => Registrar.BitnessTarget.Auto,
+        0 => Registrar.BitnessTarget.X86,
+        1 => Registrar.BitnessTarget.X64,
+        2 => Registrar.BitnessTarget.Both,
+        _ => Registrar.BitnessTarget.X86,
     };
 
     static bool IsRunningAsAdministrator()

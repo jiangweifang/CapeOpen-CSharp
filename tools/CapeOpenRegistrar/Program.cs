@@ -3,9 +3,9 @@
 //   - With args: behave like the original CLI so existing scripts keep working.
 //
 // CLI usage:
-//   CapeOpenRegistrar.exe register   [--target=auto|x86|x64|both] <managed.dll> [<managed.dll> ...]
-//   CapeOpenRegistrar.exe unregister [--target=auto|x86|x64|both] <managed.dll> [<managed.dll> ...]
-//   CapeOpenRegistrar.exe export     [--target=auto|x86|x64|both] <out.reg> <managed.dll> [<managed.dll> ...]
+//   CapeOpenRegistrar.exe register   [--target=x86|x64|both] <managed.dll> [<managed.dll> ...]
+//   CapeOpenRegistrar.exe unregister [--target=x86|x64|both] <managed.dll> [<managed.dll> ...]
+//   CapeOpenRegistrar.exe export     [--target=x86|x64|both] <out.reg> <managed.dll> [<managed.dll> ...]
 //   CapeOpenRegistrar.exe dump-tlb   <tlb> [<tlb> ...]
 
 using System;
@@ -29,12 +29,13 @@ internal static class Program
         if (args.Length < 2 ||
             (args[0] != "register" && args[0] != "unregister" && args[0] != "dump-tlb" && args[0] != "export"))
         {
-            Console.Error.WriteLine("Usage: CapeOpenRegistrar (register|unregister|dump-tlb|export) [--target=auto|x86|x64|both] <args...>");
+            Console.Error.WriteLine("Usage: CapeOpenRegistrar (register|unregister|dump-tlb|export) [--target=x86|x64|both] <args...>");
             return 2;
         }
 
         // Pull out optional --target=... flag (register/unregister/export only).
-        var target = Registrar.BitnessTarget.Auto;
+        // Default to Both so both 32-bit and 64-bit hosts can find the component.
+        var target = Registrar.BitnessTarget.Both;
         var rest = new List<string>();
         foreach (var a in args.Skip(1))
         {
@@ -43,7 +44,7 @@ internal static class Program
                 var val = a.Substring("--target=".Length);
                 if (!Enum.TryParse<Registrar.BitnessTarget>(val, ignoreCase: true, out target))
                 {
-                    Console.Error.WriteLine($"Invalid --target value '{val}'. Expected: auto|x86|x64|both.");
+                    Console.Error.WriteLine($"Invalid --target value '{val}'. Expected: x86|x64|both.");
                     return 2;
                 }
             }
