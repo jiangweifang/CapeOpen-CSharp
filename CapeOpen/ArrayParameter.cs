@@ -6,6 +6,30 @@ using System.Text;
 namespace CapeOpen
 {
     /// <summary>
+    /// TypeConverter that displays a summary string for object[] in the PropertyGrid.
+    /// </summary>
+    internal class ArrayValueTypeConverter : System.ComponentModel.TypeConverter
+    {
+        public override bool CanConvertTo(System.ComponentModel.ITypeDescriptorContext context, Type destinationType)
+        {
+            if (destinationType == typeof(string)) return true;
+            return base.CanConvertTo(context, destinationType);
+        }
+
+        public override object ConvertTo(System.ComponentModel.ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, Type destinationType)
+        {
+            if (destinationType == typeof(string) && value is object[] arr)
+            {
+                if (arr.Length == 0) return "(空数组)";
+                if (arr.Length <= 5)
+                    return "[" + String.Join(", ", arr.Select(e => e?.ToString() ?? "null")) + "]";
+                return String.Concat("[", String.Join(", ", arr.Take(3).Select(e => e?.ToString() ?? "null")), ", ... (", arr.Length, " 项)]");
+            }
+            return base.ConvertTo(context, culture, value, destinationType);
+        }
+    }
+
+    /// <summary>
     /// Array-Valued parameter for use in the CAPE-OPEN parameter collection.
     /// </summary>
     /// <remarks>
@@ -80,6 +104,8 @@ namespace CapeOpen
         /// Gets and sets the array value for this Parameter.
         /// </summary>
         [System.ComponentModel.CategoryAttribute("ICapeParameter")]
+        [System.ComponentModel.EditorAttribute(typeof(ArrayValueEditor), typeof(System.Drawing.Design.UITypeEditor))]
+        [System.ComponentModel.TypeConverter(typeof(ArrayValueTypeConverter))]
         public object[] Value
         {
             get { return m_value; }
@@ -247,6 +273,8 @@ namespace CapeOpen
         /// Gets and sets the default value of the parameter.
         /// </summary>
         [System.ComponentModel.CategoryAttribute("ICapeArrayParameterSpec")]
+        [System.ComponentModel.EditorAttribute(typeof(ArrayValueEditor), typeof(System.Drawing.Design.UITypeEditor))]
+        [System.ComponentModel.TypeConverter(typeof(ArrayValueTypeConverter))]
         public object[] DefaultValue
         {
             get { return m_DefaultValue; }

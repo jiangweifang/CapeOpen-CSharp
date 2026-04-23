@@ -428,6 +428,7 @@ namespace CapeOpen
         {
             get
             {
+                if (index < 0 || index >= this.collection.Count) return "#" + index.ToString();
                 return ((ICapeIdentification)this.collection[index]).ComponentName;
             }
         }
@@ -436,12 +437,14 @@ namespace CapeOpen
         {
             get
             {
+                if (index < 0 || index >= this.collection.Count) return String.Empty;
                 return ((ICapeIdentification)this.collection[index]).ComponentDescription;
             }
         }
 
         public override Object GetValue(Object component)
         {
+            if (index < 0 || index >= this.collection.Count) return null;
             return this.collection[index];
         }
 
@@ -465,6 +468,7 @@ namespace CapeOpen
         {
             get
             {
+                if (index < 0 || index >= this.collection.Count) return typeof(ICapeParameter);
                 return this.collection[index].GetType();
             }
         }

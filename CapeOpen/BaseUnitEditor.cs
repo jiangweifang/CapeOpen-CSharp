@@ -54,6 +54,14 @@ namespace CapeOpen
 
         private void CloseButton_Click(object sender, EventArgs e)
         {
+            if (m_Unit.Ports is PortCollection ports)
+            {
+                ports.ListChanged -= Collection_ListChanged;
+            }
+            if (m_Unit.Parameters is ParameterCollection parameters)
+            {
+                parameters.ListChanged -= Collection_ListChanged;
+            }
             this.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.Close();
         }

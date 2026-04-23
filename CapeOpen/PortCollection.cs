@@ -149,10 +149,15 @@ namespace CapeOpen
         /// </remarks>
         ~PortCollection()
         {
-            foreach (UnitPort item in this.Items)
+            try
             {
-                item.Dispose();
+                foreach (UnitPort item in this.Items)
+                {
+                    item.Dispose();
+                }
             }
+            catch (InvalidOperationException) { }
+            catch (ArgumentOutOfRangeException) { }
         }
 
         /// <summary>Creates a new object that is a copy of the current instance.</summary>
@@ -418,6 +423,7 @@ namespace CapeOpen
         {
             get
             {
+                if (index < 0 || index >= this.collection.Count) return "#" + index.ToString();
                 return ((UnitPort)this.collection[index]).ComponentName;
             }
         }
@@ -426,12 +432,14 @@ namespace CapeOpen
         {
             get
             {
+                if (index < 0 || index >= this.collection.Count) return String.Empty;
                 return ((UnitPort)this.collection[index]).ComponentDescription;
             }
         }
 
         public override Object GetValue(Object component)
         {
+            if (index < 0 || index >= this.collection.Count) return null;
             return (UnitPort)this.collection[index];
         }
 
@@ -455,6 +463,7 @@ namespace CapeOpen
         {
             get
             {
+                if (index < 0 || index >= this.collection.Count) return typeof(UnitPort);
                 return this.collection[index].GetType();
             }
         }
