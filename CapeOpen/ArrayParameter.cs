@@ -100,11 +100,22 @@ namespace CapeOpen
         /// <inheritdoc/>
         public override bool Validate(ref String message)
         {
-            message = "Value is valid.";
-            m_ValStatus = CapeValidationStatus.CAPE_VALID;
-            ParameterValidatedEventArgs args = new ParameterValidatedEventArgs(this.ComponentName, message, CapeValidationStatus.CAPE_VALID, CapeValidationStatus.CAPE_VALID);
+            string[] messages = null;
+            object result = ((ICapeArrayParameterSpec)this).Validate(m_value, ref messages);
+            bool valid = result is bool && (bool)result;
+            if (valid)
+            {
+                message = "Value is valid.";
+                m_ValStatus = CapeValidationStatus.CAPE_VALID;
+            }
+            else
+            {
+                message = messages != null && messages.Length > 0 ? String.Join("; ", messages) : "Value is invalid.";
+                m_ValStatus = CapeValidationStatus.CAPE_INVALID;
+            }
+            ParameterValidatedEventArgs args = new ParameterValidatedEventArgs(this.ComponentName, message, m_ValStatus, m_ValStatus);
             OnParameterValidated(args);
-            return true;
+            return valid;
         }
 
         /// <inheritdoc/>
@@ -146,8 +157,90 @@ namespace CapeOpen
         /// <inheritdoc/>
         object ICapeArrayParameterSpec.Validate(object inputArray, ref string[] messages)
         {
-            messages = new string[] { "Value is valid." };
-            return true;
+            if (!(inputArray is object[] arr))
+            {
+                messages = new string[] { "Value is not an array." };
+                return false;
+            }
+            if (m_itemsSpecifications == null || m_itemsSpecifications.Length == 0)
+            {
+                messages = new string[] { "Value is valid (no element specifications defined)." };
+                return true;
+            }
+            var msgList = new System.Collections.Generic.List<string>();
+            bool allValid = true;
+            for (int i = 0; i < arr.Length; i++)
+            {
+                // Use per-element spec if available, otherwise use the first spec for all elements.
+                object spec = i < m_itemsSpecifications.Length ? m_itemsSpecifications[i] : m_itemsSpecifications[0];
+                if (spec == null)
+                {
+                    msgList.Add("Element [" + i + "]: valid (no spec).");
+                    continue;
+                }
+                string elemMsg = ValidateElement(arr[i], spec, i);
+                if (elemMsg != null)
+                {
+                    allValid = false;
+                    msgList.Add(elemMsg);
+                }
+                else
+                {
+                    msgList.Add("Element [" + i + "]: valid.");
+                }
+            }
+            messages = msgList.ToArray();
+            return allValid;
+        }
+
+        /// <summary>
+        /// Validates a single element against its specification.
+        /// </summary>
+        private static string ValidateElement(object element, object spec, int index)
+        {
+            string prefix = "Element [" + index + "]: ";
+            if (spec is ICapeRealParameterSpec realSpec)
+            {
+                if (!(element is double dVal))
+                    return prefix + "expected double, got " + (element?.GetType().Name ?? "null") + ".";
+                string msg = null;
+                if (!realSpec.SIValidate(dVal, ref msg))
+                    return prefix + (msg ?? "value out of range.");
+                return null;
+            }
+            if (spec is ICapeIntegerParameterSpec intSpec)
+            {
+                if (!(element is int iVal))
+                    return prefix + "expected int, got " + (element?.GetType().Name ?? "null") + ".";
+                string msg = null;
+                if (!intSpec.Validate(iVal, ref msg))
+                    return prefix + (msg ?? "value out of range.");
+                return null;
+            }
+            if (spec is ICapeBooleanParameterSpec)
+            {
+                if (!(element is bool))
+                    return prefix + "expected bool, got " + (element?.GetType().Name ?? "null") + ".";
+                return null;
+            }
+            if (spec is ICapeOptionParameterSpec optSpec)
+            {
+                if (!(element is string sVal))
+                    return prefix + "expected string, got " + (element?.GetType().Name ?? "null") + ".";
+                string msg = null;
+                if (!optSpec.Validate(sVal, ref msg))
+                    return prefix + (msg ?? "value not in option list.");
+                return null;
+            }
+            if (spec is ICapeArrayParameterSpec arrSpec)
+            {
+                string[] msgs = null;
+                object result = arrSpec.Validate(element, ref msgs);
+                if (result is bool b && !b)
+                    return prefix + "nested array invalid: " + (msgs != null ? String.Join("; ", msgs) : "unknown error.");
+                return null;
+            }
+            return null;
         }
 
         /// <summary>
