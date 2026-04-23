@@ -16,8 +16,7 @@ namespace CapeOpen
     /// monitoring Object (Category GUID of 7BA1AF89-B2E4-493d-BD80-2970BF4CBE99).
     /// </remarks>
     [Serializable]
-    [System.Runtime.InteropServices.ComVisible(true)]
-    [System.Runtime.InteropServices.Guid("8E2F4F3D-5A1C-4C9B-9D6E-3F7A2B1C0D4E")]
+    [System.Runtime.InteropServices.ComVisible(false)]
     [System.Runtime.InteropServices.ClassInterface(System.Runtime.InteropServices.ClassInterfaceType.None)]
     public abstract class CapeObjectBase : CapeIdentification,
         ICapeUtilities,

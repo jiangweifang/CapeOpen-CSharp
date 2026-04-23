@@ -34,9 +34,7 @@ namespace CapeOpen
     /// and implement the <c>Calculate()</c> method.
     /// </remarks>
     [Serializable]
-    [System.Runtime.InteropServices.ComVisible(true)]
-    [System.Runtime.InteropServices.Guid("7A4F8D2E-3B5C-4F1A-9E7D-2C6B8A0F1E4D")]
-    [System.Runtime.InteropServices.ComSourceInterfaces(typeof(IUnitOperationValidatedEventArgs))]
+    [System.Runtime.InteropServices.ComVisible(false)]
     [System.Runtime.InteropServices.ClassInterface(System.Runtime.InteropServices.ClassInterfaceType.None)]
     public abstract class CapeUnitBase : CapeObjectBase,
         ICapeUnit,
