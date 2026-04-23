@@ -20,7 +20,7 @@
     <PackageReference Include="NLog" Version="5.3.4" />
     <PackageReference Include="System.Drawing.Common" Version="8.0.10" />
     <PackageReference Include="System.Management" Version="8.0.0" />
-    <PackageReference Include="EnvDTE" Version="17.8.37222" />
+    <PackageReference Include="EnvDTE" Version="17.14.40260" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="epa_seal_medium.ico" />
