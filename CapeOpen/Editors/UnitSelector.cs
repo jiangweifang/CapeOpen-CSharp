@@ -12,6 +12,7 @@ namespace CapeOpen
     /// <summary>
     /// The unit selector class provides a graphical user interface (GUI) for the <see cref="UnitOperationWrapper"/> class.
     /// </summary>
+    [System.Runtime.InteropServices.ComVisible(false)]
     [System.Runtime.InteropServices.ClassInterface(System.Runtime.InteropServices.ClassInterfaceType.None)]
     public partial class UnitSelector : Form
     {
@@ -42,7 +43,9 @@ namespace CapeOpen
                 //System.Windows.Forms.MessageBox.Show("This option is currently not supported.");
                 node = new TreeNode("Debugged Unit");
                 this.treeView1.Nodes.Add(node);
-                Object obj = System.Runtime.InteropServices.Marshal.GetActiveObject("VisualStudio.DTE.10.0");
+                // .NET 8 compatibility: Marshal.GetActiveObject was removed in .NET Core/.NET 5+.
+                // Use Marshal.BindToMoniker which retrieves a running COM object from the ROT via its ProgID.
+                Object obj = System.Runtime.InteropServices.Marshal.BindToMoniker("VisualStudio.DTE.10.0");
                 EnvDTE.DTE DTE = (EnvDTE.DTE)obj;
                 try
                 {

@@ -17,6 +17,7 @@ namespace CapeOpen
     /// </remarks>
     [Serializable]
     [System.Runtime.InteropServices.ComVisible(true)]
+    [System.Runtime.InteropServices.Guid("8E2F4F3D-5A1C-4C9B-9D6E-3F7A2B1C0D4E")]
     [System.Runtime.InteropServices.ClassInterface(System.Runtime.InteropServices.ClassInterfaceType.None)]
     public abstract class CapeObjectBase : CapeIdentification,
         ICapeUtilities,

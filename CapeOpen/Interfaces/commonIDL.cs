@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -549,7 +549,7 @@ namespace CapeOpen
     /// </remarks>
     /// <param name = "sender">The PMC that is the source .</param>
     /// <param name = "args">A <see cref = "ComponentNameChangedEventArgs">NameChangedEventArgs</see> that provides information about the name change.</param>
-    [System.Runtime.InteropServices.ComVisibleAttribute(true)]
+    [System.Runtime.InteropServices.ComVisible(false)]
     public delegate void ComponentNameChangedHandler(Object sender, ComponentNameChangedEventArgs args);
 
     /// <summary>
@@ -564,7 +564,7 @@ namespace CapeOpen
     /// <param name = "sender">The PMC that is the source of the event.</param>
     /// <param name = "args">A <see cref = "ComponentDescriptionChangedEventArgs">DescriptionChangedEventArgs</see> that 
     /// provides information about the description change.</param>
-    [System.Runtime.InteropServices.ComVisibleAttribute(true)]
+    [System.Runtime.InteropServices.ComVisible(false)]
     public delegate void ComponentDescriptionChangedHandler(Object sender, ComponentDescriptionChangedEventArgs args);
 
     /// <summary>
@@ -992,7 +992,7 @@ namespace CapeOpen
        /// </remarks>
        /// <param name = "sender">The PMC that is the source .</param>
        /// <param name = "args">A <see cref = "System.ComponentModel.AddingNewEventArgs">System.ComponentModel.AddingNewEventArgs</see> that provides information about the name change.</param>
-       [System.Runtime.InteropServices.ComVisibleAttribute(true)]
+       [System.Runtime.InteropServices.ComVisible(false)]
        public delegate void CollectionAddingNewHandler(Object sender, System.ComponentModel.AddingNewEventArgs args);
 
 
@@ -1006,7 +1006,7 @@ namespace CapeOpen
        /// </remarks>
        /// <param name = "sender">The PMC that is the source .</param>
        /// <param name = "args">A <see cref = "System.ComponentModel.ListChangedEventArgs">System.ComponentModel.ListChangedEventArgs</see> that provides information about the name change.</param>
-       [System.Runtime.InteropServices.ComVisibleAttribute(true)]
+       [System.Runtime.InteropServices.ComVisible(false)]
        public delegate void CollectionListChangedHandler(Object sender, System.ComponentModel.ListChangedEventArgs args);
 
        /// <summary>
