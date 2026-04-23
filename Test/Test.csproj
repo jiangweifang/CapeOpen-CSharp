@@ -6,6 +6,7 @@
     <UseWindowsForms>true</UseWindowsForms>
     <EnableComHosting>true</EnableComHosting>
     <SignAssembly>false</SignAssembly>
+    <Platforms>x64;x86</Platforms>
   </PropertyGroup>
   <ItemGroup>
     <ComHostTypeLibrary Include="Tlb\Test.tlb" Id="1" />
