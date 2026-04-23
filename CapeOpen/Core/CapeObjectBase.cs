@@ -51,11 +51,6 @@ namespace CapeOpen
         [NonSerialized]
         private ICapeSimulationContext m_SimulationContext;
 
-        protected static System.Reflection.Assembly MyResolveEventHandler(Object sender, System.ResolveEventArgs args)
-        {
-            return typeof(CapeObjectBase).Assembly;
-        }
-
         /// <summary>
         /// Event triggered when a new parameter is being added to the collection.
         /// </summary>
@@ -430,11 +425,6 @@ namespace CapeOpen
             // DllRegisterServer call). Use tools/CapeOpenRegistrar to write those keys.
         }
 
-        private static void RegistrationHelper(Microsoft.Win32.RegistryKey baseKey, Type t)
-        {
-            // Legacy helper kept for source compatibility; intentionally not invoked.
-            _ = baseKey; _ = t;
-        }
         /// <summary>
         ///	This function controls the removal of the class from the COM registry when the class is unistalled.  
         /// </summary>
@@ -448,12 +438,6 @@ namespace CapeOpen
         public static void UnregisterFunction(Type t)
         {
             // No-op under .NET 8 ComHost. See RegisterFunction for rationale.
-        }
-
-        private static void UnregisterHelper(Microsoft.Win32.RegistryKey baseKey, Type t)
-        {
-            // Legacy helper kept for source compatibility; intentionally not invoked.
-            _ = baseKey; _ = t;
         }
 
         /// <summary>

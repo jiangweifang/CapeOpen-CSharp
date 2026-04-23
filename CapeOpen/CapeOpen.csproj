@@ -25,9 +25,4 @@
   <ItemGroup>
     <Content Include="epa_seal_medium.ico" />
   </ItemGroup>
-  <ItemGroup Label="Compile items now included by globbing that were not in the original project file">
-    <Compile Remove="Visual Studio 2010\Visualizers\autoexpce.cs" />
-    <Compile Remove="Visual Studio 2010\Visualizers\autoexp.cs" />
-    <Compile Remove="MixerExample11.cs" />
-  </ItemGroup>
 </Project>
