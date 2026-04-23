@@ -47,6 +47,8 @@ namespace CapeOpen
         private CapeValidationStatus m_ValStatus;
         private String m_selecetdReport;
         private System.Collections.Generic.List<String> m_Reports;
+        private readonly System.Collections.Generic.Dictionary<string, CapeReportBase> m_ReportObjects = new System.Collections.Generic.Dictionary<string, CapeReportBase>();
+        private CapeCalculator m_Calculator;
         // Track whether Dispose has been called.
         private bool _disposed;
         
@@ -126,6 +128,54 @@ namespace CapeOpen
             m_Reports = new System.Collections.Generic.List<String>();
             m_Reports.Add("Default Report");
             m_selecetdReport = "Default Report";
+            InitPorts();
+            InitParameters();
+        }
+
+        /// <summary>
+        /// Gets or sets the calculator that performs the unit's computation.
+        /// When set, the calculator's <see cref="CapeCalculator.UnitOperation"/> 
+        /// property is automatically assigned to this unit.
+        /// Setting a different calculator allows the user to choose 
+        /// different calculation strategies at runtime.
+        /// </summary>
+        [System.ComponentModel.BrowsableAttribute(false)]
+        public CapeCalculator Calculator
+        {
+            get { return m_Calculator; }
+            set
+            {
+                m_Calculator = value;
+                if (m_Calculator != null)
+                    m_Calculator.UnitOperation = this;
+            }
+        }
+
+        /// <summary>
+        /// Override this method to add ports to the unit operation.
+        /// Called automatically from the constructor.
+        /// The default implementation does nothing.
+        /// </summary>
+        protected virtual void InitPorts() { }
+
+        /// <summary>
+        /// Override this method to add parameters to the unit operation.
+        /// Called automatically from the constructor.
+        /// The default implementation does nothing.
+        /// </summary>
+        protected virtual void InitParameters() { }
+
+        /// <summary>
+        /// Registers a <see cref="CapeReportBase"/> instance as an available report.
+        /// The report's <see cref="CapeReportBase.Name"/> is added to the report list,
+        /// and <see cref="ProduceReport"/> will delegate to it when that report is selected.
+        /// </summary>
+        public void AddReport(CapeReportBase report)
+        {
+            report.SetUnitOperation(this);
+            if (!m_Reports.Contains(report.Name))
+                m_Reports.Add(report.Name);
+            m_ReportObjects[report.Name] = report;
         }
 
         /// <summary>
@@ -691,7 +741,21 @@ namespace CapeOpen
         /// <exception cref = "ECapeTimeOut">ECapeTimeOut</exception>
         /// <exception cref = "ECapeSolvingError">ECapeSolvingError</exception>
         /// <exception cref = "ECapeLicenceError">ECapeLicenceError</exception>
-        abstract protected void Calculate();
+        /// <summary>
+        /// Override this method to implement the unit's calculation when not using a <see cref="CapeCalculator"/>.
+        /// If a <see cref="Calculator"/> is assigned, this method delegates to the calculator's
+        /// <see cref="CapeCalculator.BeforeCalculate"/>, <see cref="CapeCalculator.Calculate"/>,
+        /// and <see cref="CapeCalculator.OutputResult"/> methods in sequence.
+        /// </summary>
+        virtual protected void Calculate()
+        {
+            if (m_Calculator != null)
+            {
+                m_Calculator.BeforeCalculate();
+                m_Calculator.Calculate();
+                m_Calculator.OutputResult();
+            }
+        }
 
         /// <summary>
         /// Validates the unit operation. 
@@ -813,6 +877,9 @@ namespace CapeOpen
         /// <exception cref = "ECapeNoImpl">ECapeNoImpl</exception>
         virtual public String ProduceReport()
         {
+            if (m_ReportObjects.TryGetValue(m_selecetdReport, out CapeReportBase reportObj))
+                return reportObj.ProduceReport();
+
             String retVal = String.Empty;
             String validMessage = String.Empty;
             bool valid = this.Validate(ref validMessage);

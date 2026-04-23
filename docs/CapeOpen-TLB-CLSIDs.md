@@ -126,8 +126,9 @@
 |------|----------------|------|
 | `CollectionAddingNewHandler` | `{8ad1b20b-cb76-41de-a34f-c683d4ab5300}` | `commonIDL.cs` |
 | `CollectionListChangedHandler` | `{6a1fe3c1-dd87-4b10-bca6-b6906523b338}` | `commonIDL.cs` |
-
-> ⚠️ **不要再次重新生成**这些 GUID。一旦发布后变更将破坏 COM 客户端的二进制兼容。
+> 以下 9 个类（CapeCalculator、CapeReportBase、StatusReport、LastRunReport、MixerCalculator、
+> CapeMaterialPort、CapeEnergyPort、CapeInformationPort、CapeMaterialObject）为内部辅助类，
+> 不被模拟器通过 COM 直接访问，已改为 `ComVisible(false)`，不再需要 GUID。
 
 ---
 
