@@ -165,10 +165,21 @@ The critical path is `CapeOpen` itself — its size (43,716 LOC, 21 files with i
 2. **Convert to SDK-style project format** — Use `upgrade_convert_project_to_sdk_style`.
 3. **Set target framework** to `net8.0-windows`.
 4. **Enable WinForms support** — add `<UseWindowsForms>true</UseWindowsForms>`.
-5. **Configure COM hosting**:
-   - Remove `<RegisterForComInterop>true</RegisterForComInterop>`.
-   - Add `<EnableComHosting>true</EnableComHosting>`.
-   - If a stable `.tlb` is required by COFE/Aspen Plus, generate or reuse the existing `.tlb` and reference it via `<ComHostTypeLibrary Include="CapeOpen.tlb" />`. **Note**: `.NET 8` does not auto-generate type libraries.
+5. **Configure COM hosting** — Use **strategy "reuse existing TLB"** (decided; midl regeneration rejected as too risky):
+   - **5.1 (run before SDK conversion, on `master` if needed)** Build the existing Classic project once with MSBuild to ensure `CapeOpen\bin\Debug\CapeOpen.tlb` exists (produced by `RegisterForComInterop=true`).
+   - **5.2** Copy `CapeOpen\bin\Debug\CapeOpen.tlb` to a versioned location: `CapeOpen\Tlb\CapeOpen.tlb`.
+   - **5.3** `git add CapeOpen\Tlb\CapeOpen.tlb` so the authoritative TLB is tracked in source control.
+   - **5.4** In the new SDK-style csproj, remove `<RegisterForComInterop>true</RegisterForComInterop>` and add:
+     ```xml
+     <PropertyGroup>
+       <EnableComHosting>true</EnableComHosting>
+     </PropertyGroup>
+     <ItemGroup>
+       <ComHostTypeLibrary Include="Tlb\CapeOpen.tlb" Id="1" />
+     </ItemGroup>
+     ```
+   - **5.5** After build, verify `CapeOpen.comhost.dll` is produced alongside `CapeOpen.dll` and contains the embedded TLB resource.
+   - **Rationale**: Reusing the TLB produced by `tlbexp` guarantees byte-identical CLSID/IID/interface layout — Aspen Plus, COFE, and other consumers continue to work with no changes on their side. **DO NOT** regenerate the TLB via `midl.exe` from reverse-engineered IDL: too risky, no source IDL exists in the repo.
 6. **Migrate assembly references**:
 
    | Original GAC Reference | .NET 8 Replacement | Notes |
