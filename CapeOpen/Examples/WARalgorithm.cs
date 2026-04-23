@@ -52,7 +52,8 @@ namespace CapeOpen
     /// energy usage in the WAR algorithm.
     /// </para>
     /// </remarks>
-    [System.Runtime.InteropServices.ComVisible(false)]
+    [System.Runtime.InteropServices.ComVisible(true)]
+    [System.Runtime.InteropServices.Guid("86e05bad-db51-31dc-b4b1-8d17d28014ad")]
     [System.Runtime.InteropServices.ClassInterface(System.Runtime.InteropServices.ClassInterfaceType.None)]
     public partial class WARalgorithm : Form
     {

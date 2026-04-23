@@ -17,7 +17,8 @@ namespace CapeOpen
     /// editor can be inherited and tabs added to the tab control to customize the form
     /// for a unit operation.
     /// </remarks>
-    [System.Runtime.InteropServices.ComVisible(false)]
+    [System.Runtime.InteropServices.ComVisible(true)]
+    [System.Runtime.InteropServices.Guid("9e2d9215-1f76-33a5-a6d1-b6c196a22ce2")]
     [System.Runtime.InteropServices.ClassInterface(System.Runtime.InteropServices.ClassInterfaceType.None)]
     public partial class BaseUnitEditor : Form
     {

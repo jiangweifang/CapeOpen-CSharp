@@ -12,7 +12,8 @@ namespace CapeOpen
     /// <summary>
     /// The unit selector class provides a graphical user interface (GUI) for the <see cref="UnitOperationWrapper"/> class.
     /// </summary>
-    [System.Runtime.InteropServices.ComVisible(false)]
+    [System.Runtime.InteropServices.ComVisible(true)]
+    [System.Runtime.InteropServices.Guid("c6e08496-4269-321a-986d-3b68ff2ffd81")]
     [System.Runtime.InteropServices.ClassInterface(System.Runtime.InteropServices.ClassInterfaceType.None)]
     public partial class UnitSelector : Form
     {

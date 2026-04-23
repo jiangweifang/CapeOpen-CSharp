@@ -549,7 +549,8 @@ namespace CapeOpen
     /// </remarks>
     /// <param name = "sender">The PMC that is the source .</param>
     /// <param name = "args">A <see cref = "ComponentNameChangedEventArgs">NameChangedEventArgs</see> that provides information about the name change.</param>
-    [System.Runtime.InteropServices.ComVisible(false)]
+    [System.Runtime.InteropServices.ComVisible(true)]
+    [System.Runtime.InteropServices.Guid("4a551682-8cdd-330e-8fa4-13737697f993")]
     public delegate void ComponentNameChangedHandler(Object sender, ComponentNameChangedEventArgs args);
 
     /// <summary>
@@ -564,7 +565,8 @@ namespace CapeOpen
     /// <param name = "sender">The PMC that is the source of the event.</param>
     /// <param name = "args">A <see cref = "ComponentDescriptionChangedEventArgs">DescriptionChangedEventArgs</see> that 
     /// provides information about the description change.</param>
-    [System.Runtime.InteropServices.ComVisible(false)]
+    [System.Runtime.InteropServices.ComVisible(true)]
+    [System.Runtime.InteropServices.Guid("82de47ff-86bf-3ec9-8167-c7eddbed4acf")]
     public delegate void ComponentDescriptionChangedHandler(Object sender, ComponentDescriptionChangedEventArgs args);
 
     /// <summary>
@@ -992,7 +994,8 @@ namespace CapeOpen
        /// </remarks>
        /// <param name = "sender">The PMC that is the source .</param>
        /// <param name = "args">A <see cref = "System.ComponentModel.AddingNewEventArgs">System.ComponentModel.AddingNewEventArgs</see> that provides information about the name change.</param>
-       [System.Runtime.InteropServices.ComVisible(false)]
+       [System.Runtime.InteropServices.ComVisible(true)]
+       [System.Runtime.InteropServices.Guid("8ad1b20b-cb76-41de-a34f-c683d4ab5300")]
        public delegate void CollectionAddingNewHandler(Object sender, System.ComponentModel.AddingNewEventArgs args);
 
 
@@ -1006,7 +1009,8 @@ namespace CapeOpen
        /// </remarks>
        /// <param name = "sender">The PMC that is the source .</param>
        /// <param name = "args">A <see cref = "System.ComponentModel.ListChangedEventArgs">System.ComponentModel.ListChangedEventArgs</see> that provides information about the name change.</param>
-       [System.Runtime.InteropServices.ComVisible(false)]
+       [System.Runtime.InteropServices.ComVisible(true)]
+       [System.Runtime.InteropServices.Guid("6a1fe3c1-dd87-4b10-bca6-b6906523b338")]
        public delegate void CollectionListChangedHandler(Object sender, System.ComponentModel.ListChangedEventArgs args);
 
        /// <summary>
