@@ -67,72 +67,66 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ArrayParameter.cs" />
-    <Compile Include="ArrayValueEditor.cs" />
-    <Compile Include="ArrayValueEditorForm.cs">
+    <Compile Include="Parameters\ArrayParameter.cs" />
+    <Compile Include="Parameters\ArrayValueEditor.cs" />
+    <Compile Include="Parameters\ArrayValueEditorForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ArrayValueEditorForm.Designer.cs">
+    <Compile Include="Parameters\ArrayValueEditorForm.Designer.cs">
       <DependentUpon>ArrayValueEditorForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="BaseUnitEditor.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="BaseUnitEditor.Designer.cs">
+    <Compile Include="Editors\BaseUnitEditor.cs" />
+    <Compile Include="Editors\BaseUnitEditor.Designer.cs">
       <DependentUpon>BaseUnitEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="BooleanParameter.cs" />
-    <Compile Include="CapeMaterialObjectBase.cs" />
-    <Compile Include="CapeObjectBase.cs" />
-    <Compile Include="CapeOpen.cs" />
-    <Compile Include="CapeThermoSystem.cs" />
-    <Compile Include="CapeUnitBase.cs" />
-    <Compile Include="COFEidl.cs" />
-    <Compile Include="COGuids1.cs" />
-    <Compile Include="COMMaterialObjectWrapper.cs" />
-    <Compile Include="commonIDL.cs" />
-    <Compile Include="CoseIDL.cs" />
-    <Compile Include="Dimensions.cs" />
-    <Compile Include="errorIDL.cs" />
-    <Compile Include="Exceptions.cs" />
-    <Compile Include="IntegerParameter.cs" />
-    <Compile Include="MaterialObjectWrapper.cs" />
-    <Compile Include="MaterialObjectWrapper1.cs" />
-    <Compile Include="MaterialObjectWrapper11.cs" />
-    <Compile Include="MixerExample.cs" />
-    <Compile Include="MixerExample110.cs" />
-    <Compile Include="MonitoringInterfaces.cs" />
-    <Compile Include="OptionParameter.cs" />
-    <Compile Include="ParameterCollection.cs" />
-    <Compile Include="ParameterCollectionEditor.cs" />
-    <Compile Include="ParameterIDL.cs" />
-    <Compile Include="PersistenceInterfacesIDL.cs" />
-    <Compile Include="PetroFractionsIDL.cs" />
-    <Compile Include="PortCollection.cs" />
+    <Compile Include="Parameters\BooleanParameter.cs" />
+    <Compile Include="Materials\CapeMaterialObjectBase.cs" />
+    <Compile Include="Core\CapeObjectBase.cs" />
+    <Compile Include="Core\CapeOpen.cs" />
+    <Compile Include="Materials\CapeThermoSystem.cs" />
+    <Compile Include="UnitOperations\CapeUnitBase.cs" />
+    <Compile Include="Interfaces\COFEidl.cs" />
+    <Compile Include="Interfaces\COGuids1.cs" />
+    <Compile Include="Materials\COMMaterialObjectWrapper.cs" />
+    <Compile Include="Interfaces\commonIDL.cs" />
+    <Compile Include="Interfaces\CoseIDL.cs" />
+    <Compile Include="Core\Dimensions.cs" />
+    <Compile Include="Interfaces\errorIDL.cs" />
+    <Compile Include="Core\Exceptions.cs" />
+    <Compile Include="Parameters\IntegerParameter.cs" />
+    <Compile Include="Materials\MaterialObjectWrapper.cs" />
+    <Compile Include="Materials\MaterialObjectWrapper1.cs" />
+    <Compile Include="Materials\MaterialObjectWrapper11.cs" />
+    <Compile Include="Examples\MixerExample.cs" />
+    <Compile Include="Examples\MixerExample110.cs" />
+    <Compile Include="Interfaces\MonitoringInterfaces.cs" />
+    <Compile Include="Parameters\OptionParameter.cs" />
+    <Compile Include="Parameters\ParameterCollection.cs" />
+    <Compile Include="Parameters\ParameterCollectionEditor.cs" />
+    <Compile Include="Interfaces\ParameterIDL.cs" />
+    <Compile Include="Interfaces\PersistenceInterfacesIDL.cs" />
+    <Compile Include="Interfaces\PetroFractionsIDL.cs" />
+    <Compile Include="UnitOperations\PortCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="ReactionsIDL.cs" />
-    <Compile Include="RealParameter.cs" />
-    <Compile Include="ThrmIDL.cs" />
-    <Compile Include="UnitIDL.cs" />
-    <Compile Include="UnitOperationManager.cs" />
-    <Compile Include="UnitOperationSystem.cs" />
-    <Compile Include="UnitPort.cs" />
-    <Compile Include="UnitSelector.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UnitSelector.Designer.cs">
+    <Compile Include="Interfaces\ReactionsIDL.cs" />
+    <Compile Include="Parameters\RealParameter.cs" />
+    <Compile Include="Interfaces\ThrmIDL.cs" />
+    <Compile Include="Interfaces\UnitIDL.cs" />
+    <Compile Include="UnitOperations\UnitOperationManager.cs" />
+    <Compile Include="UnitOperations\UnitOperationSystem.cs" />
+    <Compile Include="UnitOperations\UnitPort.cs" />
+    <Compile Include="Editors\UnitSelector.cs" />
+    <Compile Include="Editors\UnitSelector.Designer.cs">
       <DependentUpon>UnitSelector.cs</DependentUpon>
     </Compile>
-    <Compile Include="War.cs" />
-    <Compile Include="WARalgorithm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="WARalgorithm.Designer.cs">
+    <Compile Include="Examples\War.cs" />
+    <Compile Include="Examples\WARalgorithm.cs" />
+    <Compile Include="Examples\WARalgorithm.Designer.cs">
       <DependentUpon>WARalgorithm.cs</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -141,10 +135,10 @@
     <None Include="unitCategories.xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ArrayValueEditorForm.resx">
+    <EmbeddedResource Include="Parameters\ArrayValueEditorForm.resx">
       <DependentUpon>ArrayValueEditorForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="BaseUnitEditor.resx">
+    <EmbeddedResource Include="Editors\BaseUnitEditor.resx">
       <DependentUpon>BaseUnitEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -152,10 +146,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="UnitSelector.resx">
+    <EmbeddedResource Include="Editors\UnitSelector.resx">
       <DependentUpon>UnitSelector.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WARalgorithm.resx">
+    <EmbeddedResource Include="Examples\WARalgorithm.resx">
       <DependentUpon>WARalgorithm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
