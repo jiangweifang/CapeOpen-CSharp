@@ -20,17 +20,25 @@ namespace CapeOpen
 
         public override object EditValue(ITypeDescriptorContext context, IServiceProvider provider, object value)
         {
-            if (provider == null) return value;
-            var svc = (IWindowsFormsEditorService)provider.GetService(typeof(IWindowsFormsEditorService));
-            if (svc == null) return value;
-
-            object[] current = value as object[] ?? new object[0];
-            using (var form = new ArrayValueEditorForm(current))
+            try
             {
-                if (svc.ShowDialog(form) == DialogResult.OK)
-                    return form.Result;
+                if (provider == null) return value;
+                var svc = (IWindowsFormsEditorService)provider.GetService(typeof(IWindowsFormsEditorService));
+                if (svc == null) return value;
+
+                object[] current = value as object[] ?? new object[0];
+                using (var form = new ArrayValueEditorForm(current))
+                {
+                    if (svc.ShowDialog(form) == DialogResult.OK)
+                        return form.Result;
+                }
+                return value;
             }
-            return value;
+            catch (Exception ex)
+            {
+                CrashLogger.LogException(ex, "ArrayValueEditor.EditValue failed");
+                throw;
+            }
         }
     }
 }

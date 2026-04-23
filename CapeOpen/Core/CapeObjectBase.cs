@@ -97,13 +97,24 @@ namespace CapeOpen
         {
             try
             {
+                CrashLogger.Logger?.Info("ICapeUtilitiesCOM.Edit() invoked on {0} (Name={1})", this.GetType().FullName, this.ComponentName);
                 System.Windows.Forms.DialogResult result = this.Edit();
                 if (result == System.Windows.Forms.DialogResult.OK)
                     return 0;
                 return 1;
             }
-            catch(System.Exception p_Ex)
+            catch (CapeNoImplException)
             {
+                // The PMC explicitly opted out of providing an editor. Propagate as-is.
+                throw;
+            }
+            catch (System.Exception p_Ex)
+            {
+                // Persist full diagnostic information BEFORE replacing the exception,
+                // otherwise the original cause is lost when this method returns to the host.
+                CrashLogger.LogException(p_Ex,
+                    string.Format("Edit() crashed for {0} (Name={1})",
+                        this.GetType().FullName, this.ComponentName));
                 throw new CapeNoImplException("No editor available");
             }
         }
@@ -196,6 +207,12 @@ namespace CapeOpen
         /// <exception cref = "ECapeLicenceError">ECapeLicenceError</exception>
         /// <exception cref = "ECapeFailedInitialisation">ECapeFailedInitialisation</exception>
         /// <exception cref = "ECapeBadInvOrder">ECapeBadInvOrder</exception>
+        static CapeObjectBase()
+        {
+            // Initialize crash logging as soon as any PMC type is touched by the host process.
+            CrashLogger.Initialize();
+        }
+
         public CapeObjectBase()
             : base()
         {
@@ -1008,37 +1025,49 @@ namespace CapeOpen
         /// <param name="pStm">The COM IStream to read from.</param>
         protected virtual void LoadFromStream(System.Runtime.InteropServices.ComTypes.IStream pStm)
         {
-            m_Loaded = true;
-            byte[] lenBytes = new byte[4];
-            pStm.Read(lenBytes, 4, IntPtr.Zero);
-            int len = BitConverter.ToInt32(lenBytes, 0);
-            byte[] data = new byte[len];
-            pStm.Read(data, len, IntPtr.Zero);
-            System.IO.MemoryStream memoryStream = new System.IO.MemoryStream(data);
-            using (var gz = new System.IO.Compression.GZipStream(memoryStream, System.IO.Compression.CompressionMode.Decompress))
-            using (var reader = new System.IO.BinaryReader(gz))
+            try
             {
-                // Detect format version: V2 starts with 4-byte magic, V1 starts with a string.
-                byte[] magic = reader.ReadBytes(4);
-                bool isV2 = magic.Length == 4
-                    && magic[0] == STREAM_MAGIC_V2[0]
-                    && magic[1] == STREAM_MAGIC_V2[1]
-                    && magic[2] == STREAM_MAGIC_V2[2]
-                    && magic[3] == STREAM_MAGIC_V2[3];
-                if (isV2)
+                m_Loaded = true;
+                byte[] lenBytes = new byte[4];
+                pStm.Read(lenBytes, 4, IntPtr.Zero);
+                int len = BitConverter.ToInt32(lenBytes, 0);
+                byte[] data = new byte[len];
+                pStm.Read(data, len, IntPtr.Zero);
+                System.IO.MemoryStream memoryStream = new System.IO.MemoryStream(data);
+                using (var gz = new System.IO.Compression.GZipStream(memoryStream, System.IO.Compression.CompressionMode.Decompress))
+                using (var reader = new System.IO.BinaryReader(gz))
                 {
-                    LoadFromStreamV2(reader);
-                }
-                else
-                {
-                    // V1: re-decompress from the beginning since GZipStream is forward-only.
-                    var memoryStream2 = new System.IO.MemoryStream(data);
-                    using (var gz2 = new System.IO.Compression.GZipStream(memoryStream2, System.IO.Compression.CompressionMode.Decompress))
-                    using (var reader2 = new System.IO.BinaryReader(gz2))
+                    // Detect format version: V2 starts with 4-byte magic, V1 starts with a string.
+                    byte[] magic = reader.ReadBytes(4);
+                    bool isV2 = magic.Length == 4
+                        && magic[0] == STREAM_MAGIC_V2[0]
+                        && magic[1] == STREAM_MAGIC_V2[1]
+                        && magic[2] == STREAM_MAGIC_V2[2]
+                        && magic[3] == STREAM_MAGIC_V2[3];
+                    CrashLogger.Logger?.Info("LoadFromStream {0} (Name={1}) format={2} payloadBytes={3}",
+                        this.GetType().FullName, this.ComponentName, isV2 ? "V2" : "V1", len);
+                    if (isV2)
                     {
-                        LoadFromStreamV1(reader2);
+                        LoadFromStreamV2(reader);
+                    }
+                    else
+                    {
+                        // V1: re-decompress from the beginning since GZipStream is forward-only.
+                        var memoryStream2 = new System.IO.MemoryStream(data);
+                        using (var gz2 = new System.IO.Compression.GZipStream(memoryStream2, System.IO.Compression.CompressionMode.Decompress))
+                        using (var reader2 = new System.IO.BinaryReader(gz2))
+                        {
+                            LoadFromStreamV1(reader2);
+                        }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                CrashLogger.LogException(ex,
+                    string.Format("LoadFromStream failed for {0} (Name={1})",
+                        this.GetType().FullName, this.ComponentName));
+                throw;
             }
         }
 

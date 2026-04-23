@@ -12,6 +12,7 @@
     <AssemblyName>CapeOpen</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
   </PropertyGroup>
@@ -67,6 +68,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="NLog" Version="5.3.4" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Core\CrashLogger.cs" />
     <Compile Include="Parameters\ArrayParameter.cs" />
     <Compile Include="Parameters\ArrayValueEditor.cs" />
     <Compile Include="Parameters\ArrayValueEditorForm.cs">
@@ -75,7 +80,9 @@
     <Compile Include="Parameters\ArrayValueEditorForm.Designer.cs">
       <DependentUpon>ArrayValueEditorForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Editors\BaseUnitEditor.cs" />
+    <Compile Include="Editors\BaseUnitEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Editors\BaseUnitEditor.Designer.cs">
       <DependentUpon>BaseUnitEditor.cs</DependentUpon>
     </Compile>
@@ -120,12 +127,16 @@
     <Compile Include="UnitOperations\UnitOperationManager.cs" />
     <Compile Include="UnitOperations\UnitOperationSystem.cs" />
     <Compile Include="UnitOperations\UnitPort.cs" />
-    <Compile Include="Editors\UnitSelector.cs" />
+    <Compile Include="Editors\UnitSelector.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Editors\UnitSelector.Designer.cs">
       <DependentUpon>UnitSelector.cs</DependentUpon>
     </Compile>
     <Compile Include="Examples\War.cs" />
-    <Compile Include="Examples\WARalgorithm.cs" />
+    <Compile Include="Examples\WARalgorithm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Examples\WARalgorithm.Designer.cs">
       <DependentUpon>WARalgorithm.cs</DependentUpon>
     </Compile>
@@ -162,9 +173,7 @@
   <ItemGroup>
     <Content Include="epa_seal_medium.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

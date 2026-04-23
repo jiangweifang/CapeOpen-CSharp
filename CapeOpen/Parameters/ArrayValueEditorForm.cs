@@ -15,23 +15,40 @@ namespace CapeOpen
 
         public ArrayValueEditorForm(object[] values)
         {
-            InitializeComponent();
-
-            colType.Items.AddRange(TypeNames);
-            cboxType.Items.AddRange(TypeNames);
-            cboxType.SelectedIndex = 0;
-
-            dataGridView1.CellValueChanged += Grid_CellValueChanged;
-            dataGridView1.CurrentCellDirtyStateChanged += (s, e) =>
+            try
             {
-                if (dataGridView1.IsCurrentCellDirty)
-                    dataGridView1.CommitEdit(DataGridViewDataErrorContexts.Commit);
-            };
+                InitializeComponent();
 
-            if (values != null)
+                colType.Items.AddRange(TypeNames);
+                cboxType.Items.AddRange(TypeNames);
+                cboxType.SelectedIndex = 0;
+
+                dataGridView1.CellValueChanged += Grid_CellValueChanged;
+                dataGridView1.CurrentCellDirtyStateChanged += (s, e) =>
+                {
+                    if (dataGridView1.IsCurrentCellDirty)
+                        dataGridView1.CommitEdit(DataGridViewDataErrorContexts.Commit);
+                };
+                dataGridView1.DataError += (s, e) =>
+                {
+                    CrashLogger.LogException(e.Exception,
+                        string.Format("ArrayValueEditorForm grid DataError row={0} col={1} context={2}",
+                            e.RowIndex, e.ColumnIndex, e.Context));
+                    e.ThrowException = false;
+                };
+
+                if (values != null)
+                {
+                    for (int i = 0; i < values.Length; i++)
+                        AddRow(values[i]);
+                }
+            }
+            catch (Exception ex)
             {
-                for (int i = 0; i < values.Length; i++)
-                    AddRow(values[i]);
+                CrashLogger.LogException(ex,
+                    string.Format("ArrayValueEditorForm ctor failed (values.Length={0})",
+                        values?.Length ?? -1));
+                throw;
             }
         }
 
