@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.4.11702.344 oobstable
+VisualStudioVersion = 18.4.11702.344
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapeOpen", "CapeOpen\CapeOpen.csproj", "{8BFBC341-B27D-43B4-BE89-F171BB15C44F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{102D4BDA-32A3-4A50-81CF-D499030485D4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CapeOpenRegistrar", "tools\CapeOpenRegistrar\CapeOpenRegistrar.csproj", "{207F5462-3220-5CAA-265A-4FB00797A611}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +33,14 @@ Global
 		{102D4BDA-32A3-4A50-81CF-D499030485D4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{102D4BDA-32A3-4A50-81CF-D499030485D4}.Release|x86.ActiveCfg = Release|Any CPU
 		{102D4BDA-32A3-4A50-81CF-D499030485D4}.Release|x86.Build.0 = Release|Any CPU
+		{207F5462-3220-5CAA-265A-4FB00797A611}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{207F5462-3220-5CAA-265A-4FB00797A611}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{207F5462-3220-5CAA-265A-4FB00797A611}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{207F5462-3220-5CAA-265A-4FB00797A611}.Debug|x86.Build.0 = Debug|Any CPU
+		{207F5462-3220-5CAA-265A-4FB00797A611}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{207F5462-3220-5CAA-265A-4FB00797A611}.Release|Any CPU.Build.0 = Release|Any CPU
+		{207F5462-3220-5CAA-265A-4FB00797A611}.Release|x86.ActiveCfg = Release|Any CPU
+		{207F5462-3220-5CAA-265A-4FB00797A611}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
