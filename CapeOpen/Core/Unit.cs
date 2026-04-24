@@ -9,9 +9,9 @@ namespace CapeOpen
     /// </summary>
     /// <remarks>
     /// <para>The unit of maesure can be either an System Internation (SI) or customary unit. Each unit is assigned to a 
-    /// <see cref = "unitCategory"/> that has information related to the dimensionality of the unit.</para>
+    /// <see cref = "UnitCategoryInfo"/> that has information related to the dimensionality of the unit.</para>
     /// </remarks>
-    struct unit
+    struct UnitInfo
     {
         /// <summary>
         /// The name of the unit of measure

@@ -15,23 +15,23 @@ namespace CapeOpen
     /// This class supports the use of CAPE-OPEN dimensionalities and conversion between SI and customary units of
     /// measure for real-valued parameters.
     /// </remarks>
-    static class CDimensions
+    static class Dimensions
     {
-        static System.Collections.ArrayList units;
-        static System.Collections.ArrayList unitCategories;
+        static List<UnitInfo> units;
+        static List<UnitCategoryInfo> unitCategories;
 
         /// <summary>
-        /// Initializes the static fields of the <see cref = "CDimensions"/> class
+        /// Initializes the static fields of the <see cref = "Dimensions"/> class
         /// </summary>
         /// <remarks>Loads units and unit category data from JSON files.</remarks>
-        static CDimensions()
+        static Dimensions()
         {
-            units = new System.Collections.ArrayList();
-            unitCategories = new System.Collections.ArrayList();
+            units = new List<UnitInfo>();
+            unitCategories = new List<UnitCategoryInfo>();
             System.AppDomain domain = System.AppDomain.CurrentDomain;
 
             // Load units from embedded JSON resource
-            var unitList = JsonConvert.DeserializeObject<List<unit>>(Properties.Resources.units);
+            var unitList = JsonConvert.DeserializeObject<List<UnitInfo>>(Properties.Resources.units);
             foreach (var u in unitList)
             {
                 var newUnit = u;
@@ -44,7 +44,7 @@ namespace CapeOpen
             if (System.IO.File.Exists(userUnitPath))
             {
                 string json = System.IO.File.ReadAllText(userUnitPath);
-                var userUnits = JsonConvert.DeserializeObject<List<unit>>(json);
+                var userUnits = JsonConvert.DeserializeObject<List<UnitInfo>>(json);
                 foreach (var u in userUnits)
                 {
                     var newUnit = u;
@@ -64,7 +64,7 @@ namespace CapeOpen
                     System.Globalization.CultureInfo ci = new System.Globalization.CultureInfo(0x0409, false);
                     for (int i = 0; i < list.Count; i++)
                     {
-                        unit newUnit = new unit();
+                        UnitInfo newUnit = new UnitInfo();
                         String UnitName = list[i].SelectSingleNode("Unit").InnerText;
                         newUnit.Name = UnitName.Trim();
                         newUnit.Category = list[i].SelectSingleNode("Category").InnerText;
@@ -76,7 +76,7 @@ namespace CapeOpen
             }
 
             // Load unit categories from embedded JSON resource
-            var categoryList = JsonConvert.DeserializeObject<List<unitCategory>>(Properties.Resources.unitCategories);
+            var categoryList = JsonConvert.DeserializeObject<List<UnitCategoryInfo>>(Properties.Resources.unitCategories);
             foreach (var category in categoryList)
             {
                 unitCategories.Add(category);
@@ -87,7 +87,7 @@ namespace CapeOpen
             if (System.IO.File.Exists(userUnitCategoryPath))
             {
                 string json = System.IO.File.ReadAllText(userUnitCategoryPath);
-                var userCategories = JsonConvert.DeserializeObject<List<unitCategory>>(json);
+                var userCategories = JsonConvert.DeserializeObject<List<UnitCategoryInfo>>(json);
                 foreach (var category in userCategories)
                 {
                     unitCategories.Add(category);
@@ -106,7 +106,7 @@ namespace CapeOpen
                     for (int i = 0; i < list.Count; i++)
                     {
                         String UnitName = list[i].SelectSingleNode("Category").InnerText;
-                        unitCategory category;
+                        UnitCategoryInfo category;
                         category.Name = UnitName;
                         category.AspenUnit = list[i].SelectSingleNode("Aspen").InnerText;
                         category.SI_Unit = list[i].SelectSingleNode("SI_Unit").InnerText;
@@ -143,7 +143,7 @@ namespace CapeOpen
         /// <returns>The SI unit having the desired dimensionality</returns>
         public static String SIUnit(int[] dimensions)
         {
-            foreach (unitCategory category in unitCategories)
+            foreach (UnitCategoryInfo category in unitCategories)
             {
                 if (dimensions[0] == category.Length &&
                     dimensions[1] == category.Mass &&
@@ -175,7 +175,7 @@ namespace CapeOpen
         /// <returns>The SI unit having the desired dimensionality</returns>
         public static String SIUnit(double[] dimensions)
         {
-            foreach (unitCategory category in unitCategories)
+            foreach (UnitCategoryInfo category in unitCategories)
             {
                 if (dimensions[0] == category.Length &&
                     dimensions[1] == category.Mass &&
@@ -201,7 +201,7 @@ namespace CapeOpen
                 String[] retVal = new String[units.Count];
                 for (int i = 0; i < units.Count; i++)
                 {
-                    retVal[i] = ((unit)units[i]).Name;
+                    retVal[i] = units[i].Name;
                 }
                 return retVal;
             }
@@ -225,10 +225,9 @@ namespace CapeOpen
             bool found = false;
             for (int i = 0; i < units.Count; i++)
             {
-                CapeOpen.unit current = (CapeOpen.unit)units[i];
-                if (current.Name == unit)
+                if (units[i].Name == unit)
                 {
-                    retVal = current.ConversionTimes;
+                    retVal = units[i].ConversionTimes;
                     found = true;
                 }
             }
@@ -253,10 +252,9 @@ namespace CapeOpen
             bool found = false;
             for (int i = 0; i < units.Count; i++)
             {
-                CapeOpen.unit current = (CapeOpen.unit)units[i];
-                if (current.Name == unit)
+                if (units[i].Name == unit)
                 {
-                    retVal = current.ConversionPlus;
+                    retVal = units[i].ConversionPlus;
                     found = true;
                 }
             }
@@ -277,22 +275,12 @@ namespace CapeOpen
             bool found = false;
             for (int i = 0; i < units.Count; i++)
             {
-                CapeOpen.unit current = (CapeOpen.unit)units[i];
-                if (current.Name == unit)
+                if (units[i].Name == unit)
                 {
-                    retVal = current.Category;
+                    retVal = units[i].Category;
                     found = true;
                 }
             }
-            //for (int i = 0; i < unitCategories.Count; i++)
-            //{
-            //    CapeOpen.unitCategory current = (CapeOpen.unitCategory)unitCategories[i];
-            //    if (current.Name == unit)
-            //    {
-            //        retVal = current.AspenUnit;
-            //        found = true;
-            //    }
-            //}
             if (!found) throw new CapeOpen.CapeBadArgumentException(String.Concat("Unit: ", unit, " was not found"), 1);
             return retVal;
         }
@@ -314,19 +302,17 @@ namespace CapeOpen
             bool found = false;
             for (int i = 0; i < units.Count; i++)
             {
-                CapeOpen.unit current = (CapeOpen.unit)units[i];
-                if (current.Name == unit)
+                if (units[i].Name == unit)
                 {
-                    category = current.Category;
+                    category = units[i].Category;
                     found = true;
                 }
             }
             for (int i = 0; i < unitCategories.Count; i++)
             {
-                CapeOpen.unitCategory current = (CapeOpen.unitCategory)unitCategories[i];
-                if (current.Name == category)
+                if (unitCategories[i].Name == category)
                 {
-                    retVal = current.AspenUnit;
+                    retVal = unitCategories[i].AspenUnit;
                     found = true;
                 }
             }
@@ -346,10 +332,9 @@ namespace CapeOpen
             bool found = false;
             for (int i = 0; i < units.Count; i++)
             {
-                CapeOpen.unit current = (CapeOpen.unit)units[i];
-                if (current.Name == unit)
+                if (units[i].Name == unit)
                 {
-                    retVal = current.Description;
+                    retVal = units[i].Description;
                     found = true;
                 }
             }
@@ -366,7 +351,7 @@ namespace CapeOpen
         //    bool found = false;
         //    for (int i = 0; i < units.Count; i++)
         //    {
-        //        CapeOpen.unit current = (CapeOpen.unit)units[i];
+        //        CapeOpen.UnitInfo current = (CapeOpen.UnitInfo)units[i];
         //        if (current.Name == unit)
         //        {
         //            current.Description = newDescription;
@@ -386,21 +371,15 @@ namespace CapeOpen
         /// <returns>All units that represent the categoery.</returns>
         public static String[] UnitsMatchingCategory(String category)
         {
-            System.Collections.ArrayList unitNames = new System.Collections.ArrayList();
+            List<string> unitNames = new List<string>();
             for (int i = 0; i < units.Count; i++)
             {
-                CapeOpen.unit current = (CapeOpen.unit)units[i];
-                if (current.Category == category)
+                if (units[i].Category == category)
                 {
-                    unitNames.Add(current.Name);
+                    unitNames.Add(units[i].Name);
                 }
             }
-            String[] retVal = new String[unitNames.Count];
-            for (int i = 0; i < unitNames.Count; i++)
-            {
-                retVal[i] = unitNames[i].ToString();
-            }
-            return retVal;
+            return unitNames.ToArray();
         }
 
         /// <summary>
@@ -417,10 +396,9 @@ namespace CapeOpen
             String category = UnitCategory(Unit);
             for (int i = 0; i < unitCategories.Count; i++)
             {
-                CapeOpen.unitCategory current = (CapeOpen.unitCategory)unitCategories[i];
-                if (current.Name == category)
+                if (unitCategories[i].Name == category)
                 {
-                    retVal = current.SI_Unit;
+                    retVal = unitCategories[i].SI_Unit;
                 }
             }
             return retVal;
@@ -443,21 +421,20 @@ namespace CapeOpen
         /// <returns>The dimenality of the unit.</returns>
         public static double[] Dimensionality(String unit)
         {
-            string category = CapeOpen.CDimensions.UnitCategory(unit);
+            string category = CapeOpen.Dimensions.UnitCategory(unit);
             double[] retVal = { 0, 0, 0, 0, 0, 0, 0, 0 };
             for (int i = 0; i < unitCategories.Count; i++)
             {
-                CapeOpen.unitCategory current = (CapeOpen.unitCategory)unitCategories[i];
-                if (current.Name == category)
+                if (unitCategories[i].Name == category)
                 {
-                    retVal[0] = current.Length;
-                    retVal[1] = current.Mass;
-                    retVal[2] = current.Time;
-                    retVal[3] = current.ElectricalCurrent;
-                    retVal[4] = current.Temperature;
-                    retVal[5] = current.AmountOfSubstance;
-                    retVal[6] = current.Luminous;
-                    retVal[7] = current.Currency;
+                    retVal[0] = unitCategories[i].Length;
+                    retVal[1] = unitCategories[i].Mass;
+                    retVal[2] = unitCategories[i].Time;
+                    retVal[3] = unitCategories[i].ElectricalCurrent;
+                    retVal[4] = unitCategories[i].Temperature;
+                    retVal[5] = unitCategories[i].AmountOfSubstance;
+                    retVal[6] = unitCategories[i].Luminous;
+                    retVal[7] = unitCategories[i].Currency;
                 }
             }
             return retVal;

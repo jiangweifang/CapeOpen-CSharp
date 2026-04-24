@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 namespace CapeOpen
 {
 
-    struct unitCategory
+    struct UnitCategoryInfo
     {
         /// <summary>
         /// Gets the name of the unit category, e.g. pressure, tempurature.

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,7 +19,7 @@ namespace CapeOpen
     /// </para>
     /// <para>
     /// This class utilizes various .Net file location schemes to enable users to develop and
-    /// deploy new unit operation PMCs on their machine under the restrictions imposed by 
+    /// deploy new UnitInfo operation PMCs on their machine under the restrictions imposed by 
     /// least priviledges. In particular, it can detect if the debugger is attached and can identifiy 
     /// the assembly being debugged, making it available in the debugger to check the progress of
     /// the unit. Further, it creates and uses a "CapeOpen Objects" directory located in the current user's 

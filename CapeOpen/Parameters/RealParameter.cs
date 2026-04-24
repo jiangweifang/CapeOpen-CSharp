@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,7 +15,7 @@ namespace CapeOpen
         public override System.ComponentModel.TypeConverter.StandardValuesCollection GetStandardValues(System.ComponentModel.ITypeDescriptorContext context)
         {
             CapeOpen.RealParameter unit = (CapeOpen.RealParameter)context.Instance;
-            string[] retVal = CapeOpen.CDimensions.UnitsMatchingCategory(CapeOpen.CDimensions.UnitCategory(unit.Unit));
+            string[] retVal = CapeOpen.Dimensions.UnitsMatchingCategory(CapeOpen.Dimensions.UnitCategory(unit.Unit));
             return new System.ComponentModel.TypeConverter.StandardValuesCollection(retVal);
         }
         public override bool GetStandardValuesExclusive(System.ComponentModel.ITypeDescriptorContext context)
@@ -254,7 +254,7 @@ namespace CapeOpen
         {
             get
             {
-                return CDimensions.Dimensionality(m_unit);
+                return Dimensions.Dimensionality(m_unit);
             }
         }
 
@@ -283,7 +283,7 @@ namespace CapeOpen
         {
             get
             {
-                return CDimensions.Dimensionality(m_unit);
+                return Dimensions.Dimensionality(m_unit);
             }
         }
         
@@ -363,13 +363,13 @@ namespace CapeOpen
             double retVal = m_value;
             if ((desiredUnit != null) || (desiredUnit == String.Empty))
             {
-                String[] units = CapeOpen.CDimensions.Units;
+                String[] units = CapeOpen.Dimensions.Units;
                 for (int i = 0; i < units.Length; i++)
                 {
                     if (units[i] == desiredUnit)
                     {
-                        Factor1 = CapeOpen.CDimensions.ConverionsTimes(desiredUnit);
-                        Factor2 = CapeOpen.CDimensions.ConverionsPlus(desiredUnit);
+                        Factor1 = CapeOpen.Dimensions.ConverionsTimes(desiredUnit);
+                        Factor2 = CapeOpen.Dimensions.ConverionsPlus(desiredUnit);
                         bUnitExisting = true;
                         break;
                     }
@@ -407,13 +407,13 @@ namespace CapeOpen
             double retVal = value;
             if ((unit != null) || (unit == String.Empty))
             {
-                String[] units = CapeOpen.CDimensions.Units;
+                String[] units = CapeOpen.Dimensions.Units;
                 for (int i = 0; i < units.Length; i++)
                 {
                     if (units[i] == unit)
                     {
-                        Factor1 = CapeOpen.CDimensions.ConverionsTimes(unit);
-                        Factor2 = CapeOpen.CDimensions.ConverionsPlus(unit);
+                        Factor1 = CapeOpen.Dimensions.ConverionsTimes(unit);
+                        Factor2 = CapeOpen.Dimensions.ConverionsPlus(unit);
                         bUnitExisting = true;
                         break;
                     }
@@ -455,7 +455,7 @@ namespace CapeOpen
             set
             {
                 m_unit = value;
-                //m_Category = CapeOpen.CDimensions.UnitCategory(m_unit); 
+                //m_Category = CapeOpen.Dimensions.UnitCategory(m_unit); 
                 this.NotifyPropertyChanged("Unit");
             }
         }
@@ -703,13 +703,13 @@ namespace CapeOpen
                 double Factor1 = 1;
                 double Factor2 = 0;
                 double retVal = m_DefaultValue;
-                String[] units = CapeOpen.CDimensions.Units;
+                String[] units = CapeOpen.Dimensions.Units;
                 for (int i = 0; i < units.Length; i++)
                 {
                     if (units[i] == this.Unit)
                     {
-                        Factor1 = CapeOpen.CDimensions.ConverionsTimes(this.Unit);
-                        Factor2 = CapeOpen.CDimensions.ConverionsPlus(this.Unit);
+                        Factor1 = CapeOpen.Dimensions.ConverionsTimes(this.Unit);
+                        Factor2 = CapeOpen.Dimensions.ConverionsPlus(this.Unit);
                         bUnitExisting = true;
                         break;
                     }
@@ -748,13 +748,13 @@ namespace CapeOpen
                 double Factor1 = 1;
                 double Factor2 = 0;
                 double retVal = m_LowerBound;
-                String[] units = CapeOpen.CDimensions.Units;
+                String[] units = CapeOpen.Dimensions.Units;
                 for (int i = 0; i < units.Length; i++)
                 {
                     if (units[i] == this.Unit)
                     {
-                        Factor1 = CapeOpen.CDimensions.ConverionsTimes(this.Unit);
-                        Factor2 = CapeOpen.CDimensions.ConverionsPlus(this.Unit);
+                        Factor1 = CapeOpen.Dimensions.ConverionsTimes(this.Unit);
+                        Factor2 = CapeOpen.Dimensions.ConverionsPlus(this.Unit);
                         bUnitExisting = true;
                         break;
                     }
@@ -883,13 +883,13 @@ namespace CapeOpen
                 double Factor1 = 1;
                 double Factor2 = 0;
                 double retVal = m_UpperBound;
-                String[] units = CapeOpen.CDimensions.Units;
+                String[] units = CapeOpen.Dimensions.Units;
                 for (int i = 0; i < units.Length; i++)
                 {
                     if (units[i] == this.Unit)
                     {
-                        Factor1 = CapeOpen.CDimensions.ConverionsTimes(this.Unit);
-                        Factor2 = CapeOpen.CDimensions.ConverionsPlus(this.Unit);
+                        Factor1 = CapeOpen.Dimensions.ConverionsTimes(this.Unit);
+                        Factor2 = CapeOpen.Dimensions.ConverionsPlus(this.Unit);
                         bUnitExisting = true;
                         break;
                     }
@@ -977,7 +977,7 @@ namespace CapeOpen
         /// Validates the SI value sent against the specification of the parameter.
         /// </summary>
         /// <remarks>
-        /// The value, in the SI units of measurement appropriate to the <see cref="unitCategory"/> of the parameter
+        /// The value, in the SI units of measurement appropriate to the <see cref="UnitCategoryInfo"/> of the parameter
         /// is considered valid if it is between the upper and lower bound of the parameter. The message is used to 
         /// return the reason that the parameter is invalid.
         /// </remarks>
@@ -1039,12 +1039,12 @@ namespace CapeOpen
         }
         
         /// <summary>
-        /// Gets the SI unit for the <see cref="unitCategory"/> of the parameter.
+        /// Gets the SI unit for the <see cref="UnitCategoryInfo"/> of the parameter.
         /// </summary>
         /// <remarks>
         /// <para>
         /// Provides the SI unit for the parameter. Parameter values are stored in their SI unit of measure for the 
-        /// <see cref="unitCategory"/>. This provides the user with a mechanism to determine the SI unit of measure 
+        /// <see cref="UnitCategoryInfo"/>. This provides the user with a mechanism to determine the SI unit of measure 
         /// used for the current parameter.
         /// </para>
         /// </remarks>
@@ -1060,7 +1060,7 @@ namespace CapeOpen
         {
             get
             {
-                return CapeOpen.CDimensions.FindSIUnit(m_unit);
+                return CapeOpen.Dimensions.FindSIUnit(m_unit);
             }
         }
         /// <summary>
@@ -1085,7 +1085,7 @@ namespace CapeOpen
         {
             get
             {
-                return CapeOpen.CDimensions.AspenUnit(m_unit);
+                return CapeOpen.Dimensions.AspenUnit(m_unit);
             }
         }
 
@@ -1133,12 +1133,12 @@ namespace CapeOpen
             if (typeof(int[]).IsAssignableFrom(dims.GetType()))
             {
                 int[] dimVals = (int[])dims;
-                m_unit = CDimensions.SIUnit(dimVals);
+                m_unit = Dimensions.SIUnit(dimVals);
             }
             else if (typeof(double[]).IsAssignableFrom(dims.GetType()))
             {
                 double[] dimVals = (double[])dims;
-                m_unit = CDimensions.SIUnit(dimVals);
+                m_unit = Dimensions.SIUnit(dimVals);
             }
         }
 
@@ -1166,7 +1166,7 @@ namespace CapeOpen
         {
             get
             {
-                return CDimensions.Dimensionality(m_unit);
+                return Dimensions.Dimensionality(m_unit);
             }
         }
 
@@ -1225,13 +1225,13 @@ namespace CapeOpen
             double retVal = (double)m_parameter.value;
             if ((desiredUnit != null) || (desiredUnit == String.Empty))
             {
-                String[] units = CapeOpen.CDimensions.Units;
+                String[] units = CapeOpen.Dimensions.Units;
                 for (int i = 0; i < units.Length; i++)
                 {
                     if (units[i] == desiredUnit)
                     {
-                        Factor1 = CapeOpen.CDimensions.ConverionsTimes(desiredUnit);
-                        Factor2 = CapeOpen.CDimensions.ConverionsPlus(desiredUnit);
+                        Factor1 = CapeOpen.Dimensions.ConverionsTimes(desiredUnit);
+                        Factor2 = CapeOpen.Dimensions.ConverionsPlus(desiredUnit);
                         bUnitExisting = true;
                         break;
                     }
@@ -1269,13 +1269,13 @@ namespace CapeOpen
             double retVal = (double)m_parameter.value;
             if ((unit != null) || (unit == String.Empty))
             {
-                String[] units = CapeOpen.CDimensions.Units;
+                String[] units = CapeOpen.Dimensions.Units;
                 for (int i = 0; i < units.Length; i++)
                 {
                     if (units[i] == unit)
                     {
-                        Factor1 = CapeOpen.CDimensions.ConverionsTimes(unit);
-                        Factor2 = CapeOpen.CDimensions.ConverionsPlus(unit);
+                        Factor1 = CapeOpen.Dimensions.ConverionsTimes(unit);
+                        Factor2 = CapeOpen.Dimensions.ConverionsPlus(unit);
                         bUnitExisting = true;
                         break;
                     }
@@ -1313,13 +1313,13 @@ namespace CapeOpen
             double retVal = (double)m_parameter.value;
             if ((unit != null) || (unit == String.Empty))
             {
-                String[] units = CapeOpen.CDimensions.Units;
+                String[] units = CapeOpen.Dimensions.Units;
                 for (int i = 0; i < units.Length; i++)
                 {
                     if (units[i] == unit)
                     {
-                        Factor1 = CapeOpen.CDimensions.ConverionsTimes(unit);
-                        Factor2 = CapeOpen.CDimensions.ConverionsPlus(unit);
+                        Factor1 = CapeOpen.Dimensions.ConverionsTimes(unit);
+                        Factor2 = CapeOpen.Dimensions.ConverionsPlus(unit);
                         bUnitExisting = true;
                         break;
                     }
@@ -1359,7 +1359,7 @@ namespace CapeOpen
             set
             {
                 m_unit = value;
-                //m_Category = CapeOpen.CDimensions.UnitCategory(m_unit); 
+                //m_Category = CapeOpen.Dimensions.UnitCategory(m_unit); 
                 this.NotifyPropertyChanged("Unit");
             }
         }
@@ -1611,7 +1611,7 @@ namespace CapeOpen
         }
 
         /// <summary>
-        /// Gets and sets the lower bound of the parameter in SI units corresponding to the <see cref="unitCategory"/> of 
+        /// Gets and sets the lower bound of the parameter in SI units corresponding to the <see cref="UnitCategoryInfo"/> of 
         /// the parameter.
         /// </summary>
         /// <remarks>
@@ -1765,7 +1765,7 @@ namespace CapeOpen
         {
             get
             {
-                return CapeOpen.CDimensions.FindSIUnit(m_unit);
+                return CapeOpen.Dimensions.FindSIUnit(m_unit);
             }
         }
         /// <summary>
@@ -1790,7 +1790,7 @@ namespace CapeOpen
         {
             get
             {
-                return CapeOpen.CDimensions.AspenUnit(m_unit);
+                return CapeOpen.Dimensions.AspenUnit(m_unit);
             }
         }
     };
