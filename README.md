@@ -12,7 +12,8 @@
 | 模块 | 说明 |
 |---|---|
 | **CapeOpen** | 核心类库：CAPE-OPEN IDL 接口的 .NET 映射、单元操作基类 (`CapeUnitBase`)、参数系统、端口与物料对象封装 |
-| **Test (MixerExample)** | 示例混合器单元操作，演示参数和端口的使用 |
+| **Examples (MixerExample)** | 示例混合器单元操作，演示参数和端口的使用 |
+| **Examples (WARalgorithm)** | WAR 废物减量算法插件示例（Monitoring 组件） |
 | **tools/CapeOpenRegistrar** | .NET 8 COM 注册工具（替代原 .NET Framework 下的 `regasm`） |
 
 ### 参数类型
@@ -60,7 +61,7 @@ dotnet build CapeOpen.sln -c Debug
 | `CapeOpen\bin\Debug\net8.0-windows\CapeOpen.dll` | 托管程序集 |
 | `CapeOpen\bin\Debug\net8.0-windows\CapeOpen.comhost.dll` | Native COM 入口（regsvr32 目标） |
 | `CapeOpen\bin\Debug\net8.0-windows\CapeOpen.tlb` | 类型库（由 `<ComHostTypeLibrary>` 嵌入，同时输出一份 .tlb） |
-| `Test\bin\Debug\net8.0-windows\Test.dll` / `Test.comhost.dll` / `Test.tlb` | 示例单元操作 |
+| `Examples\bin\Debug\net8.0-windows\Examples.dll` / `Examples.comhost.dll` / `Examples.tlb` | 示例单元操作（MixerExample / WARalgorithm） |
 
 ---
 
@@ -94,8 +95,8 @@ $registrar = 'tools\CapeOpenRegistrar\bin\Release\net8.0\CapeOpenRegistrar.exe'
 # 注册核心库
 & $registrar register 'CapeOpen\bin\Debug\net8.0-windows\CapeOpen.dll'
 
-# 注册示例 MixerExample
-& $registrar register 'Test\bin\Debug\net8.0-windows\Test.dll'
+# 注册示例（MixerExample / WARalgorithm）
+& $registrar register 'Examples\bin\Debug\net8.0-windows\Examples.dll'
 ```
 
 命令行参数：
@@ -111,7 +112,7 @@ $registrar = 'tools\CapeOpenRegistrar\bin\Release\net8.0\CapeOpenRegistrar.exe'
 ### 步骤 3：卸载
 
 ```powershell
-& $registrar unregister 'Test\bin\Debug\net8.0-windows\Test.dll'
+& $registrar unregister 'Examples\bin\Debug\net8.0-windows\Examples.dll'
 & $registrar unregister 'CapeOpen\bin\Debug\net8.0-windows\CapeOpen.dll'
 ```
 
@@ -143,12 +144,12 @@ pwsh tools\TestRegisterServer.ps1 -dll 'D:\GitHub\CapeOpen-CSharp\CapeOpen\bin\D
 pwsh .\tools\Register-CapeOpenComponents.ps1 `
     -AssemblyPaths @(
         'CapeOpen\bin\Debug\net8.0-windows\CapeOpen.dll',
-        'Test\bin\Debug\net8.0-windows\Test.dll'
+        'Examples\bin\Debug\net8.0-windows\Examples.dll'
     )
 
 # 卸载
 pwsh .\tools\Register-CapeOpenComponents.ps1 `
-    -AssemblyPaths @('Test\bin\Debug\net8.0-windows\Test.dll') -Unregister
+    -AssemblyPaths @('Examples\bin\Debug\net8.0-windows\Examples.dll') -Unregister
 ```
 
 该脚本**不**写入基础 CLSID / InprocServer32 键，它假设你已经通过其他方式（`regsvr32` 或 `CapeOpenRegistrar`）写入。如果你的组件只有一个 CLSID，`regsvr32 CapeOpen.comhost.dll` 能成功写入基础键，就可以用这个脚本补齐 CAPE-OPEN 专属键。多 CLSID 场景推荐直接用 `CapeOpenRegistrar`。
