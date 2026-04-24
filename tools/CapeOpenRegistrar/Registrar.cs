@@ -94,18 +94,23 @@ internal static class Registrar
     {
         var asmDir = Path.GetDirectoryName(asmPath)!;
         var asmName = Path.GetFileNameWithoutExtension(asmPath);
-        var projDir = Path.GetFullPath(Path.Combine(asmDir, "..", "..", ".."));
-        var candidates = new[]
+        // Climb up searching for a sibling "Tlb\<name>.tlb". Layouts differ:
+        //   .NET Framework:  <proj>\bin\<Config>\<name>.dll            -> 3 levels up
+        //   .NET 8 (SDK):    <proj>\bin\<Platform>\<Config>\<tfm>\...  -> 4 levels up
+        var candidates = new List<string> { Path.Combine(asmDir, asmName + ".tlb") };
+        var cur = asmDir;
+        for (int i = 0; i < 6 && cur is not null; i++)
         {
-            Path.Combine(asmDir, asmName + ".tlb"),
-            Path.Combine(projDir, "Tlb", asmName + ".tlb"),
-        };
+            candidates.Add(Path.Combine(cur, "Tlb", asmName + ".tlb"));
+            cur = Path.GetDirectoryName(cur);
+        }
         var tlbPath = candidates.FirstOrDefault(File.Exists);
         if (tlbPath is null)
         {
-            log.WriteLine($"  (No .tlb found alongside or in ../Tlb; skipping TypeLib registration.)");
+            log.WriteLine($"  (No .tlb found alongside or in any ancestor Tlb\\ folder; skipping TypeLib registration.)");
             return;
         }
+        log.WriteLine($"  TypeLib source: {tlbPath}");
         try
         {
             if (unreg)
