@@ -123,8 +123,6 @@
     <Compile Include="Materials\MaterialObjectWrapper.cs" />
     <Compile Include="Materials\MaterialObjectWrapper1.cs" />
     <Compile Include="Materials\MaterialObjectWrapper11.cs" />
-    <Compile Include="Examples\MixerExample.cs" />
-    <Compile Include="Examples\MixerExample110.cs" />
     <Compile Include="Interfaces\MonitoringInterfaces.cs" />
     <Compile Include="Parameters\OptionParameter.cs" />
     <Compile Include="Parameters\ParameterCollection.cs" />
@@ -152,11 +150,6 @@
     <Compile Include="Editors\UnitSelector.Designer.cs">
       <DependentUpon>UnitSelector.cs</DependentUpon>
     </Compile>
-    <Compile Include="Examples\War.cs" />
-    <Compile Include="Examples\WARalgorithm.cs" />
-    <Compile Include="Examples\WARalgorithm.Designer.cs">
-      <DependentUpon>WARalgorithm.cs</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="CapeOpenKey.snk" />
@@ -177,15 +170,9 @@
     <EmbeddedResource Include="Editors\UnitSelector.resx">
       <DependentUpon>UnitSelector.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Examples\WARalgorithm.resx">
-      <DependentUpon>WARalgorithm.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="units.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="WARdata.xml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="epa_seal_medium.ico" />

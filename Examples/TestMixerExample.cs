@@ -4,11 +4,11 @@ using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 
-namespace Test
+namespace Examples
 {
     [Serializable]
     [ComVisible(true)]
-    [Guid("883D46FE-5713-424C-BF10-7ED34263CD6D")] // ICapeThermoMaterialObject_IID
+    [Guid("D4F8B2E0-9A1C-4D6F-8B3E-1F2A5C7B4D90")]
     [Description("测试混合器模块。")]
     [CapeName("MyMixerTest")]
     [CapeDescription("一个用 C# 开发的测试 CO 单元模块。")]
@@ -20,7 +20,7 @@ namespace Test
     [CapeUnitOperation(true)]
     [CapeSupportsThermodynamics10(true)]
     [ClassInterface(ClassInterfaceType.None)]
-    public class MixerExample : CapeUnitBase
+    public class MyMixerTest : CapeUnitBase
     {
         /// <summary>
         /// Creates an instance of the CMixerExample unit operation.
@@ -68,7 +68,7 @@ namespace Test
 		/// }
 		/// </code>
         /// </example>
-        public MixerExample()
+        public MyMixerTest()
         {
             // Add Ports using the UnitPort constructor.
             Ports.Add(new UnitPort("输入端口1", "输入端口1", CapePortDirection.CAPE_INLET, CapePortType.CAPE_MATERIAL));
