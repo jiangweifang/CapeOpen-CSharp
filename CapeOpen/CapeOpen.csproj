@@ -153,9 +153,7 @@
       <DependentUpon>UnitSelector.cs</DependentUpon>
     </Compile>
     <Compile Include="Examples\War.cs" />
-    <Compile Include="Examples\WARalgorithm.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Examples\WARalgorithm.cs" />
     <Compile Include="Examples\WARalgorithm.Designer.cs">
       <DependentUpon>WARalgorithm.cs</DependentUpon>
     </Compile>
