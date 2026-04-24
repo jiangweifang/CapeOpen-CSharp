@@ -1,0 +1,14 @@
+{
+  "profiles": {
+    "COFE x64": {
+      "commandName": "Executable",
+      "executablePath": "D:\\Program Files\\COCO\\x64\\COFE.exe",
+      "workingDirectory": "D:\\Program Files\\COCO\\x64"
+    },
+    "COFE x86": {
+      "commandName": "Executable",
+      "executablePath": "D:\\Program Files\\COCO\\win32\\COFE.exe",
+      "workingDirectory": "D:\\Program Files\\COCO\\win32"
+    }
+  }
+}

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net8.0-windows</TargetFramework>
     <Platforms>x64;x86</Platforms>
@@ -29,4 +29,9 @@
 	<ItemGroup>
 		<Content Include="../README.md" />
 	</ItemGroup>
+
+  <!-- Auto-register COM components after build so F5 debugging with COFE works -->
+  <Target Name="RegisterCom" AfterTargets="Build" Condition="'$(Configuration)' == 'Debug'">
+	<Exec Command="dotnet run --project &quot;$(SolutionDir)tools\CapeOpenRegistrar\CapeOpenRegistrar.csproj&quot; -- register --target=$(Platform) &quot;$(TargetPath)&quot;" ConsoleToMsBuild="true" IgnoreExitCode="false" />
+  </Target>
 </Project>
