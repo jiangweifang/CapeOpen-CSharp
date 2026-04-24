@@ -115,6 +115,11 @@ namespace CapeOpen
             if ((indexType == typeof(System.Int16)) || (indexType == typeof(System.Int32)) || (indexType == typeof(System.Int64)))
             {
                 int i = Convert.ToInt32(index);
+                if (i < 1 || i > this.Items.Count)
+                {
+                    throw new CapeInvalidArgumentException(
+                        "Item index " + i + " is out of range (1.." + this.Items.Count + ").", 0);
+                }
                 return this.Items[i - 1];
             }
             if ((indexType == typeof(String)))

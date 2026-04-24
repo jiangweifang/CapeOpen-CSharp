@@ -17,7 +17,6 @@
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x86\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <RegisterForComInterop>true</RegisterForComInterop>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <LangVersion>7.3</LangVersion>
@@ -27,7 +26,6 @@
     <OutputPath>bin\x86\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
-    <RegisterForComInterop>true</RegisterForComInterop>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <LangVersion>7.3</LangVersion>
@@ -37,7 +35,6 @@
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x64\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <RegisterForComInterop>true</RegisterForComInterop>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <LangVersion>7.3</LangVersion>
@@ -47,7 +44,6 @@
     <OutputPath>bin\x64\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
-    <RegisterForComInterop>true</RegisterForComInterop>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <LangVersion>7.3</LangVersion>
@@ -74,4 +70,21 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- 按 PlatformTarget 选择正确位数的 RegAsm.exe：x64 用 Framework64，x86 用 Framework -->
+  <PropertyGroup Condition="'$(PlatformTarget)' == 'x64'">
+    <RegAsmPath>$(WINDIR)\Microsoft.NET\Framework64\v4.0.30319\RegAsm.exe</RegAsmPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(PlatformTarget)' != 'x64'">
+    <RegAsmPath>$(WINDIR)\Microsoft.NET\Framework\v4.0.30319\RegAsm.exe</RegAsmPath>
+  </PropertyGroup>
+  <!-- 编译后自动使用 RegAsm /codebase 注册 COM 组件（需要管理员权限） -->
+  <PropertyGroup>
+    <PostBuildEvent>echo 正在使用 RegAsm 注册 COM 组件: "$(TargetPath)"
+"$(RegAsmPath)" "$(TargetPath)" /codebase
+if errorlevel 1 (
+  echo [警告] RegAsm 注册失败，请以管理员身份运行 Visual Studio 重新生成。
+  exit /b 0
+)
+echo COM 注册完成。</PostBuildEvent>
+  </PropertyGroup>
 </Project>
