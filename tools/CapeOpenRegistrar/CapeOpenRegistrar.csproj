@@ -8,7 +8,6 @@
     <RootNamespace>CapeOpenRegistrar</RootNamespace>
     <AssemblyName>CapeOpenRegistrar</AssemblyName>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-    <Platforms>x64;x86</Platforms>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="System.Reflection.MetadataLoadContext" Version="8.0.0" />

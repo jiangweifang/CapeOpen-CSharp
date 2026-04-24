@@ -12,9 +12,6 @@
     <AssemblyOriginatorKeyFile>..\CapeOpen\CapeOpenKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <ComHostTypeLibrary Include="Tlb\Test.tlb" Id="1" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="NLog" Version="5.3.4" />
   </ItemGroup>
   <ItemGroup>
@@ -22,7 +19,7 @@
   </ItemGroup>
 
   <!-- Auto-register COM components after build so F5 debugging with COFE works -->
-  <Target Name="RegisterCom" AfterTargets="Build" Condition="'$(Configuration)' == 'Debug'">
+  <Target Name="RegisterCom" AfterTargets="Build">
     <Exec Command="dotnet run --project &quot;$(MSBuildThisFileDirectory)..\tools\CapeOpenRegistrar\CapeOpenRegistrar.csproj&quot; -- register --target=$(Platform) &quot;$(TargetPath)&quot;"
           ConsoleToMsBuild="true"
           IgnoreExitCode="false" />
