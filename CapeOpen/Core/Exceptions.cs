@@ -1,7 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+
+// Formatter-based serialization is obsolete in .NET 8, but serialization constructors
+// are retained for backward compatibility with COM interop scenarios.
+#pragma warning disable SYSLIB0051
 
 namespace CapeOpen
 {

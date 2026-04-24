@@ -219,7 +219,7 @@ namespace CapeOpen
                 portConnections[i] = port.connectedObject;
                 if (portConnections[i] != null)
                 {
-                    if (!portConnections[i].GetType().IsSerializable)
+                    if (!Attribute.IsDefined(portConnections[i].GetType(), typeof(SerializableAttribute)))
                     {
                         portConnections[i] = null;
                     }

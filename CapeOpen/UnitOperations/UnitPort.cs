@@ -325,7 +325,7 @@ namespace CapeOpen
                     return;
                 }
             }
-            if (objectToConnect.GetType().IsSerializable)
+            if (Attribute.IsDefined(objectToConnect.GetType(), typeof(SerializableAttribute)))
             {
                 m_ConnectedObject = objectToConnect;
                 isConnectObjectSerializable = true;
