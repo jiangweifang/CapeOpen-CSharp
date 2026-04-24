@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using NLog;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -280,6 +281,7 @@ namespace CapeOpen
              }
             catch (System.Exception p_Ex)
             {
+                CrashLogger.Logger.Error(p_Ex, "War: {Message}", p_Ex.Message);
                 this.throwException(new CapeOpen.CapeUnknownException(p_Ex.Message, p_Ex));
                 return System.Windows.Forms.DialogResult.Cancel;
             }

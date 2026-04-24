@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using NLog;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -380,6 +381,7 @@ namespace CapeOpen
             }
             catch (System.Exception p_Ex)
             {
+                CrashLogger.Logger.Error(p_Ex, "MixerExample110: {Message}", p_Ex.Message);
                 CapeOpen.CapeInvalidOperationException ex = new CapeOpen.CapeInvalidOperationException("Material object does not support CAPE-OPEN Thermodynamics 1.1.", p_Ex);
                 this.calcReport = String.Concat(this.calcReport, "Material object does not support CAPE-OPEN Thermodynamics 1.1.", System.Environment.NewLine);
                 this.throwException(ex);
@@ -454,6 +456,7 @@ namespace CapeOpen
             }
             catch (System.Exception p_Ex)
             {
+                CrashLogger.Logger.Error(p_Ex, "MixerExample110: {Message}", p_Ex.Message);
                 CapeOpen.ECapeUser user = (CapeOpen.ECapeUser)in1;
                 this.calcReport = String.Concat(this.calcReport, user.description, System.Environment.NewLine);
                 this.throwException(p_Ex);
@@ -487,6 +490,7 @@ namespace CapeOpen
             }
             catch (System.Exception p_Ex)
             {
+                CrashLogger.Logger.Error(p_Ex, "MixerExample110: {Message}", p_Ex.Message);
                 CapeOpen.ECapeUser user = (CapeOpen.ECapeUser)in2;
                 this.calcReport = String.Concat(this.calcReport, user.description, System.Environment.NewLine);
                 this.throwException(p_Ex);
@@ -520,6 +524,7 @@ namespace CapeOpen
             }
             catch (System.Exception p_Ex)
             {
+                CrashLogger.Logger.Error(p_Ex, "MixerExample110: {Message}", p_Ex.Message);
                 CapeOpen.ECapeUser user = (CapeOpen.ECapeUser)outlet;
                 this.calcReport = String.Concat(this.calcReport, user.description, System.Environment.NewLine);
                 this.throwException(p_Ex);

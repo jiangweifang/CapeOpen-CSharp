@@ -1,4 +1,5 @@
 using System;
+using NLog;
 
 namespace CapeOpen
 {
@@ -41,6 +42,7 @@ namespace CapeOpen
             }
             catch (Exception p_Ex)
             {
+                CrashLogger.Logger.Error(p_Ex, "MixerCalculator: {Message}", p_Ex.Message);
                 throw new CapeInvalidOperationException("Material object does not support CAPE-OPEN Thermodynamics 1.0.", p_Ex);
             }
             try
@@ -49,6 +51,7 @@ namespace CapeOpen
             }
             catch (Exception p_Ex)
             {
+                CrashLogger.Logger.Error(p_Ex, "MixerCalculator: {Message}", p_Ex.Message);
                 throw new CapeInvalidOperationException("Object connected to Inlet Port 1 does not support CAPE-OPEN Thermodynamics 1.0.", p_Ex);
             }
 
@@ -65,6 +68,7 @@ namespace CapeOpen
             }
             catch (Exception p_Ex)
             {
+                CrashLogger.Logger.Error(p_Ex, "MixerCalculator: {Message}", p_Ex.Message);
                 if (p_Ex is System.Runtime.InteropServices.COMException)
                     p_Ex = COMExceptionHandler.ExceptionForHRESULT(in1, p_Ex);
                 UnitOperation.throwException(p_Ex);
@@ -78,6 +82,7 @@ namespace CapeOpen
             }
             catch (Exception p_Ex)
             {
+                CrashLogger.Logger.Error(p_Ex, "MixerCalculator: {Message}", p_Ex.Message);
                 throw new CapeInvalidOperationException("Material object does not support CAPE-OPEN Thermodynamics 1.0.", p_Ex);
             }
             try
@@ -86,6 +91,7 @@ namespace CapeOpen
             }
             catch (Exception p_Ex)
             {
+                CrashLogger.Logger.Error(p_Ex, "MixerCalculator: {Message}", p_Ex.Message);
                 throw new CapeInvalidOperationException("Object connected to Inlet Port 2 does not support CAPE-OPEN Thermodynamics 1.0.", p_Ex);
             }
 
@@ -102,6 +108,7 @@ namespace CapeOpen
             }
             catch (Exception p_Ex)
             {
+                CrashLogger.Logger.Error(p_Ex, "MixerCalculator: {Message}", p_Ex.Message);
                 if (p_Ex is System.Runtime.InteropServices.COMException)
                     p_Ex = COMExceptionHandler.ExceptionForHRESULT(in2, p_Ex);
                 UnitOperation.throwException(p_Ex);
@@ -146,6 +153,7 @@ namespace CapeOpen
             }
             catch (Exception p_Ex)
             {
+                CrashLogger.Logger.Error(p_Ex, "MixerCalculator: {Message}", p_Ex.Message);
                 if (p_Ex is System.Runtime.InteropServices.COMException)
                     p_Ex = COMExceptionHandler.ExceptionForHRESULT(outPort, p_Ex);
                 UnitOperation.throwException(p_Ex);

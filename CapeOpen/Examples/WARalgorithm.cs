@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using NLog;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -156,6 +157,7 @@ namespace CapeOpen
             }
             catch (System.Exception p_Ex)
             {
+                CrashLogger.Logger.Error(p_Ex, "WARalgorithm: {Message}", p_Ex.Message);
                 System.Windows.Forms.MessageBox.Show(p_Ex.Message);
             }
         }
@@ -199,6 +201,7 @@ namespace CapeOpen
             }
             catch (System.Exception p_Ex)
             {
+                CrashLogger.Logger.Error(p_Ex, "WARalgorithm: {Message}", p_Ex.Message);
                 System.Windows.Forms.MessageBox.Show(p_Ex.Message);
             }
 
@@ -235,6 +238,7 @@ namespace CapeOpen
             }
             catch (System.Exception p_Ex)
             {
+                CrashLogger.Logger.Error(p_Ex, "WARalgorithm: {Message}", p_Ex.Message);
                 System.Windows.Forms.MessageBox.Show(p_Ex.Message);
             }
         }
@@ -247,6 +251,7 @@ namespace CapeOpen
             }
             catch (System.Exception p_Ex)
             {
+                CrashLogger.Logger.Error(p_Ex, "WARalgorithm: {Message}", p_Ex.Message);
                 System.Windows.Forms.MessageBox.Show(p_Ex.Message);
             }
         }
@@ -764,6 +769,7 @@ namespace CapeOpen
             }
             catch (System.Exception p_Ex)
             {
+                CrashLogger.Logger.Error(p_Ex, "WARalgorithm: {Message}", p_Ex.Message);
                 System.Windows.Forms.MessageBox.Show(p_Ex.Message);
             }
         }
@@ -1369,6 +1375,7 @@ namespace CapeOpen
             }
             catch (System.Exception p_Ex)
             {
+                CrashLogger.Logger.Error(p_Ex, "WARalgorithm: {Message}", p_Ex.Message);
                 System.Windows.Forms.MessageBox.Show(p_Ex.Message);
             }
         }

@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using NLog;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -389,6 +390,7 @@ namespace CapeOpen
             }
             catch (System.Exception p_Ex)
             {
+                CrashLogger.Logger.Error(p_Ex, "MixerExample: {Message}", p_Ex.Message);
                 this.OnUnitOperationEndCalculation("Error - Material object does not support CAPE-OPEN Thermodynamics 1.0.");
                 CapeOpen.CapeInvalidOperationException ex = new CapeOpen.CapeInvalidOperationException("Material object does not support CAPE-OPEN Thermodynamics 1.0.", p_Ex);
                 this.throwException(ex);
@@ -401,6 +403,7 @@ namespace CapeOpen
             }
             catch (System.Exception p_Ex)
             {
+                CrashLogger.Logger.Error(p_Ex, "MixerExample: {Message}", p_Ex.Message);
                 this.OnUnitOperationEndCalculation("Error - Object connected to Inlet Port 1 does not support CAPE-OPEN Thermodynamics 1.0.");
                 CapeOpen.CapeInvalidOperationException ex = new CapeOpen.CapeInvalidOperationException("Object connected to Inlet Port 1 does not support CAPE-OPEN Thermodynamics 1.0.", p_Ex);
                 this.throwException(ex);
@@ -448,6 +451,7 @@ namespace CapeOpen
             }
             catch (System.Exception p_Ex)
             {
+                CrashLogger.Logger.Error(p_Ex, "MixerExample: {Message}", p_Ex.Message);
                 // Exception handling, wraps a COM exception, shows the message, and re-throws the excecption.
 
                 if (p_Ex is System.Runtime.InteropServices.COMException)
@@ -473,6 +477,7 @@ namespace CapeOpen
             }
             catch (System.Exception p_Ex)
             {
+                CrashLogger.Logger.Error(p_Ex, "MixerExample: {Message}", p_Ex.Message);
                 this.OnUnitOperationEndCalculation("Error - Material object does not support CAPE-OPEN Thermodynamics 1.0.");
                 CapeOpen.CapeInvalidOperationException ex = new CapeOpen.CapeInvalidOperationException("Material object does not support CAPE-OPEN Thermodynamics 1.0.", p_Ex);
                 this.throwException(ex);
@@ -485,6 +490,7 @@ namespace CapeOpen
             }
             catch (System.Exception p_Ex)
             {
+                CrashLogger.Logger.Error(p_Ex, "MixerExample: {Message}", p_Ex.Message);
                 this.OnUnitOperationEndCalculation("Error - Object connected to Inlet Port 1 does not support CAPE-OPEN Thermodynamics 1.0.");
                 CapeOpen.CapeInvalidOperationException ex = new CapeOpen.CapeInvalidOperationException("Object connected to Inlet Port 1 does not support CAPE-OPEN Thermodynamics 1.0.", p_Ex);
                 this.throwException(ex);
@@ -529,6 +535,7 @@ namespace CapeOpen
             }
             catch (System.Exception p_Ex)
             {
+                CrashLogger.Logger.Error(p_Ex, "MixerExample: {Message}", p_Ex.Message);
                 System.Runtime.InteropServices.COMException comException = (System.Runtime.InteropServices.COMException)p_Ex;
                 if (comException != null)
                 {
@@ -588,6 +595,7 @@ namespace CapeOpen
             }
             catch (System.Exception p_Ex)
             {
+                CrashLogger.Logger.Error(p_Ex, "MixerExample: {Message}", p_Ex.Message);
                 System.Runtime.InteropServices.COMException comException = (System.Runtime.InteropServices.COMException)p_Ex;
                 if (comException != null)
                 {
