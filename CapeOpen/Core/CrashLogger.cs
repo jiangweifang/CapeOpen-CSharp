@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Threading;
+using System.Windows.Forms;
 using NLog;
 using NLog.Config;
 using NLog.Targets;
@@ -107,11 +108,11 @@ namespace CapeOpen
                 // hosted by PMEs such as PRO/II / Aspen Plus / COFE.
                 try
                 {
-                    System.Windows.Forms.Application.SetUnhandledExceptionMode(
-                        System.Windows.Forms.UnhandledExceptionMode.CatchException, false);
+                    Application.SetUnhandledExceptionMode(
+                        UnhandledExceptionMode.CatchException, false);
                 }
                 catch { /* host may have already configured this; ignore */ }
-                System.Windows.Forms.Application.ThreadException += OnWinFormsThreadException;
+                Application.ThreadException += OnWinFormsThreadException;
 
                 s_logger.Info("CapeOpen CrashLogger initialized. Log directory: {0}. Host process: {1} (PID {2})",
                     LogDirectory,
