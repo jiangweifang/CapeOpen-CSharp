@@ -7,6 +7,7 @@
 - 原 .NET Framework CapeOpen.dll 通过 tlbexp 生成的 CLSID 已记录在 `docs/CapeOpen-TLB-CLSIDs.md`，**任何修改 ComVisible 类时必须查此文档取真实 GUID，绝不可编造**。
 - **需要 ComVisible(true) + `[Guid]` + `[ClassInterface(ClassInterfaceType.None)]` 的类**：模拟器通过 COM/TLB 直接访问（`CoCreateInstance` 实例化）的类，即 TLB 中注册了 CLSID 的类。GUID 必须与 `docs/CapeOpen-TLB-CLSIDs.md` 一致。
 - **应设为 ComVisible(false) 的类**：内部辅助类（如 CapeCalculator、CapeReportBase、CapeMaterialPort、CapeMaterialObject 等仅被 .NET 代码使用、模拟器不会通过 CLSID 创建的类），不需要 `[Guid]` 和 `[ClassInterface]`。
+- **COGuids.cs 和 CapeOpen-TLB-CLSIDs.md 是两个完全不同的东西**：COGuids.cs 包含 CAPE-OPEN 标准协议层的 IID（接口 GUID）和 CATID（组件类别 GUID），来自 CAPE-OPEN IDL 规范；CapeOpen-TLB-CLSIDs.md 包含本项目 .NET 实现类的 CLSID（来自 tlbexp 生成的 TLB），用于 [Guid("...")] 特性。两者互不重叠，不可混淆。
 
 ## 文件编码要求
 - 所有创建/编辑文件必须保证 UTF-8 编码（无 BOM 或带 BOM 视情况），尤其在 PowerShell 写文件时使用 -Encoding utf8 或 utf8NoBOM。

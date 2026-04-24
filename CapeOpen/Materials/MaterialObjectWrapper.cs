@@ -321,7 +321,7 @@ namespace CapeOpen
         /// Provides information regarding whether the object supports Thermodynamics version 1.1.
         /// </summary>
         /// <remarks>
-        /// The <see cref = "MaterialObjectWrapper1"/> class checks to determine whether the wrapped material object
+        /// The <see cref = "MaterialObjectWrapper"/> class checks to determine whether the wrapped material object
         /// supports CAPE-OPEN version 1.1 thrmoedynamics. This proprety indicates the result of that check.
         /// </remarks>
         /// <value>Indicates whetehr the wrapped material object supports CAPE-OPEN Thermodynamics varsion 1.1 interfaces.</value>

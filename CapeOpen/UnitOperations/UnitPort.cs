@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -304,33 +304,11 @@ namespace CapeOpen
                 //If the port is a material port
                 if (m_Type == CapePortType.CAPE_MATERIAL || m_Type == CapePortType.CAPE_ANY)
                 {
-                    // does the material object support both thermo 1.0 and 1.1?
-                    if (objectToConnect is ICapeThermoMaterialObjectCOM && objectToConnect is ICapeThermoMaterialCOM)
+                    // Does the material object support thermo 1.0 or 1.1 (or both)?
+                    if (objectToConnect is ICapeThermoMaterialObjectCOM || objectToConnect is ICapeThermoMaterialCOM)
                     {
-                        //use the material wrapper that exposes both interfaces.
+                        // MaterialObjectWrapper handles both thermo 1.0 and 1.1 automatically.
                         m_ConnectedNonSerializableObject = new MaterialObjectWrapper(objectToConnect);
-                        m_ConnectedObject = null;
-                        isConnectObjectSerializable = false;
-                        OnPortConnected(args);
-                        NotifyPropertyChanged("connectedObject");
-                        return;
-                    }
-                    // Does the material only support thermo 1.1?
-                    else if (objectToConnect is ICapeThermoMaterialCOM)
-                    {
-                        //then only use the material wrapper that exposes thermo 1.1
-                        m_ConnectedNonSerializableObject = new MaterialObjectWrapper11(objectToConnect);
-                        m_ConnectedObject = null;
-                        isConnectObjectSerializable = false;
-                        OnPortConnected(args);
-                        NotifyPropertyChanged("connectedObject");
-                        return;
-                    }
-                    //Does the thermo only support thermo 1.0?
-                    else if (objectToConnect is ICapeThermoMaterialObjectCOM)
-                    {
-                        // then use the wrapper that supports thermo 1.0.
-                        m_ConnectedNonSerializableObject = new MaterialObjectWrapper1(objectToConnect);
                         m_ConnectedObject = null;
                         isConnectObjectSerializable = false;
                         OnPortConnected(args);
