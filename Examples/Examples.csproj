@@ -1,15 +1,21 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net8.0-windows</TargetFramework>
+    <Platforms>x64;x86</Platforms>
     <OutputType>Library</OutputType>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <UseWindowsForms>true</UseWindowsForms>
+    <RootNamespace>CapeOpen</RootNamespace>
+    <AssemblyName>Examples</AssemblyName>
     <EnableComHosting>true</EnableComHosting>
-    <SignAssembly>false</SignAssembly>
-    <Platforms>x64;x86</Platforms>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\CapeOpen\CapeOpenKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <ComHostTypeLibrary Include="Tlb\Test.tlb" Id="1" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="NLog" Version="5.3.4" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CapeOpen\CapeOpen.csproj" />

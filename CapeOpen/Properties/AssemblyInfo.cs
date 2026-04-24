@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -18,6 +18,9 @@ using System.Runtime.InteropServices;
 // to COM components.  If you need to access a type in this assembly from 
 // COM, set the ComVisible attribute to true on that type.
 [assembly: ComVisible(true)]
+
+// Allow Examples project to access internal types (signed with same key)
+[assembly: InternalsVisibleTo("Examples, PublicKey=002400000480000094000000060200000024000052534131000400000100010055f2f4fcc818a4a9815ef59063d21701190dde7274ffcc4a0f44f4b4f5fed1e11d10a297a491c871a2eac4be683cfca40e29ebe47c2f97bc97a51a5393139026ea59fd9a32b61b3aa6c026b9d449ee7ee6625dd954ee114f3772cf3aa547290d9b0c1880c34af1e5160bf648518ef9ce8a607df78f449babb638fbf654f1c28b")]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("d80fc39b-897e-4038-a89e-d89cec9a5fa1")]

@@ -9,7 +9,7 @@ namespace Test
 {
     [Serializable]
     [ComVisible(true)]
-    [Guid("883D46FE-5713-424C-BF10-7ED34263CD6D")] // ICapeThermoMaterialObject_IID
+    [Guid("AA7EF99E-6938-484F-98B9-4BE9AC34F85E")]
     [Description("测试混合器模块。")]
     [CapeName("MyMixerTest")]
     [CapeDescription("一个用 C# 开发的测试 CO 单元模块。")]
@@ -21,10 +21,10 @@ namespace Test
     [CapeUnitOperation(true)]
     [CapeSupportsThermodynamics10(true)]
     [ClassInterface(ClassInterfaceType.None)]
-    public class MixerExample : CapeUnitBase
+    public class TestMixerExample : CapeUnitBase
     {
         /// <summary>
-        /// Creates an instance of the CMixerExample unit operation.
+        /// Creates an instance of the TestMixerExample unit operation.
         /// </summary>
         /// <remarks>
         /// This constructor demonstates the addition of a <see cref = "BooleanParameter"/>,
@@ -41,7 +41,7 @@ namespace Test
         /// class. The available parameter classes are <see cref="RealParameter"/>, <see cref="IntegerParameter"/>, 
         /// <see cref="BooleanParameter"/>, and <see cref="OptionParameter"/>.
         /// <code>
-		/// public MixerExample()
+		/// public TestMixerExample()
 		/// {
 		///     // Add Ports using the UnitPort constructor.
 		///     this.Ports.Add(new UnitPort("Inlet Port1", "Test Inlet Port1", CapePortDirection.CAPE_INLET, CapePortType.CAPE_MATERIAL));
@@ -69,7 +69,7 @@ namespace Test
 		/// }
 		/// </code>
         /// </example>
-        public MixerExample()
+        public TestMixerExample()
         {
             // Add Ports using the UnitPort constructor.
             Ports.Add(new UnitPort("输入端口1", "输入端口1", CapePortDirection.CAPE_INLET, CapePortType.CAPE_MATERIAL));
