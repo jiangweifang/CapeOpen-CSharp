@@ -1,0 +1,2039 @@
+[
+    {
+        "Unit":  "mol",
+        "Category":  "AmountOfSubstance",
+        "ConversionTimes":  1,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "US$",
+        "Category":  "Currency",
+        "ConversionTimes":  1,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "A/cm2",
+        "Category":  "CurrentDensity",
+        "ConversionTimes":  10000,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "mA/cm2",
+        "Category":  "CurrentDensity",
+        "ConversionTimes":  10,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "A/dm2",
+        "Category":  "CurrentDensity",
+        "ConversionTimes":  100,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "A/m2",
+        "Category":  "CurrentDensity",
+        "ConversionTimes":  1,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "mA/m2",
+        "Category":  "CurrentDensity",
+        "ConversionTimes":  0.001,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "A/in2",
+        "Category":  "CurrentDensity",
+        "ConversionTimes":  1550,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "A",
+        "Category":  "ElectricalCurrent",
+        "ConversionTimes":  1,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "m3/s",
+        "Category":  "FlowRate",
+        "ConversionTimes":  1,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "bbl/day",
+        "Category":  "FlowRate",
+        "ConversionTimes":  1.8401307E-06,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "bbl/hr",
+        "Category":  "FlowRate",
+        "ConversionTimes":  4.415E-05,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "ft3/day",
+        "Category":  "FlowRate",
+        "ConversionTimes":  3.2774128E-07,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "ft3/hr",
+        "Category":  "FlowRate",
+        "ConversionTimes":  7.8657907E-06,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "ft3/min",
+        "Category":  "FlowRate",
+        "ConversionTimes":  0.00047194744,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "ft3/s",
+        "Category":  "FlowRate",
+        "ConversionTimes":  0.028316846,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "gal/hr",
+        "Category":  "FlowRate",
+        "ConversionTimes":  1.0515033E-06,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "gal/min",
+        "Category":  "FlowRate",
+        "ConversionTimes":  6.3090196E-05,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "l/day",
+        "Category":  "FlowRate",
+        "ConversionTimes":  1.157407E-08,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "l/hr",
+        "Category":  "FlowRate",
+        "ConversionTimes":  2.7777778E-07,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "l/min",
+        "Category":  "FlowRate",
+        "ConversionTimes":  1.6666667E-05,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "l/s",
+        "Category":  "FlowRate",
+        "ConversionTimes":  0.001,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "l/year",
+        "Category":  "FlowRate",
+        "ConversionTimes":  3.1688087E-11,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "m3/day",
+        "Category":  "FlowRate",
+        "ConversionTimes":  1.1574074E-05,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "m3/hr",
+        "Category":  "FlowRate",
+        "ConversionTimes":  0.00027777778,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "m3/min",
+        "Category":  "FlowRate",
+        "ConversionTimes":  0.016666667,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "m3/year",
+        "Category":  "FlowRate",
+        "ConversionTimes":  3.1688087E-08,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "Mft3/day",
+        "Category":  "FlowRate",
+        "ConversionTimes":  0.000327741279,
+        "ConversionPlus":  0,
+        "Comments":  "1000 cubic feet per day "
+    },
+    {
+        "Unit":  "MMft3/day",
+        "Category":  "FlowRate",
+        "ConversionTimes":  0.327741279,
+        "ConversionPlus":  0,
+        "Comments":  "million cubic feet per day "
+    },
+    {
+        "Unit":  "MMft3/hr",
+        "Category":  "FlowRate",
+        "ConversionTimes":  7.8657907,
+        "ConversionPlus":  0,
+        "Comments":  "million cubic feet per hour "
+    },
+    {
+        "Unit":  "Ang",
+        "Category":  "Length",
+        "ConversionTimes":  1E-10,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "cm",
+        "Category":  "Length",
+        "ConversionTimes":  0.01,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "dm",
+        "Category":  "Length",
+        "ConversionTimes":  0.1,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "ft",
+        "Category":  "Length",
+        "ConversionTimes":  0.3048,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "in",
+        "Category":  "Length",
+        "ConversionTimes":  0.0254,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "km",
+        "Category":  "Length",
+        "ConversionTimes":  1000,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "m",
+        "Category":  "Length",
+        "ConversionTimes":  1,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "mi",
+        "Category":  "Length",
+        "ConversionTimes":  1609.344,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "mm",
+        "Category":  "Length",
+        "ConversionTimes":  0.001,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "nm",
+        "Category":  "Length",
+        "ConversionTimes":  1E-09,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "um",
+        "Category":  "Length",
+        "ConversionTimes":  1E-06,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "yd",
+        "Category":  "Length",
+        "ConversionTimes":  0.9144,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "cd",
+        "Category":  "Luminous",
+        "ConversionTimes":  1,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "oz",
+        "Category":  "Mass",
+        "ConversionTimes":  0.028349523,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "g",
+        "Category":  "Mass",
+        "ConversionTimes":  0.001,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "kg",
+        "Category":  "Mass",
+        "ConversionTimes":  1,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "lb",
+        "Category":  "Mass",
+        "ConversionTimes":  0.45359237,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "Mlb",
+        "Category":  "Mass",
+        "ConversionTimes":  453.59237,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "ton",
+        "Category":  "Mass",
+        "ConversionTimes":  1000,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "ton(long)",
+        "Category":  "Mass",
+        "ConversionTimes":  1016.0469,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "ton(short)",
+        "Category":  "Mass",
+        "ConversionTimes":  907.18474,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "C",
+        "Category":  "Temperature",
+        "ConversionTimes":  1,
+        "ConversionPlus":  273.15,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "F",
+        "Category":  "Temperature",
+        "ConversionTimes":  0.55555555,
+        "ConversionPlus":  255.37222,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "K",
+        "Category":  "Temperature",
+        "ConversionTimes":  1,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "kK",
+        "Category":  "Temperature",
+        "ConversionTimes":  1000,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "mK",
+        "Category":  "Temperature",
+        "ConversionTimes":  0.001,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "R",
+        "Category":  "Temperature",
+        "ConversionTimes":  0.5555555,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "Rnk",
+        "Category":  "Temperature",
+        "ConversionTimes":  0.5555555,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "day",
+        "Category":  "Time",
+        "ConversionTimes":  86400,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "hr",
+        "Category":  "Time",
+        "ConversionTimes":  3600,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "min",
+        "Category":  "Time",
+        "ConversionTimes":  60,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "ms",
+        "Category":  "Time",
+        "ConversionTimes":  0.001,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "ns",
+        "Category":  "Time",
+        "ConversionTimes":  1E-09,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "ps",
+        "Category":  "Time",
+        "ConversionTimes":  1E-12,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "s",
+        "Category":  "Time",
+        "ConversionTimes":  1,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "us",
+        "Category":  "Time",
+        "ConversionTimes":  1E-06,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "year",
+        "Category":  "Time",
+        "ConversionTimes":  31536000,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "mg/day",
+        "Category":  "MassFlowRate",
+        "ConversionTimes":  1.15741E-11,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "g/s",
+        "Category":  "MassFlowRate",
+        "ConversionTimes":  0.001,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "kg/day",
+        "Category":  "MassFlowRate",
+        "ConversionTimes":  1.157407417E-05,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "kg/hr",
+        "Category":  "MassFlowRate",
+        "ConversionTimes":  0.00027777778,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "kg/min",
+        "Category":  "MassFlowRate",
+        "ConversionTimes":  0.0166666667,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "kg/s",
+        "Category":  "MassFlowRate",
+        "ConversionTimes":  1,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "lb/day",
+        "Category":  "MassFlowRate",
+        "ConversionTimes":  5.249911667E-06,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "lb/hr",
+        "Category":  "MassFlowRate",
+        "ConversionTimes":  0.00012599788,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "lb/s",
+        "Category":  "MassFlowRate",
+        "ConversionTimes":  0.45359237,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "Mlb/hr",
+        "Category":  "MassFlowRate",
+        "ConversionTimes":  0.12599788,
+        "ConversionPlus":  0,
+        "Comments":  "1000 pounds (avdp) per hour "
+    },
+    {
+        "Unit":  "ton/day",
+        "Category":  "MassFlowRate",
+        "ConversionTimes":  0.0115741,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "ton/hr",
+        "Category":  "MassFlowRate",
+        "ConversionTimes":  0.27777778,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "ton/year",
+        "Category":  "MassFlowRate",
+        "ConversionTimes":  3.1709792E-05,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "g/cm2",
+        "Category":  "kg/m2 ",
+        "ConversionTimes":  10,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "kg/cm2",
+        "Category":  "kg/m2 ",
+        "ConversionTimes":  0.0001,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "kg/m2",
+        "Category":  " kg/m2 ",
+        "ConversionTimes":  1,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "lb/ft2",
+        "Category":  " kg/m2 ",
+        "ConversionTimes":  0.04214,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "poundals/ft2",
+        "Category":  "kg/m2 ",
+        "ConversionTimes":  0.15175047,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "g/100ml",
+        "Category":  "DensityAndMassConcentration",
+        "ConversionTimes":  10,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "g/cm3",
+        "Category":  "DensityAndMassConcentration",
+        "ConversionTimes":  1000,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "g/dm3",
+        "Category":  "DensityAndMassConcentration",
+        "ConversionTimes":  1,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "g/l",
+        "Category":  "DensityAndMassConcentration",
+        "ConversionTimes":  1,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "g/m3",
+        "Category":  "DensityAndMassConcentration",
+        "ConversionTimes":  0.001,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "g/ml",
+        "Category":  "DensityAndMassConcentration",
+        "ConversionTimes":  1000,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "kg/cm3",
+        "Category":  "DensityAndMassConcentration",
+        "ConversionTimes":  1000000,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "kg/dm3",
+        "Category":  "DensityAndMassConcentration",
+        "ConversionTimes":  1000,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "kg/l",
+        "Category":  "DensityAndMassConcentration",
+        "ConversionTimes":  1000,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "kg/m3",
+        "Category":  "DensityAndMassConcentration",
+        "ConversionTimes":  1,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "lb/ft3",
+        "Category":  "DensityAndMassConcentration",
+        "ConversionTimes":  16.018463,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "lb/gal",
+        "Category":  "DensityAndMassConcentration",
+        "ConversionTimes":  119.82643,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "OZ/gal",
+        "Category":  "DensityAndMassConcentration",
+        "ConversionTimes":  7.489152,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "lb/in3",
+        "Category":  "DensityAndMassConcentration",
+        "ConversionTimes":  27679.9,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "mg/cm3",
+        "Category":  "DensityAndMassConcentration",
+        "ConversionTimes":  1,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "mg/l",
+        "Category":  "DensityAndMassConcentration",
+        "ConversionTimes":  0.001,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "mg/m3",
+        "Category":  "DensityAndMassConcentration",
+        "ConversionTimes":  1E-06,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "g/100g",
+        "Category":  " WeightFraction ",
+        "ConversionTimes":  0.01,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "g/g",
+        "Category":  " WeightFraction ",
+        "ConversionTimes":  1,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "g/kg",
+        "Category":  " WeightFraction ",
+        "ConversionTimes":  0.001,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "kg/kg",
+        "Category":  " WeightFraction ",
+        "ConversionTimes":  1,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "mg/kg",
+        "Category":  " WeightFraction ",
+        "ConversionTimes":  1E-06,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "ppm",
+        "Category":  " WeightFraction ",
+        "ConversionTimes":  1E-06,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "weight %",
+        "Category":  " WeightFraction ",
+        "ConversionTimes":  0.01,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "weight fraction",
+        "Category":  " WeightFraction ",
+        "ConversionTimes":  1,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "cm2",
+        "Category":  "Area",
+        "ConversionTimes":  0.0001,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "dm2",
+        "Category":  "Area",
+        "ConversionTimes":  0.01,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "ft2",
+        "Category":  "Area",
+        "ConversionTimes":  0.09290304,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "in2",
+        "Category":  "Area",
+        "ConversionTimes":  0.00064516,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "m2",
+        "Category":  "Area",
+        "ConversionTimes":  1,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "mm2",
+        "Category":  "Area",
+        "ConversionTimes":  1E-06,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "nm2",
+        "Category":  "Area",
+        "ConversionTimes":  1E-18,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "bbl/ft2.hr",
+        "Category":  "Velocity",
+        "ConversionTimes":  0.00047535474,
+        "ConversionPlus":  0,
+        "Comments":  "barrel per square foot and hour "
+    },
+    {
+        "Unit":  "cm/hr",
+        "Category":  "Velocity",
+        "ConversionTimes":  2.7777778E-06,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "cm/s",
+        "Category":  "Velocity",
+        "ConversionTimes":  0.01,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "cm2/cm.s",
+        "Category":  "Velocity",
+        "ConversionTimes":  0.01,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "ft/hr",
+        "Category":  "Velocity",
+        "ConversionTimes":  8.46666667E-05,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "ft/min",
+        "Category":  "Velocity",
+        "ConversionTimes":  0.00508,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "ft/s",
+        "Category":  "Velocity",
+        "ConversionTimes":  0.3048,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "ft2/ft.hr",
+        "Category":  "Velocity",
+        "ConversionTimes":  8.4666667E-05,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "ft2/ft.s",
+        "Category":  "Velocity",
+        "ConversionTimes":  0.3048,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "ft3/ft2.s",
+        "Category":  "Velocity",
+        "ConversionTimes":  0.3048,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "ft3/ft2.hr",
+        "Category":  "Velocity",
+        "ConversionTimes":  8.46666667E-05,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "gal/ft2.min",
+        "Category":  "Velocity",
+        "ConversionTimes":  0.000679097,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "km/hr",
+        "Category":  "Velocity",
+        "ConversionTimes":  0.27777778,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "km/s",
+        "Category":  "Velocity",
+        "ConversionTimes":  1000,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "l/m2.hr",
+        "Category":  "Velocity",
+        "ConversionTimes":  2.7778E-07,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "l/m2.s",
+        "Category":  "Velocity",
+        "ConversionTimes":  0.001,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "m/hr",
+        "Category":  "Velocity",
+        "ConversionTimes":  0.000277777778,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "m/min",
+        "Category":  "Velocity",
+        "ConversionTimes":  0.0166666667,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "m/s",
+        "Category":  "Velocity",
+        "ConversionTimes":  1,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "m2/m.hr",
+        "Category":  "Velocity",
+        "ConversionTimes":  0.00027777778,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "m2/m.s",
+        "Category":  "Velocity",
+        "ConversionTimes":  1,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "m3/m2.s",
+        "Category":  "Velocity",
+        "ConversionTimes":  1,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "m3/m2.min",
+        "Category":  "Velocity",
+        "ConversionTimes":  0.016666667,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "mile/hr",
+        "Category":  "Velocity",
+        "ConversionTimes":  0.44704,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "cm-1",
+        "Category":  "m-1 ",
+        "ConversionTimes":  100,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "cm2/cm3",
+        "Category":  "m-1 ",
+        "ConversionTimes":  100,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "ft-1",
+        "Category":  "m-1 ",
+        "ConversionTimes":  3.28084,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "ft2/ft3",
+        "Category":  "m-1 ",
+        "ConversionTimes":  3.2808,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "in-1",
+        "Category":  "m-1 ",
+        "ConversionTimes":  39.370079,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "in2/in3",
+        "Category":  "m-1 ",
+        "ConversionTimes":  0.39370079,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "m-1",
+        "Category":  "m-1 ",
+        "ConversionTimes":  1,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "m2/m3",
+        "Category":  "m-1 ",
+        "ConversionTimes":  1,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "mm-1",
+        "Category":  "m-1 ",
+        "ConversionTimes":  1000,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "mm2/mm3",
+        "Category":  "m-1 ",
+        "ConversionTimes":  1000,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "g/mol",
+        "Category":  "kg/mol ",
+        "ConversionTimes":  0.001,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "kg/mol",
+        "Category":  "kg/mol ",
+        "ConversionTimes":  1,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "bbl/ft.hr",
+        "Category":  "Accelerate",
+        "ConversionTimes":  0.00091134442,
+        "ConversionPlus":  0,
+        "Comments":  "barrel/(foot and hour) "
+    },
+    {
+        "Unit":  "cm2/s",
+        "Category":  "Accelerate",
+        "ConversionTimes":  0.0001,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "cSt",
+        "Category":  "Accelerate",
+        "ConversionTimes":  1E-06,
+        "ConversionPlus":  0,
+        "Comments":  "centistokes "
+    },
+    {
+        "Unit":  "ft2/hr",
+        "Category":  "Accelerate",
+        "ConversionTimes":  2.58064E-05,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "ft2/min",
+        "Category":  "Accelerate",
+        "ConversionTimes":  0.001548385,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "ft3/ft.hr",
+        "Category":  "Accelerate",
+        "ConversionTimes":  2.58064E-05,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "l/hr.m",
+        "Category":  "Accelerate",
+        "ConversionTimes":  2.7777778E-07,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "m2/day",
+        "Category":  "Accelerate",
+        "ConversionTimes":  1.1574074E-05,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "m2/hr",
+        "Category":  "Accelerate",
+        "ConversionTimes":  0.00027777778,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "m2/s",
+        "Category":  "Accelerate",
+        "ConversionTimes":  1,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "m2/year",
+        "Category":  "Accelerate",
+        "ConversionTimes":  3.1688087E-08,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "m3/m.min",
+        "Category":  "Accelerate",
+        "ConversionTimes":  0.016666667,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "m3/m.s",
+        "Category":  "Accelerate",
+        "ConversionTimes":  1,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "mm2/s",
+        "Category":  "Accelerate",
+        "ConversionTimes":  1E-06,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "mSt",
+        "Category":  "Accelerate",
+        "ConversionTimes":  1E-07,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "St",
+        "Category":  "Accelerate",
+        "ConversionTimes":  0.0001,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "m3/K",
+        "Category":  "m3/K ",
+        "ConversionTimes":  1,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "cm3/100g",
+        "Category":  "SpecificVolume",
+        "ConversionTimes":  1E-05,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "cm3/g",
+        "Category":  "SpecificVolume",
+        "ConversionTimes":  0.001,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "dm3/g",
+        "Category":  "SpecificVolume",
+        "ConversionTimes":  1,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "dm3/kg",
+        "Category":  "SpecificVolume",
+        "ConversionTimes":  0.001,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "ft3/lb",
+        "Category":  "SpecificVolume",
+        "ConversionTimes":  0.062427962,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "l/g",
+        "Category":  "SpecificVolume",
+        "ConversionTimes":  1,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "l/kg",
+        "Category":  "SpecificVolume",
+        "ConversionTimes":  0.001,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "m3/kg",
+        "Category":  "SpecificVolume",
+        "ConversionTimes":  1,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "ml/g",
+        "Category":  "SpecificVolume",
+        "ConversionTimes":  0.001,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "dm3/mol",
+        "Category":  "m3/mol ",
+        "ConversionTimes":  0.001,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "ft3/lbmol",
+        "Category":  "m3/mol ",
+        "ConversionTimes":  6.242796029E-05,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "l/mol",
+        "Category":  "m3/mol ",
+        "ConversionTimes":  0.001,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "m3/kmol",
+        "Category":  "m3/mol ",
+        "ConversionTimes":  0.001,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "m3/mol",
+        "Category":  "m3/mol ",
+        "ConversionTimes":  1,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "ml/mol",
+        "Category":  "m3/mol ",
+        "ConversionTimes":  1E-06,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "dmol/m3",
+        "Category":  "MolarDensity",
+        "ConversionTimes":  0.1,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "kmol/m3",
+        "Category":  "MolarDensity",
+        "ConversionTimes":  1000,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "lbmol/ft3",
+        "Category":  "MolarDensity",
+        "ConversionTimes":  16018.463,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "lbmol/gal",
+        "Category":  "MolarDensity",
+        "ConversionTimes":  119826.43,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "mmol/cm3",
+        "Category":  "MolarDensity",
+        "ConversionTimes":  0.001,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "mmol/l",
+        "Category":  "MolarDensity",
+        "ConversionTimes":  1,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "mol/cm3",
+        "Category":  "MolarDensity",
+        "ConversionTimes":  1000000,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "mol/dm3",
+        "Category":  "MolarDensity",
+        "ConversionTimes":  1000,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "mol/l",
+        "Category":  "MolarDensity",
+        "ConversionTimes":  1000,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "mol/m3",
+        "Category":  "MolarDensity",
+        "ConversionTimes":  1,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "kmol/day",
+        "Category":  "MolarFlowRate",
+        "ConversionTimes":  0.01157407417,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "kmol/hr",
+        "Category":  "MolarFlowRate",
+        "ConversionTimes":  0.27777778,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "kmol/s",
+        "Category":  "MolarFlowRate",
+        "ConversionTimes":  1000,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "lbmol/hr",
+        "Category":  "MolarFlowRate",
+        "ConversionTimes":  0.12599788,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "lbmol/s",
+        "Category":  "MolarFlowRate",
+        "ConversionTimes":  453.59237,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "mol/min",
+        "Category":  "MolarFlowRate",
+        "ConversionTimes":  0.016666667,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "mol/s",
+        "Category":  "MolarFlowRate",
+        "ConversionTimes":  1,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "dyn",
+        "Category":  "Force",
+        "ConversionTimes":  1E-05,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "lb(force)",
+        "Category":  "Force",
+        "ConversionTimes":  4.4482216,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "N",
+        "Category":  "Force",
+        "ConversionTimes":  1,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "ata",
+        "Category":  "Pressure",
+        "ConversionTimes":  98066.5,
+        "ConversionPlus":  0,
+        "Comments":  " absolute atmospheres "
+    },
+    {
+        "Unit":  "atm",
+        "Category":  "Pressure",
+        "ConversionTimes":  101325,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "bar",
+        "Category":  "Pressure",
+        "ConversionTimes":  100000,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "cmH2O",
+        "Category":  "Pressure",
+        "ConversionTimes":  98.063754,
+        "ConversionPlus":  0,
+        "Comments":  "cm of water column (pressure) "
+    },
+    {
+        "Unit":  "GPa",
+        "Category":  "Pressure",
+        "ConversionTimes":  1000000000,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "HPa",
+        "Category":  "Pressure",
+        "ConversionTimes":  100,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "inH2O",
+        "Category":  "Pressure",
+        "ConversionTimes":  249.0889,
+        "ConversionPlus":  0,
+        "Comments":  "inches of water columns (pressure) "
+    },
+    {
+        "Unit":  "inHg(32F)",
+        "Category":  "Pressure",
+        "ConversionTimes":  3386.39,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "inHg(60F)",
+        "Category":  "Pressure",
+        "ConversionTimes":  3332.69,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "kbar",
+        "Category":  "Pressure",
+        "ConversionTimes":  100000000,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "kg(force)/cm2",
+        "Category":  "Pressure",
+        "ConversionTimes":  98066.5,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "kN/m2",
+        "Category":  "Pressure",
+        "ConversionTimes":  1000,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "kp/cm2",
+        "Category":  "Pressure",
+        "ConversionTimes":  98066.5,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "kp/m2",
+        "Category":  "Pressure",
+        "ConversionTimes":  9.80665,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "kPa",
+        "Category":  "Pressure",
+        "ConversionTimes":  1000,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "lb(force)/in2",
+        "Category":  "Pressure",
+        "ConversionTimes":  6894.76,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "lb/in2",
+        "Category":  "Pressure",
+        "ConversionTimes":  6894.76,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "mbar",
+        "Category":  "Pressure",
+        "ConversionTimes":  100,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "mmH2O",
+        "Category":  "Pressure",
+        "ConversionTimes":  9.806348,
+        "ConversionPlus":  0,
+        "Comments":  "mm of water column "
+    },
+    {
+        "Unit":  "mmHg",
+        "Category":  "Pressure",
+        "ConversionTimes":  133.3223684,
+        "ConversionPlus":  0,
+        "Comments":  "mm of Hg column (Torr) "
+    },
+    {
+        "Unit":  "MN/m2",
+        "Category":  "Pressure",
+        "ConversionTimes":  1000000,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "mPa",
+        "Category":  "Pressure",
+        "ConversionTimes":  0.001,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "MPa",
+        "Category":  "Pressure",
+        "ConversionTimes":  1000000,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "mTorr",
+        "Category":  "Pressure",
+        "ConversionTimes":  0.1333224,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "N/m2",
+        "Category":  "Pressure",
+        "ConversionTimes":  1,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "Pa",
+        "Category":  "Pressure",
+        "ConversionTimes":  1,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "psi",
+        "Category":  "Pressure",
+        "ConversionTimes":  6894.7573,
+        "ConversionPlus":  0,
+        "Comments":  "pounds per square inch "
+    },
+    {
+        "Unit":  "Torr",
+        "Category":  "Pressure",
+        "ConversionTimes":  133.3224,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "bbl",
+        "Category":  "Volume",
+        "ConversionTimes":  0.15898729,
+        "ConversionPlus":  0,
+        "Comments":  "barrel "
+    },
+    {
+        "Unit":  "cm3",
+        "Category":  "Volume",
+        "ConversionTimes":  1E-06,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "dm3",
+        "Category":  "Volume",
+        "ConversionTimes":  0.001,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "ft3",
+        "Category":  "Volume",
+        "ConversionTimes":  0.028316847,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "gal",
+        "Category":  "Volume",
+        "ConversionTimes":  0.0037854118,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "in3",
+        "Category":  "Volume",
+        "ConversionTimes":  1.6387064E-05,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "l",
+        "Category":  "Volume",
+        "ConversionTimes":  0.001,
+        "ConversionPlus":  0,
+        "Comments":  "liters "
+    },
+    {
+        "Unit":  "m3",
+        "Category":  "Volume",
+        "ConversionTimes":  1,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "ml",
+        "Category":  "Volume",
+        "ConversionTimes":  1E-06,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "V",
+        "Category":  "Voltage",
+        "ConversionTimes":  1,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "day-1",
+        "Category":  "s-1 ",
+        "ConversionTimes":  1.1574074E-05,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "GHz",
+        "Category":  "s-1 ",
+        "ConversionTimes":  1000000000,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "kHz",
+        "Category":  " s-1 ",
+        "ConversionTimes":  1000,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "MHz",
+        "Category":  "s-1 ",
+        "ConversionTimes":  1000000,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "rad/s",
+        "Category":  "s-1 ",
+        "ConversionTimes":  0.15915475,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "year-1",
+        "Category":  " s-1 ",
+        "ConversionTimes":  3.1688088E-08,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "hr-1",
+        "Category":  "s-1 ",
+        "ConversionTimes":  0.000277777777777777,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "min-1",
+        "Category":  "s-1 ",
+        "ConversionTimes":  0.0166666666666667,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "s-1",
+        "Category":  "s-1 ",
+        "ConversionTimes":  1,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "BTU",
+        "Category":  "Energy",
+        "ConversionTimes":  1055.0559,
+        "ConversionPlus":  0,
+        "Comments":  "Britsh thermal unit "
+    },
+    {
+        "Unit":  "cal",
+        "Category":  "Energy",
+        "ConversionTimes":  4.1868,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "erg",
+        "Category":  "Energy",
+        "ConversionTimes":  1E-07,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "eV",
+        "Category":  "Energy",
+        "ConversionTimes":  1.6021892E-19,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "GJ",
+        "Category":  "Energy",
+        "ConversionTimes":  1000000000,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "J",
+        "Category":  "Energy",
+        "ConversionTimes":  1,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "kcal",
+        "Category":  "Energy",
+        "ConversionTimes":  4186.8,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "kJ",
+        "Category":  "Energy",
+        "ConversionTimes":  1000,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "kp.m",
+        "Category":  "Energy",
+        "ConversionTimes":  9.80665,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "kW.hr",
+        "Category":  "Energy",
+        "ConversionTimes":  3600000,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "mJ",
+        "Category":  "Energy",
+        "ConversionTimes":  0.001,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "MMBTU",
+        "Category":  "Energy",
+        "ConversionTimes":  1055055900,
+        "ConversionPlus":  0,
+        "Comments":  "million BTUs "
+    },
+    {
+        "Unit":  "MMkcal",
+        "Category":  "Energy",
+        "ConversionTimes":  4186800000,
+        "ConversionPlus":  0,
+        "Comments":  "million kilocalories "
+    },
+    {
+        "Unit":  "BTU/hr",
+        "Category":  "Power",
+        "ConversionTimes":  0.29307107,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "cal/hr",
+        "Category":  "Power",
+        "ConversionTimes":  0.001163,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "cal/s",
+        "Category":  "Power",
+        "ConversionTimes":  4.1868,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "GJ/hr",
+        "Category":  "Power",
+        "ConversionTimes":  277777.78,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "Watt",
+        "Category":  "Power",
+        "ConversionTimes":  1,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "Watt/K",
+        "Category":  "Heat Transfer Coefficient",
+        "ConversionTimes":  1,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "J/s",
+        "Category":  "Power",
+        "ConversionTimes":  1,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "kcal/hr",
+        "Category":  "Power",
+        "ConversionTimes":  1.1629833,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "kJ/hr",
+        "Category":  "Power",
+        "ConversionTimes":  0.2777777778,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "kJ/min",
+        "Category":  "Power",
+        "ConversionTimes":  16.666667,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "kJ/s",
+        "Category":  "Power",
+        "ConversionTimes":  1000,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "MJ/hr",
+        "Category":  "Power",
+        "ConversionTimes":  277.77778,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "MMBTU/day",
+        "Category":  "Power",
+        "ConversionTimes":  12211.29458,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "MMBTU/hr",
+        "Category":  "Power",
+        "ConversionTimes":  293071.07,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "MMkcal/day",
+        "Category":  "Power",
+        "ConversionTimes":  48457.6375,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "MMkcal/hr",
+        "Category":  "Power",
+        "ConversionTimes":  1162983.3,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "mol/(sec1m2)",
+        "Category":  "MolarFlowRateDensity",
+        "ConversionTimes":  1,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "mol/(sec1dm2)",
+        "Category":  "MolarFlowRateDensity",
+        "ConversionTimes":  100,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "mol/m2",
+        "Category":  "MolarPlateDensity",
+        "ConversionTimes":  1,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "mol/dm2",
+        "Category":  "MolarPlateDensity",
+        "ConversionTimes":  100,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "",
+        "Category":  "Dimensionless",
+        "ConversionTimes":  1,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "mol/mol",
+        "Category":  "Dimensionless",
+        "ConversionTimes":  1,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "g/100g",
+        "Category":  "Dimensionless",
+        "ConversionTimes":  0.01,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "g/kg",
+        "Category":  "Dimensionless",
+        "ConversionTimes":  0.001,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    },
+    {
+        "Unit":  "kg/kg",
+        "Category":  "Dimensionless",
+        "ConversionTimes":  1,
+        "ConversionPlus":  0,
+        "Comments":  "kg solute per kg solvent "
+    },
+    {
+        "Unit":  "mg/kg",
+        "Category":  "Dimensionless",
+        "ConversionTimes":  1E-06,
+        "ConversionPlus":  0,
+        "Comments":  "0"
+    }
+]

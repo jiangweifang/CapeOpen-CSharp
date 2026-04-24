@@ -1,166 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Xml;
+using Newtonsoft.Json;
 
 namespace CapeOpen
 {
-
-    /// <summary>
-    /// Provides information related to a unit of measure associated with a parameter.
-    /// </summary>
-    /// <remarks>
-    /// <para>The unit of maesure can be either an System Internation (SI) or customary unit. Each unit is assigned to a 
-    /// <see cref = "unitCategory"/> that has information related to the dimensionality of the unit.</para>
-    /// </remarks>
-    struct unit
-    {
-        /// <summary>
-        /// The name of the unit of measure
-        /// </summary>
-        /// <remarks>The common name of the unit of measure. Typically, this field represents the abbreviation for the unit.</remarks>
-        public String Name;
-        /// <summary>
-        /// A description of the unit of measure
-        /// </summary>
-        /// <remarks>The description of the unit of measure.</remarks>
-        public String Description;
-        /// <summary>
-        /// The category  of the unit of measure
-        /// </summary>
-        /// <remarks><para>The category for a unit of measure defines the dimensionality of the unit.</para>
-        /// <para>The dimensionality of the parameter represents the physical dimensional axes of this parameter. It 
-        /// is expected that the dimensionality must cover at least 6 fundamental axes (length, mass, time, angle, 
-        /// temperature and charge). A possible implementation could consist in being a constant length array vector 
-        /// that contains the exponents of each basic SI unit, following directives of SI-brochure (from 
-        /// http://www.bipm.fr/). So if we agree on order &lt;m kg s A K,&gt; ... velocity would be &lt;1,0,-1,0,0,0&gt;: 
-        /// that is m1 * s-1 =m/s. We have suggested to the  CO Scientific Committee to use the SI base units plus the 
-        /// SI derived units with special symbols (for a better usability and for allowing the definition of angles).
-        /// </para>
-        /// </remarks>
-        public String Category;
-        /// <summary>
-        /// A conversion factor used to multiply the value of the measurement by to convert the unit to its SI
-        /// equivalent.
-        /// </summary>
-        /// <remarks>
-        /// <para>Units are converted to and from the SI equivalent for the unit category. Unit conversions are 
-        /// accomplished by first adding any offset, stored in <see cref = "ConversionPlus"/> to the value of the unit. 
-        /// The sum is then multiplied by the value of the <see cref = "ConversionTimes"/> for the unit to get the 
-        /// measured value in SI units.</para>
-        /// </remarks>
-        public double ConversionTimes;
-        /// <summary>
-        /// An offset factor used in converting the value of the measurement to its SI equivalent.
-        /// </summary>
-        /// <remarks>
-        /// <para>Units are converted to and from the SI equivalent for the unit category. Unit conversions are 
-        /// accomplished by first adding any offset, stored in <see cref = "ConversionPlus"/> to the value of the unit. 
-        /// The sum is then multiplied by the value of the <see cref = "ConversionTimes"/> for the unit to get the 
-        /// measured value in SI units.</para>
-        /// </remarks>
-        public double ConversionPlus;
-    };
-
-    struct unitCategory
-    {
-        /// <summary>
-        /// Gets the name of the unit category, e.g. pressure, tempurature.
-        /// </summary>
-        /// <remarks>
-        /// <para>The unit category repsresents the unique combination of dimensions (mass, length, 
-        /// time, temperature, amount of substance (moles), electrical current, luminosity) associated with a particular
-        /// unit of measure.
-        /// </para>
-        /// </remarks>
-        public String Name;
-        /// <summary>
-        /// Gets the display unit for the parameter. Used by AspenPlus(TM).
-        /// </summary>
-        /// <remarks>
-        /// <para>DisplayUnits defines the unit of measurement symbol for a parameter.</para>
-        /// <para>Note: The symbol must be one of the uppercase strings recognized by Aspen
-        /// Plus to ensure that it can perform unit of measurement conversions on the 
-        /// parameter value. The system converts the parameter's value from SI units for
-        /// display in the data browser and converts updated values back into SI.
-        /// </para>
-        /// </remarks>
-        public String AspenUnit;
-        /// <summary>
-        /// Gets the name of the SI unit associated with the unit category, e.g. Pascals for pressure.
-        /// </summary>
-        /// <remarks>
-        /// <para>The SI unit is the basis for conversions between any two units of the same category, either SI or 
-        /// customary.
-        /// </para>
-        /// </remarks>
-        public String SI_Unit;
-        /// <summary>
-        /// Gets the mass dimensionality associated with the unit category.
-        /// </summary>
-        /// <remarks>
-        /// <para>The mass dimensionality of the unit category.
-        /// </para>
-        /// </remarks>
-        public double Mass;
-        /// <summary>
-        /// Gets the time dimensionality associated with the unit category.
-        /// </summary>
-        /// <remarks>
-        /// <para>The time dimensionality of the unit category.
-        /// </para>
-        /// </remarks>
-        public double Time;
-        /// <summary>
-        /// Gets the length dimensionality associated with the unit category.
-        /// </summary>
-        /// <remarks>
-        /// <para>The length dimensionality of the unit category.
-        /// </para>
-        /// </remarks>
-        public double Length;
-        /// <summary>
-        /// Gets the electrical current (amperage) dimensionality associated with the unit category.
-        /// </summary>
-        /// <remarks>
-        /// <para>The electrical current (amperage) dimensionality of the unit category.
-        /// </para>
-        /// </remarks>
-        public double ElectricalCurrent;
-        /// <summary>
-        /// Gets the temperature dimensionality associated with the unit category.
-        /// </summary>
-        /// <remarks>
-        /// <para>The temperature dimensionality of the unit category.
-        /// </para>
-        /// </remarks>
-        public double Temperature;
-        /// <summary>
-        /// Gets the amount of substance (moles) dimensionality associated with the unit category.
-        /// </summary>
-        /// <remarks>
-        /// <para>The amount of substance (moles) dimensionality of the unit category.
-        /// </para>
-        /// </remarks>
-        public double AmountOfSubstance;
-        /// <summary>
-        /// Gets the luminousity dimensionality associated with the unit category.
-        /// </summary>
-        /// <remarks>
-        /// <para>The luminousity dimensionality of the unit category.
-        /// </para>
-        /// </remarks>
-        public double Luminous;
-        /// <summary>
-        /// Gets the financial currency dimensionality associated with the unit category.
-        /// </summary>
-        /// <remarks>
-        /// <para>The financial currency dimensionality of the unit category.
-        /// </para>
-        /// </remarks>
-        public double Currency;
-    };
 
     /// <summary>
     /// Static class representing support for CAPE-OPEN dimensionalty and units of measures for real-valued
@@ -178,99 +23,103 @@ namespace CapeOpen
         /// <summary>
         /// Initializes the static fields of the <see cref = "CDimensions"/> class
         /// </summary>
-        /// <remarks>Loads units and unit category data from XML files.</remarks>
+        /// <remarks>Loads units and unit category data from JSON files.</remarks>
         static CDimensions()
         {
             units = new System.Collections.ArrayList();
             unitCategories = new System.Collections.ArrayList();
             System.AppDomain domain = System.AppDomain.CurrentDomain;
-            //System.Reflection.Assembly myAssembly = System.Reflection.Assembly.GetExecutingAssembly();
-            //System.IO.Stream resStream = myAssembly.GetManifestResourceStream("CapeOpen.Resources.units.xml.resources");
-            //System.Resources.ResourceReader resReader = new System.Resources.ResourceReader(resStream);
-            //System.Collections.IDictionaryEnumerator en = resReader.GetEnumerator();
-            //String temp = String.Empty;
-            //while (en.MoveNext())
-            //{
-            //    if (en.Key.ToString() == "units") temp = en.Value.ToString();
-            //}
-            System.Xml.XmlDocument reader = new System.Xml.XmlDocument();
-            reader.LoadXml(Properties.Resources.units);
-            System.Xml.XmlNodeList list = reader.SelectNodes("Units/Unit_Specs");
-            System.Globalization.CultureInfo ci = new System.Globalization.CultureInfo(0x0409, false);
-            for (int i = 0; i < list.Count; i++)
+
+            // Load units from embedded JSON resource
+            var unitList = JsonConvert.DeserializeObject<List<unit>>(Properties.Resources.units);
+            foreach (var u in unitList)
             {
-                unit newUnit;
-                String UnitName = list[i].SelectSingleNode("Unit").InnerText;
-                newUnit.Name = UnitName.Trim();
-                newUnit.Description = "";
-                newUnit.Category = list[i].SelectSingleNode("Category").InnerText;
-                newUnit.ConversionTimes = Convert.ToDouble(list[i].SelectSingleNode("ConversionTimes").InnerText, ci.NumberFormat);
-                newUnit.ConversionPlus = Convert.ToDouble(list[i].SelectSingleNode("ConversionPlus").InnerText, ci.NumberFormat);
+                var newUnit = u;
+                newUnit.Name = u.Name?.Trim();
                 units.Add(newUnit);
             }
-            String userUnitPath = String.Concat(domain.BaseDirectory, "//data//user_defined_UnitsResult.XML");
+
+            // Load user-defined units from runtime file path (JSON or XML)
+            String userUnitPath = String.Concat(domain.BaseDirectory, "//data//user_defined_UnitsResult.json");
             if (System.IO.File.Exists(userUnitPath))
             {
-                reader.Load(userUnitPath);
-                list = reader.SelectNodes("Units/Unit_Specs");
-                for (int i = 0; i < list.Count; i++)
+                string json = System.IO.File.ReadAllText(userUnitPath);
+                var userUnits = JsonConvert.DeserializeObject<List<unit>>(json);
+                foreach (var u in userUnits)
                 {
-                    unit newUnit = new unit();
-                    String UnitName = list[i].SelectSingleNode("Unit").InnerText;
-                    newUnit.Name = UnitName.Trim();
-                    newUnit.Category = list[i].SelectSingleNode("Category").InnerText;
-                    newUnit.ConversionTimes = Convert.ToDouble(list[i].SelectSingleNode("ConversionTimes").InnerText, ci.NumberFormat);
-                    newUnit.ConversionPlus = Convert.ToDouble(list[i].SelectSingleNode("ConversionPlus").InnerText, ci.NumberFormat);
+                    var newUnit = u;
+                    newUnit.Name = u.Name?.Trim();
                     units.Add(newUnit);
                 }
             }
-            //resStream = myAssembly.GetManifestResourceStream("CapeOpen.Resources.unitCategories.xml.resources");
-            //resReader = new System.Resources.ResourceReader(resStream);
-            //en = resReader.GetEnumerator();
-            //while (en.MoveNext())
-            //{
-            //    if (en.Key.ToString() == "unitCategories") temp = en.Value.ToString();
-            //}
-            reader.LoadXml(Properties.Resources.unitCategories);
-            list = reader.SelectNodes("CategorySpecifications/Category_Spec");
-            for (int i = 0; i < list.Count; i++)
+            else
             {
-                String UnitName = list[i].SelectSingleNode("Category").InnerText;
-                unitCategory category;
-                category.Name = UnitName;
-                category.AspenUnit = list[i].SelectSingleNode("Aspen").InnerText;
-                category.SI_Unit = list[i].SelectSingleNode("SI_Unit").InnerText;
-                category.Mass = Convert.ToDouble(list[i].SelectSingleNode("Mass").InnerText);
-                category.Time = Convert.ToDouble(list[i].SelectSingleNode("Time").InnerText);
-                category.Length = Convert.ToDouble(list[i].SelectSingleNode("Length").InnerText);
-                category.ElectricalCurrent = Convert.ToDouble(list[i].SelectSingleNode("ElectricalCurrent").InnerText);
-                category.Temperature = Convert.ToDouble(list[i].SelectSingleNode("Temperature").InnerText);
-                category.AmountOfSubstance = Convert.ToDouble(list[i].SelectSingleNode("AmountOfSubstance").InnerText);
-                category.Luminous = Convert.ToDouble(list[i].SelectSingleNode("Luminous").InnerText, ci.NumberFormat);
-                category.Currency = Convert.ToDouble(list[i].SelectSingleNode("Currency").InnerText, ci.NumberFormat);
+                // Fallback: try legacy XML path
+                String userUnitXmlPath = String.Concat(domain.BaseDirectory, "//data//user_defined_UnitsResult.XML");
+                if (System.IO.File.Exists(userUnitXmlPath))
+                {
+                    System.Xml.XmlDocument reader = new System.Xml.XmlDocument();
+                    reader.Load(userUnitXmlPath);
+                    System.Xml.XmlNodeList list = reader.SelectNodes("Units/Unit_Specs");
+                    System.Globalization.CultureInfo ci = new System.Globalization.CultureInfo(0x0409, false);
+                    for (int i = 0; i < list.Count; i++)
+                    {
+                        unit newUnit = new unit();
+                        String UnitName = list[i].SelectSingleNode("Unit").InnerText;
+                        newUnit.Name = UnitName.Trim();
+                        newUnit.Category = list[i].SelectSingleNode("Category").InnerText;
+                        newUnit.ConversionTimes = Convert.ToDouble(list[i].SelectSingleNode("ConversionTimes").InnerText, ci.NumberFormat);
+                        newUnit.ConversionPlus = Convert.ToDouble(list[i].SelectSingleNode("ConversionPlus").InnerText, ci.NumberFormat);
+                        units.Add(newUnit);
+                    }
+                }
+            }
+
+            // Load unit categories from embedded JSON resource
+            var categoryList = JsonConvert.DeserializeObject<List<unitCategory>>(Properties.Resources.unitCategories);
+            foreach (var category in categoryList)
+            {
                 unitCategories.Add(category);
             }
-            String userUnitCategoryPath = String.Concat(domain.BaseDirectory, "data//user_defined_units.XML");
+
+            // Load user-defined unit categories from runtime file path (JSON or XML)
+            String userUnitCategoryPath = String.Concat(domain.BaseDirectory, "data//user_defined_units.json");
             if (System.IO.File.Exists(userUnitCategoryPath))
             {
-                reader.Load(userUnitCategoryPath);
-                list = reader.SelectNodes("CategorySpecifications/Category_Spec");
-                for (int i = 0; i < list.Count; i++)
+                string json = System.IO.File.ReadAllText(userUnitCategoryPath);
+                var userCategories = JsonConvert.DeserializeObject<List<unitCategory>>(json);
+                foreach (var category in userCategories)
                 {
-                    String UnitName = list[i].SelectSingleNode("Category").InnerText;
-                    unitCategory category;
-                    category.Name = UnitName;
-                    category.AspenUnit = list[i].SelectSingleNode("Aspen").InnerText;
-                    category.SI_Unit = list[i].SelectSingleNode("SI_Unit").InnerText;
-                    category.Mass = Convert.ToDouble(list[i].SelectSingleNode("Mass").InnerText, ci.NumberFormat);
-                    category.Time = Convert.ToDouble(list[i].SelectSingleNode("Time").InnerText, ci.NumberFormat);
-                    category.Length = Convert.ToDouble(list[i].SelectSingleNode("Length").InnerText, ci.NumberFormat);
-                    category.ElectricalCurrent = Convert.ToDouble(list[i].SelectSingleNode("ElectricalCurrent").InnerText, ci.NumberFormat);
-                    category.Temperature = Convert.ToDouble(list[i].SelectSingleNode("Temperature").InnerText, ci.NumberFormat);
-                    category.AmountOfSubstance = Convert.ToDouble(list[i].SelectSingleNode("AmountOfSubstance").InnerText, ci.NumberFormat);
-                    category.Luminous = Convert.ToDouble(list[i].SelectSingleNode("Luminous").InnerText, ci.NumberFormat);
-                    category.Currency = Convert.ToDouble(list[i].SelectSingleNode("Currency").InnerText, ci.NumberFormat);
                     unitCategories.Add(category);
+                }
+            }
+            else
+            {
+                // Fallback: try legacy XML path
+                String userUnitCategoryXmlPath = String.Concat(domain.BaseDirectory, "data//user_defined_units.XML");
+                if (System.IO.File.Exists(userUnitCategoryXmlPath))
+                {
+                    System.Xml.XmlDocument reader = new System.Xml.XmlDocument();
+                    reader.Load(userUnitCategoryXmlPath);
+                    System.Xml.XmlNodeList list = reader.SelectNodes("CategorySpecifications/Category_Spec");
+                    System.Globalization.CultureInfo ci = new System.Globalization.CultureInfo(0x0409, false);
+                    for (int i = 0; i < list.Count; i++)
+                    {
+                        String UnitName = list[i].SelectSingleNode("Category").InnerText;
+                        unitCategory category;
+                        category.Name = UnitName;
+                        category.AspenUnit = list[i].SelectSingleNode("Aspen").InnerText;
+                        category.SI_Unit = list[i].SelectSingleNode("SI_Unit").InnerText;
+                        category.Mass = Convert.ToDouble(list[i].SelectSingleNode("Mass").InnerText, ci.NumberFormat);
+                        category.Time = Convert.ToDouble(list[i].SelectSingleNode("Time").InnerText, ci.NumberFormat);
+                        category.Length = Convert.ToDouble(list[i].SelectSingleNode("Length").InnerText, ci.NumberFormat);
+                        category.ElectricalCurrent = Convert.ToDouble(list[i].SelectSingleNode("ElectricalCurrent").InnerText, ci.NumberFormat);
+                        category.Temperature = Convert.ToDouble(list[i].SelectSingleNode("Temperature").InnerText, ci.NumberFormat);
+                        category.AmountOfSubstance = Convert.ToDouble(list[i].SelectSingleNode("AmountOfSubstance").InnerText, ci.NumberFormat);
+                        category.Luminous = Convert.ToDouble(list[i].SelectSingleNode("Luminous").InnerText, ci.NumberFormat);
+                        category.Currency = Convert.ToDouble(list[i].SelectSingleNode("Currency").InnerText, ci.NumberFormat);
+                        unitCategories.Add(category);
+                    }
                 }
             }
         }

@@ -3,6 +3,7 @@ using NLog;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace CapeOpen
 {
@@ -42,173 +43,64 @@ namespace CapeOpen
         }
 
         private System.Data.DataTable warDataTable = new System.Data.DataTable();
-        private void AddData(String XmlData)
+        private void AddData(String jsonData)
         {
-            System.Xml.XmlDocument document = new System.Xml.XmlDocument();
-            document.LoadXml(XmlData);
-            System.Xml.XmlNodeList list = document.SelectNodes("dataroot/data");
-            System.Collections.IEnumerator ienum = list.GetEnumerator();
-            while (ienum.MoveNext())
+            var entries = JsonConvert.DeserializeObject<List<WARDataEntry>>(jsonData);
+            foreach (var entry in entries)
             {
-                System.Xml.XmlNode current = (System.Xml.XmlNode)ienum.Current;
                 System.Data.DataRow dataRow = warDataTable.NewRow();
                 warDataTable.Rows.Add(dataRow);
-                System.Collections.IEnumerator childEnum = current.ChildNodes.GetEnumerator();
-                while (childEnum.MoveNext())
-                {
-                    System.Xml.XmlNode currentChild = (System.Xml.XmlNode)childEnum.Current;
-                    if (currentChild.Name == "Mol_ID")
-                    {
-                        String value = currentChild.InnerText;
-                        while (value.StartsWith(" ")) value = value.Substring(1);
-                        while (value.EndsWith(" ")) value = value.Remove(value.Length - 1);
-                        dataRow["Mol Id"] = value;
-                    }
-                    if (currentChild.Name == "DIPPR ID")
-                    {
-                        String value = currentChild.InnerText;
-                        while (value.StartsWith(" ")) value = value.Substring(1);
-                        while (value.EndsWith(" ")) value = value.Remove(value.Length - 1);
-                        dataRow["DIPPR ID"] = value;
-                    }
-                    if (currentChild.Name == "ASPENID")
-                    {
-                        String value = currentChild.InnerText;
-                        while (value.StartsWith(" ")) value = value.Substring(1);
-                        while (value.EndsWith(" ")) value = value.Remove(value.Length - 1);
-                        dataRow["ASPENID"] = value;
-                    }
-                    if (currentChild.Name == "ChemicalName")
-                    {
-                        String value = currentChild.InnerText;
-                        while (value.StartsWith(" ")) value = value.Substring(1);
-                        while (value.EndsWith(" ")) value = value.Remove(value.Length - 1);
-                        dataRow["ChemicalName"] = value;
-                    }
-                    if (currentChild.Name == "CAS")
-                    {
-                        String value = currentChild.InnerText;
-                        while (value.StartsWith(" ")) value = value.Substring(1);
-                        while (value.EndsWith(" ")) value = value.Remove(value.Length - 1);
-                        dataRow["CAS"] = value;
-                    }
-                    if (currentChild.Name == "Formula")
-                    {
-                        String value = currentChild.InnerText;
-                        while (value.StartsWith(" ")) value = value.Substring(1);
-                        while (value.EndsWith(" ")) value = value.Remove(value.Length - 1);
-                        dataRow["Formula"] = value;
-                    }
-                    if (currentChild.Name == "CLASS")
-                    {
-                        String value = currentChild.InnerText;
-                        while (value.StartsWith(" ")) value = value.Substring(1);
-                        while (value.EndsWith(" ")) value = value.Remove(value.Length - 1);
-                        dataRow["class"] = value;
-                    }
-                    if (currentChild.Name == "MW")
-                    {
-                        dataRow["molecularWeight"] = Convert.ToDouble(currentChild.InnerText);
-                    }
-                    if (currentChild.Name == "Rat_LD50_Value")
-                    {
-                        dataRow["Rat LD50"] = Convert.ToDouble(currentChild.InnerText);
-                    }
-                    if (currentChild.Name == "Rat_LD50_Notes")
-                    {
-                        String value = currentChild.InnerText;
-                        while (value.StartsWith(" ")) value = value.Substring(1);
-                        while (value.EndsWith(" ")) value = value.Remove(value.Length - 1);
-                        dataRow["Rat LD50 Notes"] = value;
-                    }
-                    if (currentChild.Name == "Rat_LD50_Source")
-                    {
-                        String value = currentChild.InnerText;
-                        while (value.StartsWith(" ")) value = value.Substring(1);
-                        while (value.EndsWith(" ")) value = value.Remove(value.Length - 1);
-                        dataRow["Rat LD50 Source"] = value;
-                    }
-                    if (currentChild.Name == "OSHA_TWA_Value")
-                    {
-                        dataRow["OSHA PEL"] = Convert.ToDouble(currentChild.InnerText);
-                    }
-                    if (currentChild.Name == "OSHA_TWA_Source")
-                    {
-                        String value = currentChild.InnerText;
-                        while (value.StartsWith(" ")) value = value.Substring(1);
-                        while (value.EndsWith(" ")) value = value.Remove(value.Length - 1);
-                        dataRow["OSHA Source"] = value;
-                    }
-                    if (currentChild.Name == "OSHA_TWA_Notes")
-                    {
-                        String value = currentChild.InnerText;
-                        while (value.StartsWith(" ")) value = value.Substring(1);
-                        while (value.EndsWith(" ")) value = value.Remove(value.Length - 1);
-                        dataRow["OSHA Notes"] = value;
-                    }
-                    if (currentChild.Name == "FHM_LC50_Value")
-                    {
-                        dataRow["Fathead LC50"] = Convert.ToDouble(currentChild.InnerText);
-                    }
-                    if (currentChild.Name == "FHM_LC50_Notes")
-                    {
-                        String value = currentChild.InnerText;
-                        while (value.StartsWith(" ")) value = value.Substring(1);
-                        while (value.EndsWith(" ")) value = value.Remove(value.Length - 1);
-                        dataRow["Fathead LC50 Notes"] = value;
-                    }
-                    if (currentChild.Name == "FHM_LC50_Source")
-                    {
-                        String value = currentChild.InnerText;
-                        while (value.StartsWith(" ")) value = value.Substring(1);
-                        while (value.EndsWith(" ")) value = value.Remove(value.Length - 1);
-                        dataRow["Fathead LC50 Source"] = value;
-                    }
-                    if (currentChild.Name == "PCO_Value")
-                    {
-                        dataRow["Photochemical Oxidation Potential"] = Convert.ToDouble(currentChild.InnerText);
-                    }
-                    if (currentChild.Name == "PCO_Source")
-                    {
-                        String value = currentChild.InnerText;
-                        while (value.StartsWith(" ")) value = value.Substring(1);
-                        while (value.EndsWith(" ")) value = value.Remove(value.Length - 1);
-                        dataRow["Photochemical Oxidation Potential Source"] = value;
-                    }
-                    if (currentChild.Name == "GWP_Value")
-                    {
-                        dataRow["Global Warming Potential"] = Convert.ToDouble(currentChild.InnerText);
-                    }
-                    if (currentChild.Name == "GWP_Source")
-                    {
-                        String value = currentChild.InnerText;
-                        while (value.StartsWith(" ")) value = value.Substring(1);
-                        while (value.EndsWith(" ")) value = value.Remove(value.Length - 1);
-                        dataRow["Global Warming Potential Source"] = value;
-                    }
-                    if (currentChild.Name == "OD_Value")
-                    {
-                        dataRow["Ozone Depletion Potential"] = Convert.ToDouble(currentChild.InnerText);
-                    }
-                    if (currentChild.Name == "OD_Source")
-                    {
-                        String value = currentChild.InnerText;
-                        while (value.StartsWith(" ")) value = value.Substring(1);
-                        while (value.EndsWith(" ")) value = value.Remove(value.Length - 1);
-                        dataRow["Ozone Depletion Potential Source"] = value;
-                    }
-                    if (currentChild.Name == "AP_Value")
-                    {
-                        dataRow["Acidification Potential"] = Convert.ToDouble(currentChild.InnerText);
-                    }
-                    if (currentChild.Name == "AP_Source")
-                    {
-                        String value = currentChild.InnerText;
-                        while (value.StartsWith(" ")) value = value.Substring(1);
-                        while (value.EndsWith(" ")) value = value.Remove(value.Length - 1);
-                        dataRow["Acidification Potential Source"] = value;
-                    }
-                }
+
+                if (!string.IsNullOrWhiteSpace(entry.Mol_ID))
+                    dataRow["Mol Id"] = entry.Mol_ID.Trim();
+                if (!string.IsNullOrWhiteSpace(entry.DIPPR_ID))
+                    dataRow["DIPPR ID"] = entry.DIPPR_ID.Trim();
+                if (!string.IsNullOrWhiteSpace(entry.ASPENID))
+                    dataRow["ASPENID"] = entry.ASPENID.Trim();
+                if (!string.IsNullOrWhiteSpace(entry.ChemicalName))
+                    dataRow["ChemicalName"] = entry.ChemicalName.Trim();
+                if (!string.IsNullOrWhiteSpace(entry.CAS))
+                    dataRow["CAS"] = entry.CAS.Trim();
+                if (!string.IsNullOrWhiteSpace(entry.Formula))
+                    dataRow["Formula"] = entry.Formula.Trim();
+                if (!string.IsNullOrWhiteSpace(entry.CLASS))
+                    dataRow["class"] = entry.CLASS.Trim();
+                if (!string.IsNullOrWhiteSpace(entry.MW))
+                    dataRow["molecularWeight"] = Convert.ToDouble(entry.MW);
+                if (!string.IsNullOrWhiteSpace(entry.Rat_LD50_Value))
+                    dataRow["Rat LD50"] = Convert.ToDouble(entry.Rat_LD50_Value);
+                if (!string.IsNullOrWhiteSpace(entry.Rat_LD50_Notes))
+                    dataRow["Rat LD50 Notes"] = entry.Rat_LD50_Notes.Trim();
+                if (!string.IsNullOrWhiteSpace(entry.Rat_LD50_Source))
+                    dataRow["Rat LD50 Source"] = entry.Rat_LD50_Source.Trim();
+                if (!string.IsNullOrWhiteSpace(entry.OSHA_TWA_Value))
+                    dataRow["OSHA PEL"] = Convert.ToDouble(entry.OSHA_TWA_Value);
+                if (!string.IsNullOrWhiteSpace(entry.OSHA_TWA_Source))
+                    dataRow["OSHA Source"] = entry.OSHA_TWA_Source.Trim();
+                if (!string.IsNullOrWhiteSpace(entry.OSHA_TWA_Notes))
+                    dataRow["OSHA Notes"] = entry.OSHA_TWA_Notes.Trim();
+                if (!string.IsNullOrWhiteSpace(entry.FHM_LC50_Value))
+                    dataRow["Fathead LC50"] = Convert.ToDouble(entry.FHM_LC50_Value);
+                if (!string.IsNullOrWhiteSpace(entry.FHM_LC50_Notes))
+                    dataRow["Fathead LC50 Notes"] = entry.FHM_LC50_Notes.Trim();
+                if (!string.IsNullOrWhiteSpace(entry.FHM_LC50_Source))
+                    dataRow["Fathead LC50 Source"] = entry.FHM_LC50_Source.Trim();
+                if (!string.IsNullOrWhiteSpace(entry.PCO_Value))
+                    dataRow["Photochemical Oxidation Potential"] = Convert.ToDouble(entry.PCO_Value);
+                if (!string.IsNullOrWhiteSpace(entry.PCO_Source))
+                    dataRow["Photochemical Oxidation Potential Source"] = entry.PCO_Source.Trim();
+                if (!string.IsNullOrWhiteSpace(entry.GWP_Value))
+                    dataRow["Global Warming Potential"] = Convert.ToDouble(entry.GWP_Value);
+                if (!string.IsNullOrWhiteSpace(entry.GWP_Source))
+                    dataRow["Global Warming Potential Source"] = entry.GWP_Source.Trim();
+                if (!string.IsNullOrWhiteSpace(entry.OD_Value))
+                    dataRow["Ozone Depletion Potential"] = Convert.ToDouble(entry.OD_Value);
+                if (!string.IsNullOrWhiteSpace(entry.OD_Source))
+                    dataRow["Ozone Depletion Potential Source"] = entry.OD_Source.Trim();
+                if (!string.IsNullOrWhiteSpace(entry.AP_Value))
+                    dataRow["Acidification Potential"] = Convert.ToDouble(entry.AP_Value);
+                if (!string.IsNullOrWhiteSpace(entry.AP_Source))
+                    dataRow["Acidification Potential Source"] = entry.AP_Source.Trim();
             }
         }
 
