@@ -98,13 +98,27 @@ internal static class Registrar
         //   .NET Framework:  <proj>\bin\<Config>\<name>.dll            -> 3 levels up
         //   .NET 8 (SDK):    <proj>\bin\<Platform>\<Config>\<tfm>\...  -> 4 levels up
         var candidates = new List<string> { Path.Combine(asmDir, asmName + ".tlb") };
+        var tlbDirs = new List<string>();
         var cur = asmDir;
         for (int i = 0; i < 6 && cur is not null; i++)
         {
             candidates.Add(Path.Combine(cur, "Tlb", asmName + ".tlb"));
+            var tlbDir = Path.Combine(cur, "Tlb");
+            if (Directory.Exists(tlbDir)) tlbDirs.Add(tlbDir);
             cur = Path.GetDirectoryName(cur);
         }
+        // First pass: exact assembly-name match.
         var tlbPath = candidates.FirstOrDefault(File.Exists);
+        // Fallback: any .tlb in the nearest Tlb\ folder (e.g. a shared CapeOpen.tlb
+        // describing interfaces consumed by this implementation assembly).
+        if (tlbPath is null)
+        {
+            foreach (var dir in tlbDirs)
+            {
+                var any = Directory.GetFiles(dir, "*.tlb").FirstOrDefault();
+                if (any is not null) { tlbPath = any; break; }
+            }
+        }
         if (tlbPath is null)
         {
             log.WriteLine($"  (No .tlb found alongside or in any ancestor Tlb\\ folder; skipping TypeLib registration.)");
@@ -237,7 +251,10 @@ internal static class Registrar
             using (var inproc = clsidKey.CreateSubKey("InprocServer32", writable: true)!)
             {
                 inproc.SetValue("", comHostPath);
-                inproc.SetValue("ThreadingModel", "Both");
+                // CAPE-OPEN 1.0/1.1 components are expected to live in an STA.
+                // Older hosts (e.g. PRO/II 9.x) may refuse to instantiate a class whose
+                // ThreadingModel is anything other than "Apartment"; COFE is tolerant.
+                inproc.SetValue("ThreadingModel", "Apartment");
                 inproc.SetValue("CodeBase", codeBase);
             }
             var progId = t.FullName!;
@@ -368,7 +385,7 @@ internal static class Registrar
             reg.AppendLine();
             reg.AppendLine($"[{clsidRoot}\\InprocServer32]");
             reg.AppendLine($"@=\"{RegEscape(comHostPath)}\"");
-            reg.AppendLine("\"ThreadingModel\"=\"Both\"");
+            reg.AppendLine("\"ThreadingModel\"=\"Apartment\"");
             reg.AppendLine($"\"CodeBase\"=\"{RegEscape(codeBase)}\"");
             reg.AppendLine();
             reg.AppendLine($"[{clsidRoot}\\ProgId]");
